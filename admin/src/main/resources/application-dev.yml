@@ -34,5 +34,5 @@ app:
   url:
     server-url: ENC(fRoRGxzjgDDpIiL+Odv9zgjEyFnnozQRoMD1wGvhypE=)
   key:
-    algo: ENC(7QsHWVtu4ffEBLAEOaxRveqGyxa39BD91RDiGYHICiA=)
+    algo: PBEWithMD5AndDES
     skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780

@@ -12,12 +12,13 @@ import org.springframework.context.annotation.Configuration;
 public class JasyptConfig {
     private static final String ALGORITHM =  "PBEWithMD5AndDES";
 
-    String KEY = System.getenv("key");
-
     @Bean("jasyptStringEncryptor")
     public StringEncryptor stringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+
+        String KEY = System.getenv("JASYPT_ENCRYPTOR_PASSWORD");
+
         config.setPassword(KEY); // 암호화 키
         config.setAlgorithm(ALGORITHM); // 알고리즘
         config.setKeyObtentionIterations("1000"); // 반복할 해싱 회수
