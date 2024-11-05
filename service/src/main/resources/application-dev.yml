@@ -1,0 +1,38 @@
+server:
+  port: 80
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+# SpringBoot Environment Setting
+spring:
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(xHXpClXXAhvJXW7mThmzW0380tgz1PC44ygba26Pd/ZMXkzQZswNF6V/HS2N9ZVBvZDhQzx6gluSwTSX9uBHKDGvHSPEljzB)
+    username: ENC(KuHY5H9zhktP04FElesliA==)
+    password: ENC(HTtTVsL4aOlNh+b0IKrKDV5CgdRQB4h7)
+
+# Mybatis Setting
+mybatis:
+  type-aliases-package: edu.sm.dto
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+# Logging Setting
+logging:
+  level:
+    root: info
+
+# Application Environment Setting
+app:
+  url:
+    server-url: ENC(fRoRGxzjgDDpIiL+Odv9zgjEyFnnozQRoMD1wGvhypE=)
+  key:
+    algo: ENC(7QsHWVtu4ffEBLAEOaxRveqGyxa39BD91RDiGYHICiA=)
+    skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780
