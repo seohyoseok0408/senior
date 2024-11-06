@@ -13,6 +13,7 @@ public class MainController {
 
     @RequestMapping("/")
     public String main(Model model) {
+        model.addAttribute("footer","footer");
         model.addAttribute("header", "header");
         model.addAttribute("center", "center");
         model.addAttribute("sidebar", "sidebar");

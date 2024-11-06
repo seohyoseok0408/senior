@@ -4,7 +4,9 @@
 
 
 <div class="content-body">
-    <h1>
-        test
-    </h1>
+    <div class="container-fluid">
+        <h1>
+            test
+        </h1>
+    </div>
 </div>
