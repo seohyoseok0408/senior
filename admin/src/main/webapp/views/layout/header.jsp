@@ -156,7 +156,7 @@
                                     <i class="icon-envelope-open"></i>
                                     <span class="ml-2">Inbox </span>
                                 </a>
-                                <a href="<c:url value='/page-login.html'/>" class="dropdown-item">
+                                <a href="<c:url value='/login'/>" class="dropdown-item">
                                     <i class="icon-key"></i>
                                     <span class="ml-2">Logout </span>
                                 </a>
