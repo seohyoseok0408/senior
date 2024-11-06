@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin {
-    private String adminId;
+    private Integer adminId;
     private String adminUsername;
     private String adminPassword;
     private String adminName;
