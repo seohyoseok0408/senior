@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <!DOCTYPE html>
 <html lang="en" class="h-100">
@@ -9,13 +11,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Focus - Bootstrap Admin Dashboard</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link href="./css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" href="<c:url value='/images/favicon.png' />">
+    <link href="<c:url value='/css/style.css' />" rel="stylesheet">
 </head>
-<script src="./vendor/global/global.min.js"></script>
-<script src="./js/quixnav-init.js"></script>
-<script src="./js/custom.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="<c:url value='/vendor/global/global.min.js' />"></script>
+<script src="<c:url value='/js/quixnav-init.js' />"></script>
+<script src="<c:url value='/js/custom.min.js' />"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     let login = {
@@ -32,13 +33,13 @@
 
             $.ajax({
                 type: "POST",
-                url: "/api/admin/login",
+                url: "<c:url value='/api/admin/login' />",
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
             }).done(function(resp) {
                 alert("SUCCESS TO LOGIN");
-                location.href = "/";
+                location.href = "<c:url value='/' />";
             }).fail(function(error) {
                 alert("FAIL TO LOGIN ! " + error);
                 console.error("Error:", error);
@@ -77,16 +78,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <a href="page-forgot-password.html">Forgot Password?</a>
+                                            <a href="<c:url value='/page-forgot-password.html' />">Forgot Password?</a>
                                         </div>
                                     </div>
-
                                 </form>
                                 <div class="text-center">
-                                    <button type="button" id = "loginbtn" class="btn btn-primary btn-block">Login</button>
-                                </div>
-                                <div class="new-account mt-3">
-                                    <p>Don't have an account? <a class="text-primary" href="./page-register.html">Sign up</a></p>
+                                    <button type="button" id="loginbtn" class="btn btn-primary btn-block">Login</button>
                                 </div>
                             </div>
                         </div>
