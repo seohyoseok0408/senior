@@ -17,7 +17,7 @@ public class SeniorController {
     private final SeniorService seniorService;
 
     // 시니어 등록
-    @PostMapping("/register")
+    @PostMapping("/")
     public ResponseDto<Integer> register(@RequestBody Senior senior) {
         log.info("Senior registration initiated.");
         try {
@@ -31,10 +31,11 @@ public class SeniorController {
     }
 
     // 시니어 수정
-    @PutMapping("/edit")
-    public ResponseDto<Integer> edit(@RequestBody Senior senior) {
+    @PutMapping("/update/{id}")
+    public ResponseDto<Integer> edit(@PathVariable Integer id, @RequestBody Senior senior) {
         try {
-            seniorService.modify(senior);
+            senior.setSeniorId(id); // ID 설정
+            seniorService.modify(senior); // Senior 객체를 서비스로 전달
             log.info("Senior updated successfully: {}", senior);
             return new ResponseDto<>(HttpStatus.OK.value(), 1); // 성공 시 1 반환
         } catch (Exception e) {
@@ -43,11 +44,11 @@ public class SeniorController {
         }
     }
 
-    // 시니어 상태를 inactive로 설정하여 "삭제" 처리
+    // 시니어 상태를 inactive로 설정하여 "소프트 삭제" 처리
     @DeleteMapping("/delete/{id}")
     public ResponseDto<Integer> delete(@PathVariable Integer id) {
         try {
-            seniorService.del(id);
+            seniorService.updateStatusToInactive(id); // updateStatusToInactive 메서드 호출로 상태 변경
             log.info("Senior status updated to inactive, id: {}", id);
             return new ResponseDto<>(HttpStatus.OK.value(), 1); // 성공 시 1 반환
         } catch (Exception e) {

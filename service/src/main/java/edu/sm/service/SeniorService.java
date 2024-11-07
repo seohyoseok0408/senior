@@ -5,8 +5,6 @@ import edu.sm.repository.SeniorRepository;
 import edu.sm.frame.SMService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
@@ -22,12 +20,15 @@ public class SeniorService implements SMService<Integer, Senior> {
 
     @Override
     public void modify(Senior senior) throws Exception {
-        seniorRepository.update(senior);
+        if (senior.getSeniorId() == 0) {
+            throw new IllegalArgumentException("Senior ID cannot be zero.");
+        }
+        seniorRepository.update(senior); // Senior 객체를 사용하여 업데이트
     }
 
     @Override
     public void del(Integer seniorId) throws Exception {
-        seniorRepository.updateStatusToInactive(seniorId);
+        throw new IllegalArgumentException("삭제는 불가합니다.");
     }
 
     @Override
@@ -38,5 +39,9 @@ public class SeniorService implements SMService<Integer, Senior> {
     @Override
     public List<Senior> get() throws Exception {
         return seniorRepository.select();
+    }
+
+    public void updateStatusToInactive(Integer seniorId) throws Exception {
+        seniorRepository.updateStatusToInactive(seniorId);
     }
 }
