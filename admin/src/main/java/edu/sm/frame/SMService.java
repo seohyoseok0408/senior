@@ -15,4 +15,6 @@ public interface SMService<K,V> {
     V get(K k) throws Exception;
     @Transactional(readOnly = true)
     List<V> get() throws Exception;
+    default void modifyById(K k, V v) throws Exception {
+    }
 }
