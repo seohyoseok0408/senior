@@ -26,8 +26,8 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // csrf 설정을 비활성화
-        http.csrf((csrf) -> csrf.disable());
+        // CSRF 설정 비활성화
+        http.csrf(csrf -> csrf.disable());
 
         // 권한 규칙 작성
         http.authorizeHttpRequests(authorize -> authorize
