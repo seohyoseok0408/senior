@@ -19,4 +19,8 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
 }
