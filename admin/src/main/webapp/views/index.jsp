@@ -1,38 +1,30 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <%@ include file="layout/header.jsp"%>
-    <!--**********************************
-        Header end ti-comment-alt
-    ***********************************-->
+<%@ include file="layout/header.jsp" %>
+<!-- Header -->
 
-    <!--**********************************
-        Sidebar start
-    ***********************************-->
-    <c:choose>
+<!-- Sidebar -->
+<c:choose>
     <c:when test="${sidebar == null}">
-        <jsp:include page="sidebar.jsp"></jsp:include>
+        <jsp:include page="layout/sidebar.jsp"></jsp:include>
     </c:when>
     <c:otherwise>
-        <jsp:include page="${sidebar}.jsp"></jsp:include>
+        <jsp:include page="layout/${sidebar}.jsp"></jsp:include>
     </c:otherwise>
-    </c:choose>
-    <!--**********************************
-        Sidebar end
-    ***********************************-->
+</c:choose>
+<!-- Sidebar End -->
 
-    <!--**********************************
-        Content body start
-    ***********************************-->
-    <c:choose>
+<!-- Content Body -->
+<c:choose>
     <c:when test="${center == null}">
         <jsp:include page="center.jsp"></jsp:include>
     </c:when>
     <c:otherwise>
         <jsp:include page="${center}.jsp"></jsp:include>
     </c:otherwise>
-    </c:choose>
-    <!--**********************************
-        Content body end
-    ***********************************-->
-    <%@ include file="layout/footer.jsp"%>
+</c:choose>
+<!-- Content Body End -->
 
+<%@ include file="layout/footer.jsp" %>
+<!-- Footer -->
