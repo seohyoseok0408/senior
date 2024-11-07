@@ -42,6 +42,24 @@ public class SeniorService implements SMService<Integer, Senior> {
     }
 
     public void updateStatusToInactive(Integer seniorId) throws Exception {
-        seniorRepository.updateStatusToInactive(seniorId);
+        // 기존 데이터 조회
+        Senior senior = seniorRepository.selectOne(seniorId);
+
+        if (senior == null) {
+            throw new IllegalArgumentException("Senior not found with ID: " + seniorId);
+        }
+        // 상태를 "inactive"로 설정
+        senior.setSeniorStatus("inactive");
+        // 변경 사항 저장
+        seniorRepository.update(senior);
+    }
+
+    @Override
+    public void modifyById(Integer id, Senior senior_) throws Exception {
+        // 기존 데이터 찾기
+        Senior senior = null;
+        senior = seniorRepository.selectOne(id);
+        senior.setSeniorName(senior_.getSeniorName());
+        seniorRepository.update(senior);
     }
 }

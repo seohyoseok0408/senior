@@ -15,6 +15,12 @@
                 #{seniorDetailAddr2}, NOW(), #{seniorStatus}, #{seniorSignificant}, #{userId})
     </insert>
 
+    <select id="selectOne" parameterType="int">
+        SELECT *
+        FROM senior
+        WHERE senior_id = #{id};
+    </select>
+
     <!-- 시니어 수정 -->
     <update id="update" parameterType="edu.sm.model.Senior">
         UPDATE senior
