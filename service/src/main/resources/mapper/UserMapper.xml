@@ -1,48 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.sm.repository.UserRepository">
-
-    <!-- 사용자 추가 메서드 -->
     <insert id="insert" parameterType="edu.sm.model.User">
         INSERT INTO user (user_username, user_password, user_tel, user_email, user_name, user_birthday, user_zipcode, user_detail_add1, user_detail_addr1, user_detail_addr2, user_rdate, user_status, user_profile)
         VALUES (#{username}, #{password}, #{tel}, #{email}, #{name}, #{birthday}, #{zipcode}, #{detailAdd1}, #{detailAddr1}, #{detailAddr2}, #{regDate}, #{status}, #{profileImage});
     </insert>
 
-    <!-- 사용자 ID로 사용자 조회 메서드 -->
     <select id="selectOne" parameterType="int" resultType="edu.sm.model.User">
-        SELECT
-            user_id AS userId,
-            user_username AS username,
-            user_password AS password,
-            user_tel AS tel,
-            user_email AS email,
-            user_name AS name,
-            user_birthday AS birthday,
-            user_zipcode AS zipcode,
-            user_detail_add1 AS detailAdd1,
-            user_detail_addr1 AS detailAddr1,
-            user_detail_addr2 AS detailAddr2,
-            user_rdate AS regDate,
-            user_status AS status,
-            user_profile AS profileImage
+        SELECT user_id AS userId, user_username AS username, user_password AS password,
+               user_tel AS tel, user_email AS email, user_name AS name,
+               user_birthday AS birthday, user_zipcode AS zipcode,
+               user_detail_addr1 AS detailAddr1, user_detail_addr2 AS detailAddr2,
+               user_detail_add1 AS detailAdd1, user_rdate AS regDate,
+               user_status AS status, user_profile AS profileImage
         FROM user
         WHERE user_id = #{userId};
     </select>
 
-    <!-- 사용자 이름 중복 확인 쿼리 -->
-    <select id="findByUsername" parameterType="String" resultType="edu.sm.model.User">
-        SELECT * FROM user WHERE user_username = #{username};
-    </select>
-
-    <!-- 전화번호 중복 확인 쿼리 -->
-    <select id="findByTel" parameterType="String" resultType="edu.sm.model.User">
-        SELECT * FROM user WHERE user_tel = #{tel};
-    </select>
-
-    <!-- 이메일 중복 확인 쿼리 -->
-    <select id="findByEmail" parameterType="String" resultType="edu.sm.model.User">
-        SELECT * FROM user WHERE user_email = #{email};
-    </select>
 </mapper>
