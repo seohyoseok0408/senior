@@ -11,7 +11,7 @@ public interface SMService<K,V> {
     void modify(V v) throws Exception;
     @Transactional
     void del(K k) throws Exception;
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) 
     V get(K k) throws Exception;
     @Transactional(readOnly = true)
     List<V> get() throws Exception;
