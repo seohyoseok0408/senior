@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MainController {
 
-    @RequestMapping("/main")
+    @RequestMapping("/")
     public String main(Model model) {
         model.addAttribute("header", "header");
         model.addAttribute("center", "center");
@@ -19,7 +19,7 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/login")
     public String login(Model model) {
         return "login";
     }
