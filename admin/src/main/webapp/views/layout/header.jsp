@@ -9,14 +9,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
+    <title>Focus - Bootstrap Admin Dashboard</title>
+
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="<c:url value='/images/favicon.png'/>">
+
+    <!-- Calendar and Chartist CSS -->
     <link href="<c:url value='/vendor/pg-calendar/css/pignose.calendar.min.css'/>" rel="stylesheet">
     <link href="<c:url value='/vendor/chartist/css/chartist.min.css'/>" rel="stylesheet">
+
+    <!-- Datatable CSS -->
+    <link href="<c:url value='/vendor/datatables/css/jquery.dataTables.min.css'/>" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet">
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 
 <body>
 
