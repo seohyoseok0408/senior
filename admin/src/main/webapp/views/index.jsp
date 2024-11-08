@@ -5,14 +5,7 @@
 <!-- Header -->
 
 <!-- Sidebar -->
-<c:choose>
-    <c:when test="${sidebar == null}">
-        <jsp:include page="layout/sidebar.jsp"></jsp:include>
-    </c:when>
-    <c:otherwise>
-        <jsp:include page="layout/${sidebar}.jsp"></jsp:include>
-    </c:otherwise>
-</c:choose>
+<%@ include file="layout/sidebar.jsp" %>
 <!-- Sidebar End -->
 
 <!-- Content Body -->
