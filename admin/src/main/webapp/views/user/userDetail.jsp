@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -72,17 +73,22 @@
 
             <!-- 추가적인 유저 정보나 활동 내역 등을 표시할 영역 -->
             <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="text-primary">Activity</h5>
-                        <p class="mb-1">최근 활동: 주문 3건, 리뷰 작성 2건</p>
-                        <p class="mb-1">팔로워 수: 120명</p>
-                        <div class="mt-4 text-center">
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm">Follow</a>
-                            <a href="javascript:void(0)" class="btn btn-dark btn-sm">Message</a>
+                <h5 class="text-primary">Senior List</h5>
+                <c:forEach items="${senior}" var="senior">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <h5 class="text-primary">${senior.seniorName}</h5>
+                            <p class="mb-1">${senior.seniorGender == 'male' ? '남성' : '여성'}</p>
+                            <p class="mb-1">
+                                <fmt:formatDate value="${senior.seniorBirth}" pattern="yyyy년 MM월 dd일" />
+                            </p>
+                            <div class="mt-4 text-center">
+                                <a href="javascript:void(0)" class="btn btn-primary btn-sm">Follow</a>
+                                <a href="javascript:void(0)" class="btn btn-dark btn-sm">Message</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:forEach>
             </div>
         </div>
     </div>

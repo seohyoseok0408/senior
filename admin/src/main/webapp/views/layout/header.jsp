@@ -55,7 +55,7 @@
         Nav header start
     ***********************************-->
     <div class="nav-header">
-        <a href="index.html" class="brand-logo">
+        <a href="" class="brand-logo">
             <img class="logo-abbr" src="<c:url value='/images/logo.png'/>" alt="">
             <img class="logo-compact" src="<c:url value='/images/logo-text.png'/>" alt="">
             <img class="brand-title" src="<c:url value='/images/logo-text.png'/>" alt="">
