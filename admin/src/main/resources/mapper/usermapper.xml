@@ -9,4 +9,7 @@
     <select id="findAll" resultType="User">
         SELECT * FROM user;
     </select>
+    <select id="selectSeniorByUserId" parameterType="Integer" resultType="Senior">
+        SELECT * FROM senior WHERE user_id = #{userId};
+    </select>
 </mapper>

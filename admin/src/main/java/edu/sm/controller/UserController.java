@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import edu.sm.model.Senior;
 import edu.sm.model.User;
 import edu.sm.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -25,20 +26,20 @@ public class UserController {
         List<User> user = userService.get();
 
         model.addAttribute("user", user);
-        model.addAttribute("header", "header");
+
         model.addAttribute("center", dir + "userList");
-        model.addAttribute("sidebar", "sidebar");
+
         return "index";
     }
 
     @RequestMapping("/customer-detail")
     public String detail(Model model, @RequestParam("id") Integer userId) throws Exception {
         User user = userService.get(userId);
-        log.info("Retrieved User: {}", user);
+        List<Senior> senior = userService.getSeniorsByUserId(userId);
+
         model.addAttribute("user", user);
-        model.addAttribute("header", "header");
+        model.addAttribute("senior", senior);
         model.addAttribute("center", dir + "userDetail");
-        model.addAttribute("sidebar", "sidebar");
         return "index";
     }
 }
