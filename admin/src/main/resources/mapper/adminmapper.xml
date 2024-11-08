@@ -9,7 +9,7 @@
         VALUES (#{adminUsername}, #{adminPassword}, #{adminName});
     </insert>
 
-    <select id="findByUsername" parameterType="String" resultType="Admin">
+    <select id="selectByUsername" parameterType="String" resultType="Admin">
         SELECT * FROM admin WHERE admin_username = #{username};
     </select>
 </mapper>
