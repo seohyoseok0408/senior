@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 @Mapper
 public interface UserRepository extends SMRepository<Integer, User> {
-    User findByUsername(Integer userid);
+    User selectOne(Integer userId);
     List<User> findAll();
 }
