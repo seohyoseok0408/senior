@@ -20,6 +20,20 @@ public class AdminApiController {
 
     private final AdminService adminService;
 
+    @PostMapping("/api/admin/signup")
+    public ResponseDto<Integer> save(@RequestBody Admin admin) {
+        try {
+            adminService.add(admin);
+            return new ResponseDto<>(HttpStatus.OK.value(), 1);
+        } catch (IllegalArgumentException e) {
+            log.error("잘못된 입력 값입니다.", e);
+            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), 0);
+        } catch (Exception e) {
+            log.error("예기치 않은 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
+        }
+    }
+
     @PostMapping("/api/admin/login")
     public ResponseDto<Integer> login(@RequestBody Admin admin, HttpSession session) {
         log.info("Admin login 호출됨");

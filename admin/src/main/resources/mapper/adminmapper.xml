@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.sm.repository.AdminRepository">
+
+    <insert id="insert" parameterType="Admin">
+        INSERT INTO admin (admin_username, admin_password, admin_name)
+        VALUES (#{adminUsername}, #{adminPassword}, #{adminName});
+    </insert>
+
     <select id="findByUsername" parameterType="String" resultType="Admin">
         SELECT * FROM admin WHERE admin_username = #{username};
     </select>
