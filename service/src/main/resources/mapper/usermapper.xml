@@ -19,4 +19,16 @@
         WHERE user_id = #{userId};
     </select>
 
+    <!-- 사용자 이름 중복 확인 쿼리 -->
+    <select id="findByUsername" parameterType="String" resultType="edu.sm.model.User">
+    SELECT * FROM user WHERE user_username = #{username};
+    </select>
+            <!-- 전화번호 중복 확인 쿼리 -->
+    <select id="findByTel" parameterType="String" resultType="edu.sm.model.User">
+    SELECT * FROM user WHERE user_tel = #{tel};
+    </select>
+            <!-- 이메일 중복 확인 쿼리 -->
+    <select id="findByEmail" parameterType="String" resultType="edu.sm.model.User">
+    SELECT * FROM user WHERE user_email = #{email};
+    </select>
 </mapper>
