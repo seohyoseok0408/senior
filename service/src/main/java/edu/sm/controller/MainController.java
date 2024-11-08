@@ -14,6 +14,7 @@ public class MainController {
         log.info("Start Main");
         return "index"; // 메인 페이지로 이동
     }
+
     @RequestMapping("/index")
     public String index(Model model) {
         log.info("Start Main");

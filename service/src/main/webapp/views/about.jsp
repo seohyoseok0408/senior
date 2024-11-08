@@ -25,4 +25,4 @@
   </div>
 </section>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="layout/footer.jsp" %>

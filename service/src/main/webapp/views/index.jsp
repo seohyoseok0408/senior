@@ -14,7 +14,7 @@
 <body>
 
 <!-- Include Header -->
-<%@ include file="header.jsp" %>
+<%@ include file="layout/header.jsp" %>
 
 <!-- Include Center Content Section -->
 <c:choose>
@@ -27,7 +27,7 @@
 </c:choose>
 
 <!-- Include Footer -->
-<%@ include file="footer.jsp" %>
+<%@ include file="layout/footer.jsp" %>
 
 <script src="js/bootstrap.js"></script>
 </body>

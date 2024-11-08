@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.jsp" %>
+<%@ include file="layout/header.jsp" %>
 
 <section class="why_section layout_padding">
   <div class="container">
@@ -80,4 +80,4 @@
   </div>
 </section>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="layout/footer.jsp" %>

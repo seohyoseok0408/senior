@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.jsp" %>
+<%@ include file="layout/header.jsp" %>
 
-<section class="team_section">
+<section class="team_section layout_padding">
   <div class="container-fluid">
     <div class="heading_container">
       <h2>
@@ -174,4 +174,4 @@
   </div>
 </section>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="layout/footer.jsp" %>
