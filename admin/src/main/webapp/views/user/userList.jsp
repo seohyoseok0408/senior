@@ -36,7 +36,7 @@
                             <tbody>
                             <!-- 데이터 행들 -->
                             <c:forEach var="user" items="${user}">
-                                <tr>
+                                <tr onclick="window.location.href='customer-detail?id=${user.userId}'" style="cursor: pointer;">
                                     <td>${user.userId}</td>
                                     <td>${user.userUsername}</td>
                                     <td>${user.userTel}</td>
@@ -50,24 +50,25 @@
                                 </tr>
                             </c:forEach>
                             </tbody>
-<%--                            <tfoot>--%>
-<%--                            <tr>--%>
-<%--                                <th>User ID</th>--%>
-<%--                                <th>Username</th>--%>
-<%--                                <th>Password</th>--%>
-<%--                                <th>Tel</th>--%>
-<%--                                <th>Email</th>--%>
-<%--                                <th>Name</th>--%>
-<%--                                <th>Birthday</th>--%>
-<%--                                <th>Zipcode</th>--%>
-<%--                                <th>Address1</th>--%>
-<%--                                <th>Address2</th>--%>
-<%--                                <th>Address3</th>--%>
-<%--                                <th>Registration Date</th>--%>
-<%--                                <th>Status</th>--%>
-<%--                                <th>Profile</th>--%>
-<%--                            </tr>--%>
-<%--                            </tfoot>--%>
+
+                            <%--                            <tfoot>--%>
+                            <%--                            <tr>--%>
+                            <%--                                <th>User ID</th>--%>
+                            <%--                                <th>Username</th>--%>
+                            <%--                                <th>Password</th>--%>
+                            <%--                                <th>Tel</th>--%>
+                            <%--                                <th>Email</th>--%>
+                            <%--                                <th>Name</th>--%>
+                            <%--                                <th>Birthday</th>--%>
+                            <%--                                <th>Zipcode</th>--%>
+                            <%--                                <th>Address1</th>--%>
+                            <%--                                <th>Address2</th>--%>
+                            <%--                                <th>Address3</th>--%>
+                            <%--                                <th>Registration Date</th>--%>
+                            <%--                                <th>Status</th>--%>
+                            <%--                                <th>Profile</th>--%>
+                            <%--                            </tr>--%>
+                            <%--                            </tfoot>--%>
                         </table>
                     </div>
                 </div>
@@ -84,20 +85,3 @@
 <!-- Datatable -->
 <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="./js/plugins-init/datatables.init.js"></script>
-<script>
-    // 클릭 이벤트를 각 행에 추가하는 함수
-    function addRowClickEvent() {
-        const rows = document.querySelectorAll("tbody tr");
-        rows.forEach(row => {
-            row.addEventListener("click", () => {
-                // 각 셀의 데이터를 배열로 가져오기
-                const data = Array.from(row.cells).map(cell => cell.textContent);
-                // 데이터를 알림으로 표시
-                alert("id : "+ data[0]);
-            });
-        });
-    }
-
-    // 페이지가 로드되면 클릭 이벤트를 추가
-    document.addEventListener("DOMContentLoaded", addRowClickEvent);
-</script>
