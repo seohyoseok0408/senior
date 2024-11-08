@@ -19,7 +19,7 @@ public class MainController {
             return "redirect:/login";
         }
 
-        model.addAttribute("header", "header");
+
         model.addAttribute("center", "center");
         model.addAttribute("sidebar", "sidebar");
         return "index";
