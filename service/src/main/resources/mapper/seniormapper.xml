@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.sm.repository.SeniorRepository">
+
+    <!-- 시니어 추가 -->
+    <insert id="insert" parameterType="edu.sm.model.Senior">
+        INSERT INTO senior (senior_id, senior_name, senior_gender, senior_tel, senior_birth,
+                            senior_zipcode, senior_street_addr, senior_detail_addr1,
+                            senior_detail_addr2, senior_rdate, senior_status,
+                            senior_significant, user_id)
+        VALUES (null, #{seniorName}, #{seniorGender}, #{seniorTel}, #{seniorBirth},
+                #{seniorZipcode}, #{seniorStreetAddr}, #{seniorDetailAddr1},
+                #{seniorDetailAddr2}, NOW(), #{seniorStatus}, #{seniorSignificant}, #{userId})
+    </insert>
+
+    <select id="selectOne" parameterType="int">
+        SELECT *
+        FROM senior
+        WHERE senior_id = #{id};
+    </select>
+
+    <!-- 시니어 수정 -->
+    <update id="update" parameterType="edu.sm.model.Senior">
+        UPDATE senior
+        SET senior_name = #{seniorName},
+            senior_gender = #{seniorGender},
+            senior_tel = #{seniorTel},
+            senior_birth = #{seniorBirth},
+            senior_zipcode = #{seniorZipcode},
+            senior_street_addr = #{seniorStreetAddr},
+            senior_detail_addr1 = #{seniorDetailAddr1},
+            senior_detail_addr2 = #{seniorDetailAddr2},
+            senior_rdate = #{seniorRdate},
+            senior_status = #{seniorStatus},
+            senior_significant = #{seniorSignificant},
+            user_id = #{userId}
+        WHERE senior_id = #{seniorId}
+    </update>
+
+    <!-- 시니어 상태만 inactive로 변경 -->
+    <update id="updateStatusToInactive" parameterType="int">
+        UPDATE senior
+        SET senior_status = 'inactive'
+        WHERE senior_id = #{seniorId}
+    </update>
+
+</mapper>
