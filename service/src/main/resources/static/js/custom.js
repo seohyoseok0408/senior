@@ -19,7 +19,6 @@ function displayYear() {
 }
 displayYear();
 
-
 // owl carousel slider js
 $('.team_carousel').owlCarousel({
     loop: true,

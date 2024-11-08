@@ -58,7 +58,7 @@ p {
 
 /*header section*/
 .hero_area {
-  height: 100vh;
+  height: auto !important;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -70,7 +70,7 @@ p {
 }
 
 .sub_page .hero_area {
-  height: auto;
+  height: auto !important;
 }
 
 .sub_page .hero_area .header_section {
@@ -80,6 +80,8 @@ p {
 
 .header_section {
   background-color: #ffffff;
+  border-bottom: 1px solid #ddd; /* 구분선 색상과 두께 */
+
 }
 
 .header_section .container-fluid {
@@ -371,7 +373,7 @@ a:focus {
 
 .slider_section .box {
   width: 100%;
-  height: 100%;
+  height: 827px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -861,6 +863,7 @@ a:focus {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  height: 50px;
 }
 
 .team_section .team_carousel .owl-dots .owl-dot {
