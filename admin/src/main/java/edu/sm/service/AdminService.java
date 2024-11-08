@@ -5,6 +5,8 @@ import edu.sm.model.Admin;
 import edu.sm.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.auth.InvalidCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +25,7 @@ public class AdminService implements SMService<Integer, Admin> {
     public void add(Admin admin) throws Exception {
         validateAdminFields(admin); // 유효성 검사(username, password, name)
 
-        if (adminRepository.findByUsername(admin.getAdminUsername()) != null) {
+        if (adminRepository.selectByUsername(admin.getAdminUsername()) != null) {
             throw new IllegalArgumentException("이미 존재하는 사용자 아이디입니다.");
         }
 
@@ -54,8 +56,16 @@ public class AdminService implements SMService<Integer, Admin> {
         return List.of();
     }
 
-    public Admin getByUsername (String s) throws Exception {
-        return adminRepository.findByUsername(s);
+    @Transactional
+    public Admin login(Admin admin) throws Exception {
+        Admin principal = adminRepository.selectByUsername(admin.getAdminUsername());
+        if (principal == null) {
+            throw new UsernameNotFoundException("존재하지 않는 사용자 아이디입니다.");
+        }
+        if (!encoder.matches(admin.getAdminPassword(), principal.getAdminPassword())) {
+            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+        return principal;
     }
 
     // 필수 필드 유효성 검사를 위한 메서드
