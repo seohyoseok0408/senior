@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,15 +21,23 @@ public class UserController {
     String dir = "user/";
 
     @RequestMapping("/customer-list")
-    public String main(Model model, HttpSession session) throws Exception {
+    public String list(Model model, HttpSession session) throws Exception {
         List<User> user = userService.get();
-
-        // 가져온 데이터 로그 출력
-        log.info("Retrieved User List: {}", user);
 
         model.addAttribute("user", user);
         model.addAttribute("header", "header");
         model.addAttribute("center", dir + "userList");
+        model.addAttribute("sidebar", "sidebar");
+        return "index";
+    }
+
+    @RequestMapping("/customer-detail")
+    public String detail(Model model, @RequestParam("id") Integer userId) throws Exception {
+        User user = userService.get(userId);
+        log.info("Retrieved User: {}", user);
+        model.addAttribute("user", user);
+        model.addAttribute("header", "header");
+        model.addAttribute("center", dir + "userDetail");
         model.addAttribute("sidebar", "sidebar");
         return "index";
     }
