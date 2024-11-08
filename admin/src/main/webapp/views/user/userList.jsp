@@ -1,24 +1,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+    tbody tr td {
+        color: black; /* 기본 글자 색상을 검정으로 설정 */
+        font-size: 10px; /* 원하는 글자 크기로 조정 */
+    }
+
+    tbody tr:hover td {
+        color: #3043c7; /* 마우스를 올렸을 때 글자 색상을 파란색으로 설정 */
+    }
+</style>
 
 <div class="content-body">
     <div class="container-fluid">
         <h1>User List</h1>
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">User Data Table</h4>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example" class="display" style="min-width: 845px">
                             <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Username</th>
                                 <th>Tel</th>
                                 <th>Email</th>
                                 <th>Name</th>
-                                <th>Birthday</th>
                                 <th>Zipcode</th>
                                 <th>Address1</th>
                                 <th>Address2</th>
@@ -30,11 +37,11 @@
                             <!-- 데이터 행들 -->
                             <c:forEach var="user" items="${user}">
                                 <tr>
+                                    <td>${user.userId}</td>
                                     <td>${user.userUsername}</td>
                                     <td>${user.userTel}</td>
                                     <td>${user.userEmail}</td>
                                     <td>${user.userName}</td>
-                                    <td>${user.userBirthday}</td>
                                     <td>${user.userZipcode}</td>
                                     <td>${user.userDetailAdd1}</td>
                                     <td>${user.userDetailAddr1}</td>
@@ -77,3 +84,20 @@
 <!-- Datatable -->
 <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="./js/plugins-init/datatables.init.js"></script>
+<script>
+    // 클릭 이벤트를 각 행에 추가하는 함수
+    function addRowClickEvent() {
+        const rows = document.querySelectorAll("tbody tr");
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+                // 각 셀의 데이터를 배열로 가져오기
+                const data = Array.from(row.cells).map(cell => cell.textContent);
+                // 데이터를 알림으로 표시
+                alert("id : "+ data[0]);
+            });
+        });
+    }
+
+    // 페이지가 로드되면 클릭 이벤트를 추가
+    document.addEventListener("DOMContentLoaded", addRowClickEvent);
+</script>
