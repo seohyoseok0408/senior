@@ -36,5 +36,11 @@ public class SeniorController {
             seniorService.updateStatusToInactive(id); // 상태를 inactive로 변경
             return new ResponseDto<>(HttpStatus.OK.value(), 1); // 성공 시 1 반환{
         }
+
+    @GetMapping("/{id}")
+    public ResponseDto<Senior> get(@PathVariable Integer id) throws Exception {
+        Senior senior = seniorService.get(id);
+        return new ResponseDto<>(HttpStatus.OK.value(), senior); // 조회된 시니어 정보 반환
+    }
     }
 
