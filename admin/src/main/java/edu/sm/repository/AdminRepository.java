@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 @Mapper
 public interface AdminRepository extends SMRepository<Integer, Admin> {
-    Admin findByUsername(String username) throws Exception;
+    Admin selectByUsername(String username) throws Exception;
 }
