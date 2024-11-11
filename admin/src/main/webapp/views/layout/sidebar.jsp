@@ -16,7 +16,7 @@
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-user-female"></i><span class="nav-text">시니어 관리</span></a>
                 <ul aria-expanded="false">
                     <li><a href="<c:url value='/senior-list'/>">시니어 리스트</a></li>
-                    <li><a href="<c:url value='/senior-detail'/>">시니어 상세</a></li>
+<%--                    <li><a href="<c:url value='/senior-detail'/>">시니어 상세</a></li>--%>
                 </ul>
             </li>
 
