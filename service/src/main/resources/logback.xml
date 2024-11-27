@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- logdir 경로 설정 -->
+    <property name="LOG_DIR" value="../logs" />
+
+    <!-- 로그 파일 설정 (logs/senior/logfile.log) -->
+    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 로그 파일 저장 위치 -->
+        <file>${LOG_DIR}/senior/logfile.log</file>
+        <encoder>
+            <!-- 로그 출력 형식 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <!-- 로그 롤링 정책 설정 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/senior/logfile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory> <!-- 30일 동안 로그 보관 -->
+        </rollingPolicy>
+    </appender>
+
+    <!-- HttpSendData 클래스 로그 설정 -->
+    <logger name="edu.sm.util.HttpSendData" level="INFO">
+        <appender-ref ref="LOG_FILE" />
+    </logger>
+
+    <!-- 루트 Logger 설정 -->
+    <root level="INFO">
+        <appender-ref ref="LOG_FILE" />
+    </root>
+</configuration>

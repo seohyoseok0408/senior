@@ -40,6 +40,8 @@ app:
   dir:
     imgdir: ENC(ct2qQbo6cc8jeyPu7XCPetaZuu6qVQDB)
     uploaddir: ENC(/2TpcDLKatu3EYdSypcT7A==)
+    logdir: ../logs
+    uploadlogdir: ../logs/uploadlog
   key:
     algo: PBEWithMD5AndDES
     skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780
