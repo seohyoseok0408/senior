@@ -3,24 +3,39 @@
     <!-- logdir 경로 설정 -->
     <property name="LOG_DIR" value="../logs" />
 
-    <!-- 로그 파일 설정 (logs/senior/logfile.log) -->
+    <!-- 공통 로그 파일 설정 -->
     <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 로그 파일 저장 위치 -->
         <file>${LOG_DIR}/senior/logfile.log</file>
         <encoder>
-            <!-- 로그 출력 형식 -->
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-        <!-- 로그 롤링 정책 설정 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_DIR}/senior/logfile.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory> <!-- 30일 동안 로그 보관 -->
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
     </appender>
 
-    <!-- HttpSendData 클래스 로그 설정 -->
-    <logger name="edu.sm.util.HttpSendData" level="INFO">
-        <appender-ref ref="LOG_FILE" />
+    <!-- 시니어 건강정보 로그 파일 설정 -->
+    <appender name="HEALTH_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/senior/senior_health.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/senior/senior_health.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+
+    <!-- IotController 클래스 로그 설정 -->
+    <logger name="edu.sm.controller.IotController" level="INFO" additivity="false">
+        <appender-ref ref="HEALTH_LOG" />
+    </logger>
+
+    <!-- edu.sm.util.HttpSendData 전용 HEALTH_LOG 설정 -->
+    <logger name="edu.sm.util.HttpSendData" level="INFO" additivity="false">
+        <appender-ref ref="HEALTH_LOG" />
     </logger>
 
     <!-- 루트 Logger 설정 -->

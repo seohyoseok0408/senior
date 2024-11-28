@@ -1,60 +1,107 @@
 package edu.sm.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.io.BufferedReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
 @RequestMapping("/iot")
 public class IotController {
 
-    @GetMapping("/senior")
-    public String getSeniorData(@RequestParam("data") String data) {
-        try {
-            // JSON 데이터를 명시적으로 Map<String, Object>로 변환
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> parsedData = objectMapper.readValue(data, new TypeReference<Map<String, Object>>() {});
+    private static final String LOG_FILE_PATH = "../logs/senior/senior_health.log";
 
-            int seniorId = (int) parsedData.get("seniorId");
-            int systolicBP = (int) parsedData.get("systolicBP");
-            int diastolicBP = (int) parsedData.get("diastolicBP");
-            int heartRate = (int) parsedData.get("heartRate");
-            float temperature = Float.parseFloat(parsedData.get("temperature").toString());
-
-            // 위험 상태 확인 및 로그 출력
-            checkForAlerts(seniorId, systolicBP, diastolicBP, heartRate, temperature);
-
+    /**
+     * Returns health data for a specific senior by ID.
+     */
+    @GetMapping("/health/{id}")
+    public List<Map<String, Object>> getHealthDataBySeniorId(@PathVariable int id) {
+        List<Map<String, Object>> healthData = new ArrayList<>();
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(LOG_FILE_PATH))) {
+            // Filter logs for specific Senior ID
+            healthData = reader.lines()
+                    .filter(line -> line.contains("seniorId=" + id + ","))
+                    .map(this::parseLogLine)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("Error processing received data: {}", e.getMessage());
+            log.error("Error reading log file: {}", e.getMessage());
+        }
+        return healthData;
+    }
+
+    /**
+     * Parses a log line into a map of health data.
+     */
+    private Map<String, Object> parseLogLine(String line) {
+        Map<String, Object> data = new HashMap<>();
+        try {
+            String[] logParts = line.split(" - ");
+            String timestamp = logParts[0].substring(0, 19); // Extract timestamp
+            String[] metrics = logParts[1].split(",");
+
+            for (String metric : metrics) {
+                String[] keyValue = metric.split("=");
+                String key = keyValue[0].trim();
+                String value = keyValue[1].trim();
+
+                if (key.equals("temperature")) {
+                    data.put(key, Float.parseFloat(value));
+                } else {
+                    data.put(key, Integer.parseInt(value));
+                }
+            }
+
+            // Add timestamp to the data
+            data.put("timestamp", timestamp);
+        } catch (Exception e) {
+            log.error("Error parsing log line: {}", e.getMessage());
+        }
+        return data;
+    }
+
+    /**
+     * Processes health data sent by HttpSendData.
+     */
+    @PostMapping("/senior")
+    public String processSeniorData(@RequestBody Map<String, Object> data) {
+        try {
+            // 데이터 파싱
+            int systolicBP = (int) data.get("systolicBP");
+            int diastolicBP = (int) data.get("diastolicBP");
+            int heartRate = (int) data.get("heartRate");
+            float temperature = Float.parseFloat(data.get("temperature").toString());
+
+            // 건강 상태 로그 출력
+            logHealthStatus(systolicBP, diastolicBP, heartRate, temperature);
+        } catch (Exception e) {
+            log.error("데이터 처리 중 오류 발생: {}", e.getMessage());
         }
 
         return "Data processed successfully";
     }
 
-    private void checkForAlerts(int seniorId, int systolicBP, int diastolicBP, int heartRate, float temperature) {
-        StringBuilder alertMessage = new StringBuilder();
+    /**
+     * Logs health status based on thresholds.
+     */
+    private void logHealthStatus(int systolicBP, int diastolicBP, int heartRate, float temperature) {
+        // Format log message
+        String logMessage = String.format(
+                "seniorId=1, systolicBP=%d, diastolicBP=%d, heartRate=%d, temperature=%.1f",
+                systolicBP, diastolicBP, heartRate, temperature
+        );
 
-        if (seniorId == 1 || seniorId == 2) {
-            // 정상 상태
-            log.info("SeniorID {}: Normal status. SystolicBP: {}, DiastolicBP: {}, HeartRate: {}, Temperature: {}",
-                    seniorId, systolicBP, diastolicBP, heartRate, temperature);
-        } else if (seniorId == 3) {
-            // 경미한 위험 상태
-            alertMessage.append(String.format("SeniorID %d: Mild warning. SystolicBP: %d, DiastolicBP: %d, HeartRate: %d, Temperature: %.1f",
-                    seniorId, systolicBP, diastolicBP, heartRate, temperature));
-            log.warn(alertMessage.toString());
-        } else if (seniorId == 4) {
-            // 극히 위험 상태
-            alertMessage.append(String.format("SeniorID %d: Critical warning. SystolicBP: %d, DiastolicBP: %d, HeartRate: %d, Temperature: %.1f",
-                    seniorId, systolicBP, diastolicBP, heartRate, temperature));
-            log.error(alertMessage.toString());
+        // Log based on health status thresholds
+        if (systolicBP < 120 && diastolicBP < 80 && temperature < 37.5) {
+            log.info(logMessage);
+        } else if (systolicBP < 140 && diastolicBP < 90 && temperature < 38) {
+            log.warn(logMessage);
+        } else {
+            log.error(logMessage);
         }
     }
 }
