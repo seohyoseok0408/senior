@@ -3,6 +3,7 @@ package edu.sm.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sm.model.Careworker;
 import edu.sm.model.License;
+import edu.sm.model.enums.CwStatus;
 import edu.sm.service.CareworkerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,7 @@ public class CareworkerController {
         Careworker careworker = careworkerService.get(cwId);
         List<License> licenses = careworkerService.getLicensesByCareworkerId(cwId);
 
+        model.addAttribute("enumStatuses", CwStatus.values());
         model.addAttribute("user", careworker);
         model.addAttribute("licenses", licenses);
 

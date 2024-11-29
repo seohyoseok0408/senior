@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <label for="cwStatus">Status</label>
                                 <select class="form-control" id="cwStatus" name="cwStatus">
-                                    <c:forEach var="status" items="${['active:Active', 'inactive:Inactive', 'waiting:Waiting']}">
+                                    <c:forEach var="status" items="${['ACTIVE:ACTIVE', 'INACTIVE:INACTIVE', 'WAITING:WAITING']}">
                                         <option value="${status.split(':')[0]}"
                                             ${user.cwStatus == status.split(':')[0] ? 'selected' : ''}>
                                                 ${status.split(':')[1]}
