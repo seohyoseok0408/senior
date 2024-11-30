@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,18 +22,6 @@ import java.util.List;
 public class CareworkerController {
     private final SeniorService seniorService;
     private final CareworkerService careworkerService;
-
-    @RequestMapping("/")
-    public String careworker(Model model) {
-        model.addAttribute("center", "careworker/list");
-        return "index";
-    }
-
-    @RequestMapping("/search")
-    public String searchPage(Model model) {
-        model.addAttribute("center", "careworker/search");
-        return "index";
-    }
 
     @RequestMapping("/mypage")
     public String Mypage(HttpSession session, Model model) {
@@ -46,47 +35,15 @@ public class CareworkerController {
         return "index";
     }
 
-
-
-    @RequestMapping("/careworkers")
-    public String careworkerList(HttpSession session, Model model) {
-        Integer userId = (Integer) session.getAttribute("principal");
-        if (userId == null) {
-            return "redirect:/login/user";
-        }
-
+    @RequestMapping("/worklog/saveform")
+    public String saveForm(@RequestParam Integer seniorId, Model model) {
         try {
-            List<Senior> seniors = seniorService.getSeniorsByUserId(userId);
-
-            model.addAttribute("seniors", seniors);
-            model.addAttribute("center", "user/careworker/careworkerlist");
+            Senior senior = seniorService.get(seniorId);
+            log.info("seniorInfo: {}", senior);
+            model.addAttribute("senior", senior);
+            model.addAttribute("center", "careworker/saveform");
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return "index";
-    }
-
-    @RequestMapping("/careworkers/{id}")
-    public String cwDetail(@PathVariable Integer id, HttpSession session, Model model) {
-        Integer userId = (Integer) session.getAttribute("principal");
-        log.info("sessoionId: {}", userId);
-        if (userId == null) {
-            log.info("session is null");
-            return "redirect:/";
-        }
-
-        try {
-            Careworker careworker = careworkerService.get(id);
-            if (careworker == null) {
-                return "redirect:/";
-            }
-
-            log.info("careworker: {}", careworker);
-
-            model.addAttribute("careworker", careworker);
-            model.addAttribute("center", "user/careworker/detail");
-        } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return "index";
