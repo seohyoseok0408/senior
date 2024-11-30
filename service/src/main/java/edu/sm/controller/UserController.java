@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -88,23 +89,23 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("/careworkers/{id}")
-    public String cwDetail(@PathVariable Integer id, HttpSession session, Model model) {
+    @RequestMapping("/careworkers/detail")
+    public String cwDetail(@RequestParam Integer cwId, @RequestParam Integer seniorId, HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("principal");
-        log.info("sessoionId: {}", userId);
         if (userId == null) {
             log.info("session is null");
             return "redirect:/";
         }
 
         try {
-            Careworker careworker  = careworkerService.get(id);
+            Careworker careworker  = careworkerService.get(cwId);
             if (careworker == null) {
                 return "redirect:/";
             }
 
             log.info("careworker: {}", careworker);
 
+            model.addAttribute("seniorId", seniorId);
             model.addAttribute("careworker", careworker);
             model.addAttribute("center", "user/careworker/detail");
         } catch (Exception e) {

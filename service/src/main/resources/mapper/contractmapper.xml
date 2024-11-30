@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.sm.repository.ContractRepository">
+
+    <insert id="insert" parameterType="Contract">
+        INSERT INTO contract (contract_status, cw_id, user_id, senior_id)
+        VALUES (#{contractStatus}, #{cwId}, #{userId}, #{seniorId});
+    </insert>
+
+</mapper>

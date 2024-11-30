@@ -36,10 +36,11 @@
 
     <!-- 버튼 영역 -->
     <div class="text-center">
-        <form action="/contracts/request" method="post" style="display: inline;">
-            <input type="hidden" name="careworkerId" value="${careworker.cwId}">
-            <button type="submit" class="btn btn-primary">계약 신청</button>
-        </form>
+        <input type="hidden" id="careworkerId" value="${careworker.cwId}">
+        <input type="hidden" id="seniorId" value="${seniorId}"/>
+        <button type="button" id="contract-btn" class="btn btn-primary">계약 신청</button>
         <a href="/user/careworkers" class="btn btn-secondary">목록으로</a>
     </div>
 </div>
+
+<script src="/js/careworker.js"></script>

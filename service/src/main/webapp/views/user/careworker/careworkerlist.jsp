@@ -9,7 +9,7 @@
             <label for="senior-select" class="form-label">내 시니어 선택</label>
             <select id="senior-select" class="form-control">
                 <c:forEach var="senior" items="${seniors}">
-                    <option value="${senior.seniorLatitude},${senior.seniorLongitude}">
+                    <option value="${senior.seniorId},${senior.seniorLatitude},${senior.seniorLongitude}">
                             ${senior.seniorName} (${senior.seniorStatus})
                     </option>
                 </c:forEach>
