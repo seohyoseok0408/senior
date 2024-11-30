@@ -6,10 +6,14 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class HttpSendData {
+
+    private static final DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static void send(String url) {
         HttpClient client = HttpClient.newHttpClient();
@@ -21,19 +25,19 @@ public class HttpSendData {
                 if (counter == 0 || counter == 2 || counter == 8) {
                     // 정상 데이터
                     jsonData = generateNormalData();
-                    log.info("INFO: {}", jsonData);
+                    log.info("{} INFO: {}", getCurrentTimestamp(), jsonData);
                 } else if (counter == 6) {
                     // 경미한 위험 데이터
                     jsonData = generateMildData();
-                    log.warn("WARN: {}", jsonData);
+                    log.warn("{} WARN: {}", getCurrentTimestamp(), jsonData);
                 } else if (counter == 10) {
                     // 심각한 위험 데이터
                     jsonData = generateCriticalData();
-                    log.error("ERROR: {}", jsonData);
+                    log.error("{} ERROR: {}", getCurrentTimestamp(), jsonData);
                     counter = -2; // 10초 주기 초기화
                 } else {
                     jsonData = generateNormalData();
-                    log.info("INFO: {}", jsonData);
+                    log.info("{} INFO: {}", getCurrentTimestamp(), jsonData);
                 }
 
                 // HTTP 전송
@@ -56,8 +60,9 @@ public class HttpSendData {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() != 200) {
-                log.warn("데이터 전송 실패. 상태 코드: {}", response.statusCode());
+
+            if (response.statusCode() != 200 && response.statusCode() != 404) {
+                log.warn("데이터 전송 실패. 상태 코드: {}, 응답: {}", response.statusCode(), response.body());
             }
         } catch (Exception e) {
             log.error("데이터 전송 중 오류 발생: {}", e.getMessage());
@@ -84,8 +89,8 @@ public class HttpSendData {
         int heartRate = getRandomValue(heartRateMin, heartRateMax);
         double temperature = getRandomValue(tempMin, tempMax) / 10.0;
 
-        return String.format("{\"seniorId\":1,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
-                systolicBP, diastolicBP, heartRate, temperature);
+        return String.format("{\"timestamp\":\"%s\",\"seniorId\":1,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
+                getCurrentTimestamp(), systolicBP, diastolicBP, heartRate, temperature);
     }
 
     private static String generateDynamicData(int systolicMin, int systolicMax, int diastolicMin, int diastolicMax, int heartRateMin, int heartRateMax, int tempMin, int tempMax, int variance) {
@@ -94,8 +99,8 @@ public class HttpSendData {
         int heartRate = getRandomValue(heartRateMin, heartRateMax) + getVariance(variance);
         double temperature = (getRandomValue(tempMin, tempMax) + getVariance(variance * 10)) / 10.0;
 
-        return String.format("{\"seniorId\":1,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
-                systolicBP, diastolicBP, heartRate, temperature);
+        return String.format("{\"timestamp\":\"%s\",\"seniorId\":1,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
+                getCurrentTimestamp(), systolicBP, diastolicBP, heartRate, temperature);
     }
 
     private static int getRandomValue(int min, int max) {
@@ -104,5 +109,9 @@ public class HttpSendData {
 
     private static int getVariance(int maxVariance) {
         return (int) (Math.random() * (maxVariance + 1)) - (maxVariance / 2);
+    }
+
+    private static String getCurrentTimestamp() {
+        return LocalDateTime.now().format(TIMESTAMP_FORMAT);
     }
 }

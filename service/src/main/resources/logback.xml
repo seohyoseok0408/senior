@@ -3,30 +3,21 @@
     <!-- logdir 경로 설정 -->
     <property name="LOG_DIR" value="../logs" />
 
-    <!-- 공통 로그 파일 설정 -->
-    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- 공통 로그 파일 설정 (하나의 파일에 기록, 날짜별 섹션 추가 가능) -->
+    <appender name="LOG_FILE" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_DIR}/senior/logfile.log</file>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/senior/logfile.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
     </appender>
 
-    <!-- 시니어 건강정보 로그 파일 설정 -->
-    <appender name="HEALTH_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- 시니어 건강정보 로그 파일 설정 (하나의 파일에 기록) -->
+    <appender name="HEALTH_LOG" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_DIR}/senior/senior_health.log</file>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/senior/senior_health.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
     </appender>
-
 
     <!-- IotController 클래스 로그 설정 -->
     <logger name="edu.sm.controller.IotController" level="INFO" additivity="false">

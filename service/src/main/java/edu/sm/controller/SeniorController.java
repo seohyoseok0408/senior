@@ -56,6 +56,4 @@ public class SeniorController {
         model.addAttribute("center", "senior/map");
         return "index";
     }
-
-
 }
