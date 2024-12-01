@@ -49,6 +49,7 @@ public class CareworkerApiController {
     public ResponseDto<String> login(@RequestBody Careworker careworker, HttpSession session) {
         try {
             Careworker principal = careworkerService.login(careworker);
+            session.setAttribute("name", principal.getCwName());
             session.setAttribute("principal", principal.getCwId()); // 세션에 Careworker ID 저장
             session.setAttribute("role", "CAREWORKER"); // 역할 정보 저장
             return new ResponseDto<>(HttpStatus.OK.value(), "1");

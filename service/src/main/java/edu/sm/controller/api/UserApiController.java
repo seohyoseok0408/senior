@@ -46,6 +46,7 @@ public class UserApiController {
     public ResponseDto<String> login(@RequestBody User user, HttpSession session) {
         try {
             User principal = userService.login(user);
+            session.setAttribute("name", principal.getUserName());
             session.setAttribute("principal", principal.getUserId());
             session.setAttribute("role", "USER");
             return new ResponseDto<>(HttpStatus.OK.value(), "1");
