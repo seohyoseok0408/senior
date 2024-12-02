@@ -1,19 +1,23 @@
 package edu.sm.controller;
 
 import edu.sm.model.Careworker;
+import edu.sm.model.Contract;
 import edu.sm.model.Senior;
 import edu.sm.service.CareworkerService;
+import edu.sm.service.ContractService;
 import edu.sm.service.SeniorService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -22,6 +26,7 @@ import java.util.List;
 public class CareworkerController {
     private final SeniorService seniorService;
     private final CareworkerService careworkerService;
+    private final ContractService contractService;
 
     @RequestMapping("/mypage")
     public String Mypage(HttpSession session, Model model) {
@@ -44,6 +49,27 @@ public class CareworkerController {
             model.addAttribute("center", "careworker/saveform");
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return "index";
+    }
+
+    @GetMapping("/contracts")
+    public String viewContracts(
+            HttpSession session,
+            @RequestParam(required = false, defaultValue = "") String status,
+            Model model) {
+        Integer cwId = (Integer) session.getAttribute("principal");
+        if (cwId == null) {
+            return "redirect:/login/careworker";
+        }
+
+        try {
+            List<Map<String, Object>> contractsWithDetails = contractService.getContractsWithDetails(cwId, status);
+            model.addAttribute("contractsWithDetails", contractsWithDetails);
+            model.addAttribute("status", status); // 현재 상태를 전달하여 탭 활성화에 사용
+            model.addAttribute("center", "careworker/contract");
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return "index";

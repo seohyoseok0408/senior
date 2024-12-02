@@ -9,4 +9,18 @@
         VALUES (#{contractStatus}, #{cwId}, #{userId}, #{seniorId});
     </insert>
 
+    <!-- 보호사의 전체 계약 조회 -->
+    <select id="findAllByCareworkerId" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE cw_id = #{cwId}
+    </select>
+
+    <!-- 상태별 보호사 계약 조회 -->
+    <select id="findByCareworkerIdAndStatus" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE cw_id = #{cwId}
+          AND contract_status = #{status}
+    </select>
 </mapper>
