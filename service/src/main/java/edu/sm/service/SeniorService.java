@@ -89,12 +89,10 @@ public class SeniorService implements SMService<Integer, Senior> {
         seniorRepository.update(senior);
     }
 
-    public List<Senior> getSeniorsByUserId(Integer userId) throws Exception {
-        List<Senior> seniors = seniorRepository.selectSeniorsByUserId(userId);
-        for (Senior senior : seniors) {
-            decryptAddress(senior);
-        }
-        return seniors;
+    public Senior getSeniorsByUserId(Integer userId) throws Exception {
+        Senior senior = seniorRepository.selectSeniorsByUserId(userId);
+        decryptAddress(senior);
+        return senior;
     }
 
     private void encryptAddress(Senior senior) {

@@ -6,14 +6,9 @@
 
     <div class="search-panel">
         <div class="form-group">
-            <label for="senior-select" class="form-label">내 시니어 선택</label>
-            <select id="senior-select" class="form-control">
-                <c:forEach var="senior" items="${seniors}">
-                    <option value="${senior.seniorId},${senior.seniorLatitude},${senior.seniorLongitude}">
-                            ${senior.seniorName} (${senior.seniorStatus})
-                    </option>
-                </c:forEach>
-            </select>
+            <h2>${senior.seniorName} 시니어</h2>
+            <input type="hidden" id="senior-info"
+                   value="${senior.seniorId},${senior.seniorLatitude},${senior.seniorLongitude}">
         </div>
 
         <div class="form-group">

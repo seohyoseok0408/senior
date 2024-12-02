@@ -7,10 +7,10 @@ let index = {
     careworkerList: {
         init: function () {
             const fetchCareworkers = () => {
-                const selected = $('#senior-select').val().split(',');
-                const seniorId = selected[0];
-                const latitude = selected[1];
-                const longitude = selected[2];
+                const senior = $('#senior-info').val().split(',');
+                const seniorId = senior[0];
+                const latitude = senior[1];
+                const longitude = senior[2];
                 const radius = $('#radius-select').val();
 
                 $.ajax({

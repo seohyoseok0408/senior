@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 @Mapper
 public interface SeniorRepository extends SMRepository<Integer, Senior> {
-    List<Senior> selectSeniorsByUserId(Integer userId) throws Exception;
+    Senior selectSeniorsByUserId(Integer userId) throws Exception;
 }

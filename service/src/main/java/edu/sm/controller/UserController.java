@@ -30,7 +30,7 @@ public class UserController {
     private final HealthinfoService healthinfoService;
     private final CareworkerService careworkerService;
 
-    @GetMapping("/seniors")
+    @GetMapping("/senior")
     public String seniors(HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("principal");
         if (userId == null) {
@@ -38,17 +38,18 @@ public class UserController {
         }
 
         try {
-            List<Senior> seniors = seniorService.getSeniorsByUserId(userId);
+            Senior senior = seniorService.getSeniorsByUserId(userId);
 
-            model.addAttribute("seniors", seniors);
-            model.addAttribute("center", "user/senior/seniorlist");
+            model.addAttribute("senior", senior);
+            model.addAttribute("center", "senior/detail");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
         return "index";
     }
 
-    @RequestMapping("/seniors/insert")
+    @RequestMapping("/senior/insert")
     public String seniorInsertForm(HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("principal");
         if (userId == null) {
@@ -76,16 +77,15 @@ public class UserController {
         if (userId == null) {
             return "redirect:/login/user";
         }
-
         try {
-            List<Senior> seniors = seniorService.getSeniorsByUserId(userId);
+            Senior senior = seniorService.getSeniorsByUserId(userId);
 
-            model.addAttribute("seniors", seniors);
+            model.addAttribute("senior", senior);
             model.addAttribute("center", "user/careworker/careworkerlist");
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return "index";
     }
 
