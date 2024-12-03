@@ -15,38 +15,31 @@ public class HttpSendData {
 
     private static final DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public static void send(String url) {
+    public static void send(String url, int seniorId) {
         HttpClient client = HttpClient.newHttpClient();
+        int counter = 0;
 
-        int counter = 0; // 10초 주기 제어를 위한 카운터
         try {
             while (true) {
                 String jsonData;
-                if (counter == 0 || counter == 2 || counter == 8) {
-                    // 정상 데이터
-                    jsonData = generateNormalData();
-                    log.info("{} INFO: {}", getCurrentTimestamp(), jsonData);
-                } else if (counter == 6) {
-                    // 경미한 위험 데이터
-                    jsonData = generateMildData();
-                    log.warn("{} WARN: {}", getCurrentTimestamp(), jsonData);
-                } else if (counter == 10) {
-                    // 심각한 위험 데이터
-                    jsonData = generateCriticalData();
-                    log.error("{} ERROR: {}", getCurrentTimestamp(), jsonData);
-                    counter = -2; // 10초 주기 초기화
+
+                if (counter % 30 == 0) {
+                    jsonData = generateCriticalData(seniorId);
+                    log.error("{} CRITICAL: {}", getCurrentTimestamp(), jsonData);
+                } else if (counter % 15 == 0) {
+                    jsonData = generateMildData(seniorId);
+                    log.warn("{} MILD: {}", getCurrentTimestamp(), jsonData);
                 } else {
-                    jsonData = generateNormalData();
-                    log.info("{} INFO: {}", getCurrentTimestamp(), jsonData);
+                    jsonData = generateNormalData(seniorId);
+                    log.info("{} NORMAL: {}", getCurrentTimestamp(), jsonData);
                 }
 
-                // HTTP 전송
                 sendData(client, url, jsonData);
-                TimeUnit.SECONDS.sleep(2); // 2초 대기
+                TimeUnit.SECONDS.sleep(2);
                 counter += 2;
             }
         } catch (InterruptedException e) {
-            log.error("데이터 전송 루프에서 오류 발생: {}", e.getMessage());
+            log.error("Data transmission interrupted: {}", e.getMessage());
             Thread.currentThread().interrupt();
         }
     }
@@ -62,45 +55,53 @@ public class HttpSendData {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200 && response.statusCode() != 404) {
-                log.warn("데이터 전송 실패. 상태 코드: {}, 응답: {}", response.statusCode(), response.body());
+                log.warn("Failed to send data. Status code: {}, Response: {}", response.statusCode(), response.body());
             }
         } catch (Exception e) {
-            log.error("데이터 전송 중 오류 발생: {}", e.getMessage());
+            log.error("Error during data transmission: {}", e.getMessage());
         }
     }
 
-    private static String generateNormalData() {
-        return generateData(110, 120, 70, 80, 60, 75, 360, 375);
+    private static String generateNormalData(int seniorId) {
+        return generateData(seniorId, 110, 120, 70, 80, 60, 75, 360, 375);
     }
 
-    private static String generateMildData() {
-        // 경미한 위험 데이터에 약간의 변화 추가
-        return generateDynamicData(121, 140, 81, 90, 76, 85, 376, 380, 3);
+    private static String generateMildData(int seniorId) {
+        return generateDynamicData(seniorId, 121, 140, 81, 90, 76, 85, 376, 380, 3);
     }
 
-    private static String generateCriticalData() {
-        // 심각한 위험 데이터에 큰 변화 추가
-        return generateDynamicData(141, 200, 91, 120, 86, 120, 381, 400, 7);
+    private static String generateCriticalData(int seniorId) {
+        return generateDynamicData(seniorId, 141, 200, 91, 120, 86, 120, 381, 400, 7);
     }
 
-    private static String generateData(int systolicMin, int systolicMax, int diastolicMin, int diastolicMax, int heartRateMin, int heartRateMax, int tempMin, int tempMax) {
+    private static String generateData(int seniorId, int systolicMin, int systolicMax, int diastolicMin, int diastolicMax, int heartRateMin, int heartRateMax, int tempMin, int tempMax) {
+        // 기본값 설정
+        if (seniorId <= 0) {
+            seniorId = 1; // default 값
+        }
+
         int systolicBP = getRandomValue(systolicMin, systolicMax);
         int diastolicBP = getRandomValue(diastolicMin, diastolicMax);
         int heartRate = getRandomValue(heartRateMin, heartRateMax);
         double temperature = getRandomValue(tempMin, tempMax) / 10.0;
 
-        return String.format("{\"timestamp\":\"%s\",\"seniorId\":1,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
-                getCurrentTimestamp(), systolicBP, diastolicBP, heartRate, temperature);
+        return String.format("{\"timestamp\":\"%s\",\"seniorId\":%d,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
+                getCurrentTimestamp(), seniorId, systolicBP, diastolicBP, heartRate, temperature);
     }
 
-    private static String generateDynamicData(int systolicMin, int systolicMax, int diastolicMin, int diastolicMax, int heartRateMin, int heartRateMax, int tempMin, int tempMax, int variance) {
+    private static String generateDynamicData(int seniorId, int systolicMin, int systolicMax, int diastolicMin, int diastolicMax, int heartRateMin, int heartRateMax, int tempMin, int tempMax, int variance) {
+        // 기본값 설정
+        if (seniorId <= 0) {
+            seniorId = 1; // default 값
+        }
+
         int systolicBP = getRandomValue(systolicMin, systolicMax) + getVariance(variance);
         int diastolicBP = getRandomValue(diastolicMin, diastolicMax) + getVariance(variance);
         int heartRate = getRandomValue(heartRateMin, heartRateMax) + getVariance(variance);
         double temperature = (getRandomValue(tempMin, tempMax) + getVariance(variance * 10)) / 10.0;
 
-        return String.format("{\"timestamp\":\"%s\",\"seniorId\":1,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
-                getCurrentTimestamp(), systolicBP, diastolicBP, heartRate, temperature);
+        return String.format("{\"timestamp\":\"%s\",\"seniorId\":%d,\"systolicBP\":%d,\"diastolicBP\":%d,\"heartRate\":%d,\"temperature\":%.1f}",
+                getCurrentTimestamp(), seniorId, systolicBP, diastolicBP, heartRate, temperature);
     }
 
     private static int getRandomValue(int min, int max) {

@@ -3,15 +3,14 @@
     <!-- logdir 경로 설정 -->
     <property name="LOG_DIR" value="../logs" />
 
-    <!-- 공통 로그 파일 설정 (하나의 파일에 기록, 날짜별 섹션 추가 가능) -->
-    <appender name="LOG_FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${LOG_DIR}/senior/logfile.log</file>
+    <!-- 콘솔 출력 설정 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- 시니어 건강정보 로그 파일 설정 (하나의 파일에 기록) -->
+    <!-- 시니어 건강정보 로그 파일 설정 -->
     <appender name="HEALTH_LOG" class="ch.qos.logback.core.FileAppender">
         <file>${LOG_DIR}/senior/senior_health.log</file>
         <encoder>
@@ -22,15 +21,17 @@
     <!-- IotController 클래스 로그 설정 -->
     <logger name="edu.sm.controller.IotController" level="INFO" additivity="false">
         <appender-ref ref="HEALTH_LOG" />
+        <appender-ref ref="CONSOLE" /> <!-- 콘솔 출력 추가 -->
     </logger>
 
     <!-- edu.sm.util.HttpSendData 전용 HEALTH_LOG 설정 -->
     <logger name="edu.sm.util.HttpSendData" level="INFO" additivity="false">
         <appender-ref ref="HEALTH_LOG" />
+        <appender-ref ref="CONSOLE" /> <!-- 콘솔 출력 추가 -->
     </logger>
 
     <!-- 루트 Logger 설정 -->
     <root level="INFO">
-        <appender-ref ref="LOG_FILE" />
+        <appender-ref ref="CONSOLE" /> <!-- 콘솔 출력 추가 -->
     </root>
 </configuration>
