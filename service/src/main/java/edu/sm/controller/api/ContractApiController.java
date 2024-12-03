@@ -30,6 +30,19 @@ public class ContractApiController {
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "예기치 않은 오류 발생");
         }
     }
+
+    @PutMapping("")
+    public ResponseDto<String> approveContract(@RequestBody Contract contract) {
+        try {
+            contractService.modify(contract);
+            return new ResponseDto<>(HttpStatus.OK.value(), "계약 승인 성공");
+        } catch (Exception e) {
+            log.error("Error approving contract", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "계약 승인 중 오류 발생");
+        }
+    }
+
+
 }
 
 

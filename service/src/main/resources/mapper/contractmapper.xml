@@ -23,4 +23,20 @@
         WHERE cw_id = #{cwId}
           AND contract_status = #{status}
     </select>
+
+    <select id="selectOne" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE contract_id = #{contractId}
+    </select>
+
+    <update id="update" parameterType="Contract">
+        UPDATE contract
+        SET
+            contract_start_date = #{contractStartDate},
+            contract_end_date = #{contractEndDate},
+            contract_price = #{contractPrice},
+            contract_status = #{contractStatus}
+        WHERE contract_id = #{contractId}
+    </update>
 </mapper>

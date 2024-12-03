@@ -74,4 +74,21 @@ public class CareworkerController {
         }
         return "index";
     }
+
+    @GetMapping("/contract")
+    public String viewContract(@RequestParam Integer contractId, Model model, HttpSession session) {
+        Integer cwId = (Integer) session.getAttribute("principal");
+        if (cwId == null) {
+            return "redirect:/login/careworker";
+        }
+        try {
+            Map<String, Object> contractDetails = contractService.getContractDetails(contractId);
+
+            model.addAttribute("contractDetails", contractDetails);
+            model.addAttribute("center", "careworker/contract_detail");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return "index";
+    }
 }

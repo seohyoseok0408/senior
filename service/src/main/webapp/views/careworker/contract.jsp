@@ -13,12 +13,12 @@
                href="/careworker/contracts?status=PENDING">대기중</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <c:if test='${param.status == "APPROVED"}'>active</c:if>'"
-               href="/careworker/contracts?status=APPROVED">승인됨</a>
+            <a class="nav-link <c:if test='${param.status == "ACTIVE"}'>active</c:if>'"
+               href="/careworker/contracts?status=ACTIVE">승인됨</a>
         </li>
     </ul>
 
-    <!-- 카드 리스트 -->
+    <!-- 리스트 -->
     <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
         <c:forEach var="details" items="${contractsWithDetails}">
             <div class="col">
@@ -30,6 +30,7 @@
                         <p><strong>성함:</strong> ${details.senior.seniorName}</p>
                         <p><strong>생년월일:</strong> ${details.senior.seniorBirth}</p>
                         <p><strong>주소:</strong> ${details.senior.seniorStreetAddr}</p>
+                        <p><strong>거리:</strong> ${details.distance} 떨어져 있음</p>
                         <p>
                             <strong>상태:</strong>
                             <span class="badge
