@@ -35,33 +35,15 @@
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            googleCalendarApiKey: 'AIzaSyDg2saqO_a9atDxi182PINGustuRV2KU0A',
+            googleCalendarApiKey: '${googleCalendarApiKey}',
             events: {
-                googleCalendarId: '0f14794759b325ef3e3fa62244d491fedb96c4c7d548aa6f6a3cff0d95ea58ed@group.calendar.google.com'
+                googleCalendarId: '${googleCalendarId}'
             },
             eventDidMount: function (info) {
-                // FullCalendar가 처리한 이벤트 객체에서 확장 속성 확인
-                const event = info.event;
-                const extendedProps = event.extendedProps;
-
-                // 로그로 출력
                 console.log("=== 이벤트 데이터 ===");
-                console.log("ID:", event.id);
-                console.log("상태:", extendedProps.status);
-                console.log("제목:", event.title);
-                console.log("설명:", extendedProps.description);
-                console.log("위치:", extendedProps.location);
-                console.log("시작 시간:", event.start);
-                console.log("끝 시간:", event.end);
-                console.log("반복 규칙:", extendedProps.recurrence);
-                console.log("참석자:", extendedProps.attendees);
-                console.log("리마인더:", extendedProps.reminders);
+                console.log("ID:", info.event.id);
+                console.log("상태:", info.event.extendedProps.status);
                 console.log("=====================");
-            },
-            eventDataTransform: function (rawEvent) {
-                // 원본 데이터를 변환하거나 필요에 따라 확인
-                console.log("원본 이벤트 데이터:", rawEvent);
-                return rawEvent; // 변형 없이 반환
             }
         });
         calendar.render();
