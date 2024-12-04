@@ -13,28 +13,28 @@
 
 <script>
     let websocket = {
-        id:'',
+        id: '',
         targetId: '',
-        stompClient:null,
-        init:function(){
+        stompClient: null,
+        init: function () {
             this.id = '0';
             this.targetId = $("#target").val();
-            $('#connect').click(()=>{
+            $('#connect').click(() => {
                 this.connect();
             });
-            $('#disconnect').click(()=>{
+            $('#disconnect').click(() => {
                 this.disconnect();
             });
-            $('#sendto').click(()=>{
+            $('#sendto').click(() => {
                 var msg = JSON.stringify({
-                    'sendid' : this.id,
-                    'receiveid' : $('#target').val(),
-                    'content1' : $('#totext').val()
+                    'sendid': this.id,
+                    'receiveid': $('#target').val(),
+                    'content1': $('#totext').val()
                 });
                 this.stompClient.send('/receiveto', {}, msg);
             });
         },
-        connect:function(){
+        connect: function () {
             let sid = this.id;
             let targetIdd = this.targetId;
             console.log("aaaa" + targetIdd);
@@ -42,31 +42,32 @@
             let socket = new SockJS('${serverurl}/ws');
             this.stompClient = Stomp.over(socket);
 
-            this.stompClient.connect({}, function(frame) {
+            this.stompClient.connect({}, function (frame) {
                 websocket.setConnected(true);
                 console.log('Connected: ' + frame);
-                this.subscribe('/send/to/'+sid, function(msg) {
+                this.subscribe('/send/to/' + sid, function (msg) {
                     $("#to").prepend(
-                        "<h4>" + JSON.parse(msg.body).sendid +":"+
+                        "<h4>" + JSON.parse(msg.body).sendid + ":" +
                         JSON.parse(msg.body).content1
                         + "</h4>");
                 });
-                this.subscribe('/send/to/'+targetIdd, function(msg) {
+                this.subscribe('/send/to/' + targetIdd, function (msg) {
                     $("#to").prepend(
-                        "<h4>" + JSON.parse(msg.body).sendid +":"+
+                        "<h4>" + JSON.parse(msg.body).sendid + ":" +
                         JSON.parse(msg.body).content1
                         + "</h4>");
                 });
+                console.log(sid);
             });
         },
-        disconnect:function(){
+        disconnect: function () {
             if (this.stompClient !== null) {
                 this.stompClient.disconnect();
             }
             websocket.setConnected(false);
             console.log("Disconnected");
         },
-        setConnected:function(connected){
+        setConnected: function (connected) {
             if (connected) {
                 $("#status").text("Connected");
             } else {
@@ -74,40 +75,42 @@
             }
         }
     };
-    $(function(){
+    $(function () {
         websocket.init();
     });
 </script>
 
 
+<div class="content-body">
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Web Socket</h1>
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Web Socket</h1>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Web Socket</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <div class="col-sm-5">
-                    <h1 id="adm_id">${sessionScope.principal}</h1>
-                    <H1 id="status">Status</H1>
-                    <button id="connect">Connect</button>
-                    <button id="disconnect">Disconnect</button>
-                    <h3>To</h3>
-                    <input type="hidden" id="target" value="${userId}">
-                    <input type="text" id="totext"><button id="sendto">Send</button>
-                    <div id="to"></div>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Web Socket</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="col-sm-5">
+                        <h1 id="adm_id">${sessionScope.principal}</h1>
+                        <H1 id="status">Status</H1>
+                        <button id="connect">Connect</button>
+                        <button id="disconnect">Disconnect</button>
+                        <h3>To</h3>
+                        <input type="hidden" id="target" value="${userId}">
+                        <input type="text" id="totext">
+                        <button id="sendto">Send</button>
+                        <div id="to"></div>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 
