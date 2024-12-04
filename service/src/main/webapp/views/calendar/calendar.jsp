@@ -27,25 +27,60 @@
 </div>
 
 <!-- FullCalendar 스크립트 및 스타일 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css" />
+<script src='/js/index.global.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js"></script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
+
+        // JavaScript로 전달된 JSON 데이터를 파싱
+        const eventsData = JSON.parse('${schedulesJson}');
+
+        // FullCalendar 초기화
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            googleCalendarApiKey: '${googleCalendarApiKey}',
-            events: {
-                googleCalendarId: '${googleCalendarId}'
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            eventDidMount: function (info) {
-                console.log("=== 이벤트 데이터 ===");
-                console.log("ID:", info.event.id);
-                console.log("상태:", info.event.extendedProps.status);
-                console.log("=====================");
-            }
+            initialDate: '2024-12-01',
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            selectMirror: true,
+            select: function(arg) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.addEvent({
+                        title: title,
+                        start: arg.start,
+                        end: arg.end,
+                        allDay: arg.allDay
+                    })
+                }
+                calendar.unselect()
+            },
+            eventClick: function(arg) {
+                if (confirm('Are you sure you want to delete this event?')) {
+                    arg.event.remove()
+                }
+            },
+            editable: true,
+            dayMaxEvents: true, // allow "more" link when too many events
+            events: eventsData.map(event => ({
+                title: event.scheduleTitle,
+                start: event.scheduleStartDatetime,
+                end: event.scheduleEndDatetime,
+                description: event.scheduleDescription, // FullCalendar에서 description은 커스텀
+                allDay: false // 필요 시 event에서 allDay 값을 계산해 넣을 수 있음
+            }))
         });
+
         calendar.render();
     });
 </script>
