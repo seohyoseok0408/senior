@@ -40,7 +40,7 @@ public class AdminApiController {
     public ResponseDto<Integer> login(@RequestBody Admin admin, HttpSession session) {
         try {
             Admin principal = adminService.login(admin);
-            session.setAttribute("principal", principal);
+            session.setAttribute("principal", principal.getAdminId());
             return new ResponseDto<>(HttpStatus.OK.value(), 1);
         } catch (UsernameNotFoundException e) {
             log.error("존재하지 않는 사용자 아이디입니다.", e);

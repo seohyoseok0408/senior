@@ -71,9 +71,6 @@ dependencies {
     // pageing
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6'
 
-    // Websocket
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-
     // Apache HttpClient
     implementation 'org.apache.httpcomponents:httpcore:4.4.15'
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
