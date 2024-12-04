@@ -121,7 +121,7 @@ const createPeerConnection = (otherKey) =>{
             });
         }
 
-        console.log('PeerConnection created');
+        console.log('PeerConnection cr  eated');
     } catch (error) {
         console.error('PeerConnection failed: ', error);
     }

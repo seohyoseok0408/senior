@@ -121,6 +121,315 @@
             </div>
         </div>
     </div>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  .srd-wrapper {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 2rem;
+  }
+
+  .srd-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .srd-header {
+    background: linear-gradient(60deg, #2c786c 0%, #37a794 100%);
+    padding: 2rem;
+    color: #fff;
+    text-align: center;
+    position: relative;
+  }
+
+  .srd-header::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: inherit;
+    transform: skewY(-4deg);
+  }
+
+  .srd-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .srd-content {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 3rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .srd-profile {
+    flex: 1;
+    min-width: 250px;
+    text-align: center;
+  }
+
+  .srd-profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .srd-profile-image:hover {
+    transform: scale(1.05) rotate(3deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .srd-info {
+    flex: 2;
+    min-width: 300px;
+  }
+
+  .srd-name {
+    font-size: 2.2rem;
+    color: #2c786c;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .srd-gender {
+    font-size: 0.9rem;
+    background-color: #37a794;
+    color: #fff;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .srd-details {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .srd-detail-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 1.2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .srd-detail-item::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #2c786c, #37a794);
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .srd-detail-item:hover {
+    transform: translateY(-5px);
+  }
+
+  .srd-detail-item:hover::before {
+    opacity: 1;
+  }
+
+  .srd-detail-label {
+    font-weight: 600;
+    color: #2c786c;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .srd-detail-value {
+    color: #333;
+  }
+
+  .srd-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 40px;
+  }
+
+  .srd-btn {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .srd-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+    );
+    transition: all 0.5s;
+  }
+
+  .srd-btn:hover::before {
+    left: 100%;
+  }
+
+  .srd-btn-primary {
+    background-color: #2c786c;
+    color: #fff;
+  }
+
+  .srd-btn-primary:hover {
+    background-color: #37a794;
+    box-shadow: 0 5px 15px rgba(44, 120, 108, 0.4);
+  }
+
+  .srd-btn-secondary {
+    background-color: #e0f2f1;
+    color: #2c786c;
+  }
+
+  .srd-btn-secondary:hover {
+    background-color: #b2dfdb;
+    box-shadow: 0 5px 15px rgba(55, 167, 148, 0.3);
+  }
+
+  .srd-health-info {
+    margin-top: 0.5rem;
+  }
+
+  .srd-health-item {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .srd-health-item:last-child {
+    margin-bottom: 0;
+  }
+</style>
+
+<div class="srd-wrapper">
+  <div class="srd-container">
+    <header class="srd-header">
+      <h1 class="srd-title">시니어 상세 정보</h1>
+    </header>
+
+    <div class="srd-content">
+      <div class="srd-profile">
+        <c:choose>
+          <c:when test="${not empty senior.seniorProfile}">
+            <img src="/imgs/senior/${senior.seniorProfile}" class="srd-profile-image" alt="${senior.seniorName}">
+          </c:when>
+          <c:otherwise>
+            <img src="/static/images/default-profile.png" class="srd-profile-image" alt="Default Profile">
+          </c:otherwise>
+        </c:choose>
+      </div>
+
+      <div class="srd-info">
+        <div class="srd-name">
+          ${senior.seniorName}
+          <span class="srd-gender">
+                        <c:choose>
+                          <c:when test="${senior.seniorGender == 'M'}">남성</c:when>
+                          <c:otherwise>여성</c:otherwise>
+                        </c:choose>
+                    </span>
+        </div>
+
+        <div class="srd-details">
+          <div class="srd-detail-item">
+            <span class="srd-detail-label">생년월일</span>
+            <span class="srd-detail-value">${senior.seniorBirth}</span>
+          </div>
+
+          <div class="srd-detail-item">
+            <span class="srd-detail-label">전화번호</span>
+            <span class="srd-detail-value">${senior.seniorTel}</span>
+          </div>
+
+          <div class="srd-detail-item">
+            <span class="srd-detail-label">주소</span>
+            <span class="srd-detail-value">
+                            ${senior.seniorStreetAddr} ${senior.seniorDetailAddr2}
+                            <c:if test="${not empty senior.seniorDetailAddr1}">, ${senior.seniorDetailAddr1}</c:if>
+                            (${senior.seniorZipcode})
+                        </span>
+          </div>
+
+          <div class="srd-detail-item">
+            <span class="srd-detail-label">중요 사항</span>
+            <span class="srd-detail-value">${senior.seniorSignificant != null ? senior.seniorSignificant : '특이사항 없음'}</span>
+          </div>
+
+          <div class="srd-detail-item">
+            <span class="srd-detail-label">등록일</span>
+            <span class="srd-detail-value">${senior.seniorRdate}</span>
+          </div>
+
+          <div class="srd-detail-item">
+            <span class="srd-detail-label">건강 정보</span>
+            <div class="srd-health-info">
+              <c:choose>
+                <c:when test="${not empty healthinfo}">
+                  <c:forEach items="${healthinfo}" var="info">
+                    <div class="srd-health-item">
+                      <span class="srd-detail-label">질병명</span>
+                      <span class="srd-detail-value">${info.diseaseName}</span>
+                      <span class="srd-detail-label" style="margin-top: 0.5rem;">설명</span>
+                      <span class="srd-detail-value">${info.diseaseDescription}</span>
+                    </div>
+                  </c:forEach>
+                </c:when>
+                <c:otherwise>
+                  <span class="srd-detail-value">등록된 건강 정보가 없습니다.</span>
+                </c:otherwise>
+              </c:choose>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="srd-buttons">
+      <a href="/senior/update/${senior.seniorId}" class="srd-btn srd-btn-primary">수정</a>
+      <a href="/user/seniors" class="srd-btn srd-btn-secondary">목록으로</a>
+    </div>
+  </div>
 </div>
 
 <script>
