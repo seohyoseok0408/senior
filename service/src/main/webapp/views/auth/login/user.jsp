@@ -73,9 +73,10 @@
             <div class="mt-4">
                 <p style="color: #666; font-size: 14px;">SNS 간편로그인</p>
                 <div class="d-flex justify-content-center">
-                    <button class="btn" style="background-color: transparent; border: none; border-radius: 50%; width: 48px; height: 48px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=64b9ea9d9f0617efc1cffc0e66813e95&redirect_uri=http://127.0.0.1/auth/kakao/callback&response_type=code"
+                       class="btn" style="background-color: transparent; border: none; border-radius: 50%; width: 48px; height: 48px; padding: 0; display: flex; align-items: center; justify-content: center;">
                         <img src="/images/kakao.png" alt="" style="width: 40px; height: 40px;">
-                    </button>
+                    </a>
                     <button class="btn" style="background-color: transparent; border: none; border-radius: 50%; width: 48px; height: 48px; padding: 0; display: flex; align-items: center; justify-content: center;">
                         <img src="/images/naver.png" alt="" style="width: 40px; height: 40px;">
                     </button>

@@ -30,6 +30,33 @@ public class UserApiController {
         }
     }
 
+    @PostMapping("/signup/kakao")
+    public ResponseDto<String> completeKakaoSignup(HttpSession session, @ModelAttribute User user) {
+        try {
+            User kakaoUser = (User) session.getAttribute("kakaoUser");
+
+            if (kakaoUser == null) {
+                throw new IllegalArgumentException("카카오 사용자 정보가 없습니다.");
+            }
+
+            // 세션에 저장된 카카오 사용자 정보에 추가 입력값 반영
+            kakaoUser.setUserProfileFile(user.getUserProfileFile()); // 프로필 이미지 파일 설정
+            kakaoUser.setUserZipcode(user.getUserZipcode());
+            kakaoUser.setUserStreetAddr(user.getUserStreetAddr());
+            kakaoUser.setUserDetailAddr1(user.getUserDetailAddr1());
+            kakaoUser.setUserDetailAddr2(user.getUserDetailAddr2());
+            kakaoUser.setUserProfile(user.getUserProfileFile().getOriginalFilename());
+
+            // 회원가입 처리
+            userService.add(kakaoUser);
+            session.removeAttribute("kakaoUser"); // 세션 정보 정리
+            return new ResponseDto<>(HttpStatus.OK.value(), "회원가입 완료");
+        } catch (Exception e) {
+            log.error("회원가입 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "회원가입 실패");
+        }
+    }
+
     // 사용자 정보 조회 API 엔드포인트
     @GetMapping("/{userId}")
     public ResponseDto<User> getUser(@PathVariable int userId) {

@@ -36,7 +36,12 @@ public class UserService implements SMService<Integer, User> {
 
         validateDuplicateUser(user);
 
-        FileUploadUtil.saveFile(user.getUserProfileFile(), userDir);
+        if (user.getUserProfileFile() != null) {
+            FileUploadUtil.saveFile(user.getUserProfileFile(), userDir);
+        } else {
+            log.info("프로필 이미지가 없습니다. 기본값(null)로 설정합니다.");
+            user.setUserProfile(null);
+        }
 
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword())); // 비밀번호 암호화
         encryptAddressFields(user);
@@ -177,6 +182,10 @@ public class UserService implements SMService<Integer, User> {
                 + "*".repeat(length - halfLength);
 
         return maskedUsername;
+    }
+
+    public User getUsername(String username) throws Exception {
+        return userRepository.selectByUsername(username);
     }
 
     // 주소 필드 암호화
