@@ -23,7 +23,7 @@ let chatbtn = {
             <div id="chat-modal-body">
                 <h1 id="adm_id">${principal}</h1>
                 <h1 id="status">Disconnected</h1>
-                <div id="chat-box" style="border: 1px solid #ccc; padding: 10px; height: 200px; overflow-y: auto;"></div>
+                <div id="chat-box" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto;"></div>
                 <input type="text" id="totext" placeholder="Type your message here" style="width: 80%;">
                 <button id="sendto">Send</button>
             </div>`;
@@ -51,37 +51,42 @@ let websocket = {
     init: function () {
         this.id = document.getElementById("adm_id").innerText.trim();
 
-        // 메시지 전송 및 WebSocket 연결 처리
+        // WebSocket 연결
+        this.connect();
+
+        // 메시지 전송 이벤트
         document.getElementById("sendto").addEventListener("click", () => {
-            const message = document.getElementById("totext").value;
-            if (message) {
+            const messageContent = document.getElementById("totext").value.trim();
+            if (messageContent) {
                 const msg = JSON.stringify({
                     sendid: this.id,
                     receiveid: "0", // Admin ID
-                    content1: message,
+                    content1: messageContent,
                 });
+
+                // 메시지 발행
                 this.stompClient.send("/receiveto", {}, msg);
-                this.addMessageToChatBox(this.id, message);
-                document.getElementById("totext").value = ""; // 입력창 비우기
+
+                document.getElementById("totext").value = ""; // 입력창 초기화
             }
         });
-
-        this.connect();
     },
     connect: function () {
-        const socket = new SockJS("/signaling");
+
+        let socket = new SockJS(serverurl+'/ws');
         this.stompClient = Stomp.over(socket);
 
         this.stompClient.connect({}, (frame) => {
+            console.log("Connected: " + frame);
             this.setConnected(true);
 
-            // 개인 메시지 수신
+            // 개인 메시지 구독
             this.stompClient.subscribe(`/send/to/${this.id}`, (msg) => {
                 const message = JSON.parse(msg.body);
                 this.addMessageToChatBox(message.sendid, message.content1);
             });
 
-            // 공용 메시지 수신
+            // 공용 메시지 구독 (Admin 메시지)
             this.stompClient.subscribe("/send/to/0", (msg) => {
                 const message = JSON.parse(msg.body);
                 this.addMessageToChatBox(message.sendid, message.content1);
@@ -106,7 +111,6 @@ let websocket = {
     }
 };
 
-// DOM 로드 후 초기화
 document.addEventListener("DOMContentLoaded", function () {
     chatbtn.init();
 });

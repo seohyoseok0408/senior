@@ -80,6 +80,7 @@
         }
     }
 
+
 </style>
 
 <!-- Include Center Content Section -->
@@ -92,6 +93,9 @@
     </c:otherwise>
 </c:choose>
 <div id="principal" style="display: none;">${sessionScope.principal}</div>
+<script>
+    const serverurl = "${sessionScope.serverurl}";
+</script>
 <script src="/js/index.js"></script>
 <!-- Include Footer -->
 <%@ include file="layout/footer.jsp" %>

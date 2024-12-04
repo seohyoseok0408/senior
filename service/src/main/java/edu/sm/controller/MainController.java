@@ -14,8 +14,9 @@ public class MainController {
     String serverurl;
 
     @RequestMapping("/")
-    public String main(Model model) {
+    public String main(Model model, HttpSession session) {
         log.info("Start Main");
+        session.setAttribute("serverurl", serverurl);
         return "index"; // 메인 페이지로 이동
     }
 
