@@ -43,7 +43,7 @@ public class UserController {
             model.addAttribute("senior", senior);
             model.addAttribute("center", "senior/detail");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return "redirect:/user/senior/insert";
         }
 
         return "index";
@@ -84,7 +84,7 @@ public class UserController {
             model.addAttribute("center", "user/careworker/careworkerlist");
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return "redirect:/user/senior/insert";
         }
         return "index";
     }
@@ -129,16 +129,12 @@ public class UserController {
 
         try {
             Senior senior = seniorService.getSeniorsByUserId(userId);
-            if (senior == null) {
-                return "redirect:/user/senior/insert";
-            }
 
             model.addAttribute("senior", senior);
             model.addAttribute("center", "user/map");
             return "index";
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return "redirect:/user/senior/insert";
         }
-
     }
 }
