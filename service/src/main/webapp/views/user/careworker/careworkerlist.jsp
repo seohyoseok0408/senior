@@ -306,7 +306,6 @@
             </div>
         </form>
     </div>
-
     <div id="careworker-list" class="cw-careworker-list"></div>
 </div>
 

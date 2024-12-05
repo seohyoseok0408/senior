@@ -53,12 +53,19 @@
         padding: 3rem 2rem;
         position: relative;
         z-index: 1;
+        gap: 2rem;
+    }
+
+    .srd-profile, .srd-info {
+        flex: 1;
+        min-width: 300px;
+        max-width: calc(50% - 1rem);
     }
 
     .srd-profile {
-        flex: 1;
-        min-width: 250px;
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .srd-profile-image {
@@ -69,6 +76,7 @@
         border: 5px solid #fff;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
+        margin-bottom: 2rem;
     }
 
     .srd-profile-image:hover {
@@ -77,7 +85,6 @@
     }
 
     .srd-info {
-        flex: 2;
         min-width: 300px;
     }
 
@@ -101,7 +108,7 @@
 
     .srd-details {
         display: grid;
-        gap: 1.5rem;
+        gap: 1.9rem;
     }
 
     .srd-detail-item {
@@ -221,19 +228,59 @@
         margin-bottom: 0;
     }
 
-    .card {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 15px;
-        background-color: #fff;
+    .health-charts {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
     }
 
-    .progress-bar {
-        background-color: #28a745;
-        height: 20px;
-        transition: width 0.5s ease-in-out; /* 애니메이션 추가 */
+    .health-chart-title {
+        font-size: 1.5rem;
+        color: #2c786c;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .health-chart-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .health-chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .health-chart-card h5 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #2c786c;
+    }
+
+    .health-chart-card h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .health-chart-card .progress {
+        height: 10px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .health-chart-card .progress-bar {
+        height: 100%;
+        background-color: #2c786c;
+        transition: width 0.5s ease-in-out;
     }
 </style>
+
 <div class="srd-wrapper">
     <div class="srd-container">
         <header class="srd-header">
@@ -250,17 +297,55 @@
                         <img src="/static/images/default-profile.png" class="srd-profile-image" alt="Default Profile">
                     </c:otherwise>
                 </c:choose>
+
+                <!-- 차트 영역 -->
+                <div class="health-charts">
+                    <h2 class="health-chart-title">건강 정보</h2>
+                    <div class="health-chart-card">
+                        <h5>수축기 혈압</h5>
+                        <h2 id="systolicBP">--</h2>
+                        <div class="progress">
+                            <div id="progress1" class="progress-bar" role="progressbar"
+                                 style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="health-chart-card">
+                        <h5>확장기 혈압</h5>
+                        <h2 id="diastolicBP">--</h2>
+                        <div class="progress">
+                            <div id="progress2" class="progress-bar" role="progressbar"
+                                 style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="health-chart-card">
+                        <h5>심박수</h5>
+                        <h2 id="heartRate">--</h2>
+                        <div class="progress">
+                            <div id="progress3" class="progress-bar" role="progressbar"
+                                 style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="health-chart-card">
+                        <h5>체온</h5>
+                        <h2 id="temperature">--</h2>
+                        <div class="progress">
+                            <div id="progress4" class="progress-bar" role="progressbar"
+                                 style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="srd-info">
                 <div class="srd-name">
                     ${senior.seniorName}
                     <span class="srd-gender">
-            <c:choose>
-                <c:when test="${senior.seniorGender == 'M'}">남성</c:when>
-                <c:otherwise>여성</c:otherwise>
-            </c:choose>
-          </span>
+                        <c:choose>
+                            <c:when test="${senior.seniorGender == 'M'}">남성</c:when>
+                            <c:otherwise>여성</c:otherwise>
+                        </c:choose>
+                    </span>
                 </div>
 
                 <div class="srd-details">
@@ -277,10 +362,10 @@
                     <div class="srd-detail-item">
                         <span class="srd-detail-label">주소</span>
                         <span class="srd-detail-value">
-              ${senior.seniorStreetAddr} ${senior.seniorDetailAddr2}
-              <c:if test="${not empty senior.seniorDetailAddr1}">, ${senior.seniorDetailAddr1}</c:if>
-              (${senior.seniorZipcode})
-            </span>
+                            ${senior.seniorStreetAddr} ${senior.seniorDetailAddr2}
+                            <c:if test="${not empty senior.seniorDetailAddr1}">, ${senior.seniorDetailAddr1}</c:if>
+                            (${senior.seniorZipcode})
+                        </span>
                     </div>
 
                     <div class="srd-detail-item">
@@ -317,61 +402,6 @@
             </div>
         </div>
 
-        <!-- 차트 영역 -->
-        <div class="container mt-5">
-            <div class="row justify-content-center mb-4">
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">수축기 혈압</h5>
-                            <h2 id="systolicBP">--</h2>
-                            <div class="progress mt-3">
-                                <div id="progress1" class="progress-bar bg-info" role="progressbar"
-                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">확장기 혈압</h5>
-                            <h2 id="diastolicBP">--</h2>
-                            <div class="progress mt-3">
-                                <div id="progress2" class="progress-bar bg-info" role="progressbar"
-                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">심박수</h5>
-                            <h2 id="heartRate">--</h2>
-                            <div class="progress mt-3">
-                                <div id="progress3" class="progress-bar bg-info" role="progressbar"
-                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">체온</h5>
-                            <h2 id="temperature">--</h2>
-                            <div class="progress mt-3">
-                                <div id="progress4" class="progress-bar bg-info" role="progressbar"
-                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="srd-buttons">
             <a href="/senior/update/${senior.seniorId}" class="srd-btn srd-btn-primary">수정</a>
         </div>
@@ -379,7 +409,7 @@
 </div>
 
 <script>
-    const seniorId = '${senior.seniorId}'; // JSP에서 전달된 seniorId 사용
+    const seniorId = '${senior.seniorId}';
 
     function fetchDataAndUpdateCharts() {
         const url = '/iot/health/data/' + seniorId;
@@ -415,7 +445,6 @@
                     $('#progress3').attr('aria-valuenow', JSON.parse(p3) / 120 * 100);
                     $('#progress4').css('width', JSON.parse(p4) / 45 * 100 + '%');
                     $('#progress4').attr('aria-valuenow', JSON.parse(p4) / 45 * 100);
-
                 }
             },
             error: function (xhr, status, error) {
@@ -445,3 +474,4 @@
     setInterval(fetchDataAndUpdateCharts, 2000);
     fetchDataAndUpdateCharts(); // 초기 호출
 </script>
+

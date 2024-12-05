@@ -1,41 +1,37 @@
 let chatbtn = {
     init: function () {
-        // 사용자 ID 가져오기
         const principalElement = document.getElementById("principal");
-        const principal = principalElement ? principalElement.innerText.trim() : "Guest";
+        const principal = principalElement ? principalElement.innerText.trim() : "손님";
 
-        // 채팅 버튼 생성
         const scrollBtn2 = document.createElement("button");
-        scrollBtn2.innerHTML = "1:1";
+        scrollBtn2.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
         scrollBtn2.setAttribute("id", "scroll-btn2");
+        scrollBtn2.setAttribute("title", "채팅 시작");
         document.body.appendChild(scrollBtn2);
         scrollBtn2.classList.add("show");
 
-        // 채팅 모달 생성
         const chatModal = document.createElement("div");
         chatModal.setAttribute("id", "chat-modal");
-        chatModal.style.display = "none"; // 초기 숨김 처리
+        chatModal.style.display = "none";
         chatModal.innerHTML = `
             <div id="chat-modal-header">
-                Chat
+                실시간 채팅
                 <span id="chat-modal-close">×</span>
             </div>
             <div id="chat-modal-body">
-                <h1 id="adm_id">${principal}</h1>
-                <h1 id="status">Disconnected</h1>
-                <div id="chat-box" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto;"></div>
-                <input type="text" id="totext" placeholder="Type your message here" style="width: 80%;">
-                <button id="sendto">Send</button>
+                <h3 id="adm_id">${principal}</h3>
+                <p id="status">연결 끊김</p>
+                <div id="chat-box"></div>
+                <input type="text" id="totext" placeholder="메시지를 입력하세요">
+                <button id="sendto">전송</button>
             </div>`;
         document.body.appendChild(chatModal);
 
-        // 버튼 클릭 시 모달 표시
         scrollBtn2.addEventListener("click", function () {
             chatModal.style.display = "block";
             websocket.init();
         });
 
-        // 모달 닫기 버튼
         const closeButton = document.getElementById("chat-modal-close");
         if (closeButton) {
             closeButton.addEventListener("click", function () {
@@ -50,63 +46,62 @@ let websocket = {
     stompClient: null,
     init: function () {
         this.id = document.getElementById("adm_id").innerText.trim();
-
-        // WebSocket 연결
         this.connect();
 
-        // 메시지 전송 이벤트
         document.getElementById("sendto").addEventListener("click", () => {
             const messageContent = document.getElementById("totext").value.trim();
             if (messageContent) {
                 const msg = JSON.stringify({
                     sendid: this.id,
-                    receiveid: "0", // Admin ID
+                    receiveid: "0",
                     content1: messageContent,
                 });
 
-                // 메시지 발행
                 this.stompClient.send("/receiveto", {}, msg);
+                document.getElementById("totext").value = "";
+            }
+        });
 
-                document.getElementById("totext").value = ""; // 입력창 초기화
+        document.getElementById("totext").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("sendto").click();
             }
         });
     },
     connect: function () {
-
         let socket = new SockJS(serverurl+'/ws');
         this.stompClient = Stomp.over(socket);
 
         this.stompClient.connect({}, (frame) => {
-            console.log("Connected: " + frame);
+            console.log("연결됨: " + frame);
             this.setConnected(true);
 
-            // 개인 메시지 구독
             this.stompClient.subscribe(`/send/to/${this.id}`, (msg) => {
                 const message = JSON.parse(msg.body);
                 this.addMessageToChatBox(message.sendid, message.content1);
             });
 
-            // 공용 메시지 구독 (Admin 메시지)
             this.stompClient.subscribe("/send/to/0", (msg) => {
                 const message = JSON.parse(msg.body);
                 this.addMessageToChatBox(message.sendid, message.content1);
             });
         }, (error) => {
-            console.error("WebSocket Connection Error:", error);
+            console.error("WebSocket 연결 오류:", error);
             this.setConnected(false);
         });
     },
     addMessageToChatBox: function (sender, message) {
         const chatBox = document.getElementById("chat-box");
         const newMessage = document.createElement("div");
-        newMessage.innerHTML = `<b>${sender}:</b> ${message}`;
+        newMessage.innerHTML = `<strong>${sender}:</strong> ${message}`;
         chatBox.appendChild(newMessage);
-        chatBox.scrollTop = chatBox.scrollHeight; // 스크롤 자동 내리기
+        chatBox.scrollTop = chatBox.scrollHeight;
     },
     setConnected: function (connected) {
         const statusElement = document.getElementById("status");
         if (statusElement) {
-            statusElement.innerText = connected ? "Connected" : "Disconnected";
+            statusElement.innerText = connected ? "연결됨" : "연결 끊김";
+            statusElement.style.color = connected ? "#4CAF50" : "#f44336";
         }
     }
 };

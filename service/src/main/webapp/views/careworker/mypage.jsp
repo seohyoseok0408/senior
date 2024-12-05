@@ -6,7 +6,7 @@
         <!-- 왼쪽 사이드바 -->
         <div class="profile-sidebar">
             <div class="profile-info">
-                <img alt="프로필 이미지" class="profile-image">
+                <img alt="프로필 이미지" class="profile-image" id="profileImage"  >
                 <h3 class="profile-name" id="profileName"></h3>
                 <p class="profile-email" id="profileEmail"></p>
                 <div class="profile-actions">
@@ -194,6 +194,7 @@
         },
 
         updateProfileDisplay: function (cw) {
+            document.getElementById("profileImage").src = cw.cwProfile ? `/imgs/careworker/`+cw.cwProfile : "../images/default-profile.jpg";
             document.getElementById("profileName").textContent = cw.cwName || "이름 없음";
             document.getElementById("profileEmail").textContent = cw.cwEmail || "이메일 없음";
         },

@@ -172,7 +172,7 @@
                             <a href="/senior-list">시니어 리스트</a>
                             <a href="/careworker/contracts">계약관리</a>
                             <a href="/fullcalendar-cw">일정관리</a>
-                            <a href="/cwmypage">내 정보</a>
+                            <a href="/careworker/mypage">내 정보</a>
                         </c:if>
                     </div>
                 </div>

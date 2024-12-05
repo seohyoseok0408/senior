@@ -47,11 +47,11 @@
             <form>
                 <div class="form-group mb-3">
                     <input type="text" class="form-control" id="username" name="username"
-                           placeholder="아이디 입력" style="border-radius: 8px; height: 48px;" value="jin14410" required>
+                           placeholder="아이디 입력" style="border-radius: 8px; height: 48px;"  required>
                 </div>
                 <div class="form-group mb-3">
                     <input type="password" class="form-control" id="password" name="password"
-                           placeholder="비밀번호 입력" style="border-radius: 8px; height: 48px;" value="jin553300?" required>
+                           placeholder="비밀번호 입력" style="border-radius: 8px; height: 48px;"  required>
                 </div>
                 <div class="form-check d-flex align-items-center justify-content-start mb-3">
                     <input type="checkbox" class="form-check-input" id="rememberMe" style="margin-right: 0.5rem;">

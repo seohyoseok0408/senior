@@ -17,7 +17,7 @@
         margin: 0 auto;
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         border-radius: 20px;
-        overflow: hidden;rPd
+        overflow: hidden;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     }
 
