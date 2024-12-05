@@ -52,6 +52,7 @@ public class UserApiController {
             session.removeAttribute("kakaoUser"); // 세션 정보 정리
             return new ResponseDto<>(HttpStatus.OK.value(), "회원가입 완료");
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("회원가입 중 오류 발생", e);
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "회원가입 실패");
         }

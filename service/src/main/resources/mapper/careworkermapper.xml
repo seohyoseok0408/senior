@@ -5,17 +5,14 @@
 <mapper namespace="edu.sm.repository.CareworkerRepository">
 
     <insert id="insert" parameterType="Careworker">
-        INSERT INTO careworker (
-            cw_username, cw_password, cw_tel, cw_email, cw_name,
-            cw_gender, cw_birthday, cw_zipcode, cw_street_addr,
-            cw_detail_addr1, cw_detail_addr2, cw_profile,
-            cw_holiday, cw_intro, cw_experience, cw_latitude, cw_longitude
-        ) VALUES (
-                     #{cwUsername}, #{cwPassword}, #{cwTel}, #{cwEmail}, #{cwName},
-                     #{cwGender}, #{cwBirthday}, #{cwZipcode}, #{cwStreetAddr},
-                     #{cwDetailAddr1}, #{cwDetailAddr2}, #{cwProfile},
-                     #{cwHoliday}, #{cwIntro}, #{cwExperience}, #{cwLatitude}, #{cwLongitude}
-                 );
+        INSERT INTO careworker (cw_username, cw_password, cw_tel, cw_email, cw_name,
+                                cw_gender, cw_birthday, cw_zipcode, cw_street_addr,
+                                cw_detail_addr1, cw_detail_addr2, cw_profile,
+                                cw_holiday, cw_intro, cw_experience, cw_latitude, cw_longitude)
+        VALUES (#{cwUsername}, #{cwPassword}, #{cwTel}, #{cwEmail}, #{cwName},
+                #{cwGender}, #{cwBirthday}, #{cwZipcode}, #{cwStreetAddr},
+                #{cwDetailAddr1}, #{cwDetailAddr2}, #{cwProfile},
+                #{cwHoliday}, #{cwIntro}, #{cwExperience}, #{cwLatitude}, #{cwLongitude});
     </insert>
 
     <select id="selectOne" parameterType="Integer" resultType="Careworker">
@@ -37,7 +34,7 @@
     <select id="selectNearbyCareworkers" resultType="Careworker">
         SELECT
         cw_id AS cwId,
-        cw_name AS cwName,
+        cw_username AS cwuserName,
         cw_tel AS cwTel,
         cw_profile AS cwProfile,
         cw_latitude AS cwLatitude,
@@ -53,6 +50,35 @@
         HAVING <![CDATA[distance <= #{radius}]]>
         ORDER BY distance;
     </select>
+    <!-- 회원 정보 수정 쿼리 (비밀번호 제외) -->
+    <update id="update" parameterType="Careworker">
+        UPDATE careworker
+        SET cw_tel = #{cwTel},
+            cw_email = #{cwEmail},
+            cw_name = #{cwName},
+            cw_intro = #{cwIntro},
+            cw_zipcode = #{cwZipcode},
+            cw_street_addr = #{cwStreetAddr},
+            cw_detail_addr1 = #{cwDetailAddr1},
+            cw_detail_addr2 = #{cwDetailAddr2},
+            cw_profile = #{cwProfile}
+        WHERE cw_id = #{cwId};
+    </update>
+
+
+    <!-- 비밀번호 수정 쿼리 -->
+    <update id="updatePassword" parameterType="Careworker">
+        UPDATE careworker
+        SET cw_password = #{cwPassword}
+        WHERE cw_id = #{cwId};
+    </update>
+
+    <!-- 계정 비활성화 (소프트 삭제) 쿼리 -->
+    <update id="deactivateCareworker" parameterType="int">
+        UPDATE careworker
+        SET cw_status = 'INACTIVE'
+        WHERE cw_id = #{cwId};
+    </update>
 
 
 

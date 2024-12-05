@@ -2,6 +2,7 @@ package edu.sm.controller.api;
 
 import edu.sm.dto.ResponseDto;
 import edu.sm.model.Careworker;
+import edu.sm.model.User;
 import edu.sm.service.CareworkerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,16 @@ public class CareworkerApiController {
     @GetMapping("/{cwId}")
     public ResponseDto<Careworker> getUser(@PathVariable int cwId) {
         try {
+            log.info("Careworker 요청 ID: {}", cwId);
             Careworker careworker = careworkerService.get(cwId);
+            log.info("조회된 Careworker: {}", careworker);
             return new ResponseDto<>(HttpStatus.OK.value(), careworker);
         } catch (Exception e) {
             log.error("사용자 조회 중 오류 발생", e);
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
         }
     }
+
 
     @PostMapping("/signup")
     public ResponseDto<String> save(@ModelAttribute Careworker careworker) {
@@ -61,8 +65,6 @@ public class CareworkerApiController {
         }
     }
 
-
-
     @GetMapping("/nearby")
     public List<Careworker> findNearbyCareworkers(
             @RequestParam Double latitude,
@@ -79,6 +81,44 @@ public class CareworkerApiController {
         }
         log.info(careworkers.toString());
         return careworkers;
+    }
+
+    // 회원 정보 수정 (비밀번호 제외)
+    @PutMapping("/update/{id}")
+    public ResponseDto<Integer> updatecwInfo(@PathVariable Integer id, @RequestBody Careworker careworker) {
+        try {
+            log.info("수정 요청 데이터: {}", careworker);
+            careworkerService.modifyById(id, careworker);
+            return new ResponseDto<>(HttpStatus.OK.value(), 1);
+        } catch (Exception e) {
+            log.error("회원 정보 수정 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
+        }
+    }
+
+    //비밀번호 변경
+    @PutMapping("/update/password/{id}")
+    public ResponseDto<Integer> updatePassword(@PathVariable Integer id, @RequestBody String newPassword) {
+        try {
+            log.info(newPassword);
+            careworkerService.updatePassword(id, newPassword); // 비밀번호 수정 서비스 호출
+            return new ResponseDto<>(HttpStatus.OK.value(), 1);
+        } catch (Exception e) {
+            log.error("비밀번호 수정 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
+        }
+    }
+
+    // 유저 상태를 inactive로 설정하여 "소프트 삭제" 처리
+    @DeleteMapping("/delete/{id}")
+    public ResponseDto<Integer> delete(@PathVariable Integer id) {
+        try {
+            careworkerService.del(id); // 상태를 inactive로 변경
+            return new ResponseDto<>(HttpStatus.OK.value(), 1); // 성공 시 1 반환
+        } catch (Exception e) {
+            log.error("유저 소프트 삭제 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
+        }
     }
 
 }

@@ -6,7 +6,7 @@
         <!-- 왼쪽 사이드바 -->
         <div class="profile-sidebar">
             <div class="profile-info">
-                <img src="imgs/cw" alt="프로필 이미지" class="profile-image">
+                <img alt="프로필 이미지" class="profile-image">
                 <h3 class="profile-name" id="profileName"></h3>
                 <p class="profile-email" id="profileEmail"></p>
                 <div class="profile-actions">
@@ -17,7 +17,7 @@
             </div>
             <ul class="menu-list">
                 <li class="menu-item" onclick="mypage.showSection('infoSection')">
-                    <i class="fas fa-cw"></i>
+                    <i class="fas fa-user"></i>
                     <p>내 정보</p>
                 </li>
                 <li class="menu-item" onclick="mypage.showSection('updateSection')">
@@ -29,7 +29,7 @@
                     <p>비밀번호 변경</p>
                 </li>
                 <li class="menu-item" onclick="mypage.showSection('deleteSection')">
-                    <i class="fas fa-cw-times"></i>
+                    <i class="fas fa-user-times"></i>
                     <p>회원 탈퇴</p>
                 </li>
             </ul>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="info-item">
                         <div class="info-label">주소</div>
-                        <div class="info-value" id="cwtreetAddr"></div>
+                        <div class="info-value" id="cwStreetAddr"></div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">상세주소</div>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">주소</label>
-                        <input type="text" readonly class="form-control" id="updateStreetAddr" name="cwtreetAddr">
+                        <input type="text" readonly class="form-control" id="updateStreetAddr" name="cwStreetAddr">
                     </div>
                     <div class="form-group">
                         <label class="form-label">상세주소</label>
@@ -155,10 +155,6 @@
 
 <script>
     const cwId = '${cwId}';
-    alert("cwId: " + cwId);
-    console.log("cwId:", cwId); // 콘솔 출력
-
-
     const mypage = {
         init: function () {
             this.loadCwInfo();
@@ -192,7 +188,7 @@
             document.getElementById("cwTel").textContent = cw.cwTel || "없음";
             document.getElementById("cwIntro").textContent = cw.cwIntro || "없음";
             document.getElementById("cwZipcode").textContent = cw.cwZipcode || "없음";
-            document.getElementById("cwtreetAddr").textContent = cw.cwtreetAddr || "없음";
+            document.getElementById("cwStreetAddr").textContent = cw.cwStreetAddr || "없음";
             document.getElementById("cwDetailAddr1").textContent = cw.cwDetailAddr1 || "없음";
             document.getElementById("cwDetailAddr2").textContent = cw.cwDetailAddr2 || "없음";
         },
@@ -208,7 +204,7 @@
             document.getElementById("updateTel").value = cw.cwTel || "";
             document.getElementById("updateIntro").value = cw.cwIntro || "";
             document.getElementById("updateZipcode").value = cw.cwZipcode || "";
-            document.getElementById("updateStreetAddr").value = cw.cwtreetAddr || "";
+            document.getElementById("updateStreetAddr").value = cw.cwStreetAddr || "";
             document.getElementById("updateDetailAddr1").value = cw.cwDetailAddr1 || "";
             document.getElementById("updateDetailAddr2").value = cw.cwDetailAddr2 || "";
         },
@@ -217,26 +213,30 @@
             const formData = new FormData(document.getElementById("updateForm"));
             const updatedInfo = Object.fromEntries(formData.entries());
 
-            fetch(`/api/cw/update/${cwId}`, {
+            fetch(`/api/careworkers/update/${cwId}`, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(updatedInfo)
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error("회원정보 수정 실패");
+                    return response.json();
+                })
                 .then(data => {
                     if (data.status === 200) {
                         alert("회원정보가 성공적으로 수정되었습니다.");
-                        this.loadCwInfo();
-                        this.showSection('infoSection');
+                        this.loadCwInfo(); // 정보 갱신
+                        this.showSection("infoSection");
                     } else {
-                        throw new Error("회원정보 수정에 실패했습니다.");
+                        alert(`회원정보 수정 실패: ${data.data || "알 수 없는 오류"}`);
                     }
                 })
                 .catch(error => {
                     console.error("회원정보 수정 오류:", error);
-                    alert("회원정보 수정에 실패했습니다.");
+                    alert("회원정보 수정 중 오류가 발생했습니다.");
                 });
         },
+
 
         updatePassword: function () {
             const newPassword = document.getElementById("newPassword").value;
@@ -247,7 +247,7 @@
                 return;
             }
 
-            fetch(`/api/cw/update/password/${cwId}`, {
+            fetch(`/api/careworkers/update/password/${cwId}`, {
                 method: "PUT",
                 headers: {"Content-Type": "text/plain"},
                 body: newPassword
@@ -269,7 +269,7 @@
 
         deleteAccount: function () {
             if (confirm("정말로 회원 탈퇴를 진행하시겠습니까? 이 작업은 되돌릴 수 없습니다.")) {
-                fetch(`/api/cw/delete/${cwId}`, {method: "DELETE"})
+                fetch(`/api/careworkers/delete/${cwId}`, {method: "DELETE"})
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 200) {

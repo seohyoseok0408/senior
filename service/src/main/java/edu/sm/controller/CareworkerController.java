@@ -1,7 +1,5 @@
 package edu.sm.controller;
 
-import edu.sm.model.Careworker;
-import edu.sm.model.Contract;
 import edu.sm.model.Senior;
 import edu.sm.service.CareworkerService;
 import edu.sm.service.ContractService;
@@ -12,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,7 +26,7 @@ public class CareworkerController {
     private final ContractService contractService;
 
     @RequestMapping("/mypage")
-    public String Mypage(HttpSession session, Model model) {
+    public String mypage(HttpSession session, Model model) {
         Integer cwId = (Integer) session.getAttribute("principal"); // 세션에서 principal 가져오기
         if (cwId == null) {
             log.warn("No principal found in session. Redirecting to login.");
