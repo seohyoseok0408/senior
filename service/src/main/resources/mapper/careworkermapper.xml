@@ -34,7 +34,7 @@
     <select id="selectNearbyCareworkers" resultType="Careworker">
         SELECT
         cw_id AS cwId,
-        cw_username AS cwuserName,
+        cw_name AS cwName,
         cw_tel AS cwTel,
         cw_profile AS cwProfile,
         cw_latitude AS cwLatitude,

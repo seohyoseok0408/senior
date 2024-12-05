@@ -73,9 +73,7 @@ public class CareworkerApiController {
     ) {
         List<Careworker> careworkers = null;
         try {
-            log.info("latitude: " + latitude + ", longitude: " + longitude + ", radius: " + radius);
             careworkers = careworkerService.getCareworkersWithinRadius(latitude, longitude, radius);
-            log.info("cacarere: " + careworkers.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
