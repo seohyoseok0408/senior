@@ -162,6 +162,7 @@
                         <c:if test="${sessionScope.role == 'USER'}">
                             <a href="/user/careworkers">보호사 신청</a>
                             <a href="/user/senior">시니어 관리</a>
+                            <a href="/user/map">지도보기</a>
                             <a href="/fullcalendar-u">일정관리</a>
                             <a href="/help">문의</a>
                             <a href="/user/mypage">내 정보</a>

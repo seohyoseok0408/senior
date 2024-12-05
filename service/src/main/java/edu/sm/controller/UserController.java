@@ -98,7 +98,7 @@ public class UserController {
         }
 
         try {
-            Careworker careworker  = careworkerService.get(cwId);
+            Careworker careworker = careworkerService.get(cwId);
             if (careworker == null) {
                 return "redirect:/";
             }
@@ -118,5 +118,27 @@ public class UserController {
     public String video(Model model) {
         model.addAttribute("center", "user/video");
         return "index";
+    }
+
+    @RequestMapping("/map")
+    public String list(HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("principal");
+        if (userId == null) {
+            return "redirect:/login/user"; // 로그인 페이지로 리다이렉트
+        }
+
+        try {
+            Senior senior = seniorService.getSeniorsByUserId(userId);
+            if (senior == null) {
+                return "redirect:/user/senior/insert";
+            }
+
+            model.addAttribute("senior", senior);
+            model.addAttribute("center", "user/map");
+            return "index";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
