@@ -29,7 +29,6 @@ public class CalendarController {
         if (userId == null) {
             return "redirect:/login/user";
         }
-        log.info("User ID: {}", userId);
 
         List<Schedule> schedules = calendarService.getSchedulesByUserId(userId);
         try {
@@ -41,7 +40,6 @@ public class CalendarController {
             // JSON 변환
             String schedulesJson = objectMapper.writeValueAsString(schedules);
             model.addAttribute("schedulesJson", schedulesJson);
-            log.info(schedulesJson);
         } catch (JsonProcessingException e) {
             log.error("Error converting schedules to JSON", e);
             model.addAttribute("schedulesJson", "[]");
