@@ -3,11 +3,13 @@ package edu.sm.service;
 import edu.sm.frame.SMService;
 import edu.sm.model.Careworker;
 import edu.sm.model.Contract;
+import edu.sm.model.Schedule;
 import edu.sm.model.Senior;
 import edu.sm.repository.ContractRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,7 @@ public class ContractService implements SMService<Integer, Contract> {
     private final SeniorService seniorService;
     private final UserService userService;
     private final CareworkerService careworkerService;
+    private final CalendarService calendarService;
 
     @Override
     public void add(Contract contract) throws Exception {
@@ -119,4 +122,22 @@ public class ContractService implements SMService<Integer, Contract> {
         return R * c; // Distance in kilometers
     }
 
+    @Transactional
+    public void createContractAndSchedule(Contract contract, Schedule schedule) throws Exception {
+        try {
+            // 1. 계약 생성
+            contract.setContractStatus("PENDING");
+            contractRepository.insert(contract); // contract_id가 자동 설정됨
+            log.info("Contract created with ID: {}", contract.getContractId());
+
+            // 2. 스케줄 생성
+            schedule.setContractId(contract.getContractId()); // 생성된 계약 ID 설정
+            schedule.setScheduleStatus("WAITING"); // 스케줄 상태 설정
+            calendarService.addContractSchedule(schedule); // 스케줄 삽입
+            log.info("Schedule created for contract ID: {}", contract.getContractId());
+        } catch (Exception e) {
+            log.error("Error creating contract and schedule", e);
+            throw e; // 트랜잭션 롤백
+        }
+    }
 }

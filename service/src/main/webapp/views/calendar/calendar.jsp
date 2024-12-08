@@ -3,55 +3,12 @@
 
 <div class="content-body">
     <div class="container-fluid">
-        <!-- Flexbox를 이용한 레이아웃 -->
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
-            <!-- FullCalendar가 렌더링될 영역 -->
             <div id="calendar" style="flex: 0 0 70%; border: 1px solid #ddd; padding: 10px;"></div>
         </div>
     </div>
 </div>
 
-<!-- 상세 보기 모달 -->
-<div class="modal fade" id="scheduleDetailModal" tabindex="-1" aria-labelledby="scheduleDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="scheduleDetailModalLabel">일정 상세</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="modalScheduleForm">
-                    <div style="margin-bottom: 10px;">
-                        <label for="modalScheduleTitle">제목</label>
-                        <input type="text" id="modalScheduleTitle" name="scheduleTitle" class="form-control" readonly>
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label for="modalScheduleStartDate">시작 날짜</label>
-                        <input type="date" id="modalScheduleStartDate" name="scheduleStartDate" class="form-control" readonly>
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label for="modalScheduleStartTime">시작 시간</label>
-                        <input type="time" id="modalScheduleStartTime" name="scheduleStartTime" class="form-control" readonly>
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label for="modalScheduleEndDate">종료 날짜</label>
-                        <input type="date" id="modalScheduleEndDate" name="scheduleEndDate" class="form-control" readonly>
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label for="modalScheduleEndTime">종료 시간</label>
-                        <input type="time" id="modalScheduleEndTime" name="scheduleEndTime" class="form-control" readonly>
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label for="modalScheduleDescription">설명</label>
-                        <textarea id="modalScheduleDescription" name="scheduleDescription" class="form-control" rows="4" readonly></textarea>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 일정 추가 모달 -->
 <div class="modal fade" id="scheduleAddModal" tabindex="-1" aria-labelledby="scheduleAddModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -92,15 +49,11 @@
     </div>
 </div>
 
-<!-- Bootstrap CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- FullCalendar CSS & JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
-<!-- FullCalendar 초기화 -->
 <script>
     function formatDateTime(date, time) {
         return date + "T" + time + ":00";
@@ -132,19 +85,55 @@
                 document.getElementById('modalAddEndDate').value = arg.endStr;
                 $('#scheduleAddModal').modal('show');
             },
-            eventClick: function(arg) {
-                document.getElementById('modalScheduleTitle').value = arg.event.title;
-                document.getElementById('modalScheduleStartDate').value = arg.event.start.toISOString().split('T')[0];
-                document.getElementById('modalScheduleStartTime').value = arg.event.start.toTimeString().slice(0, 5);
-                document.getElementById('modalScheduleEndDate').value = arg.event.end.toISOString().split('T')[0];
-                document.getElementById('modalScheduleEndTime').value = arg.event.end.toTimeString().slice(0, 5);
-                document.getElementById('modalScheduleDescription').value = arg.event.extendedProps.description;
-                $('#scheduleDetailModal').modal('show');
-            },
             editable: true,
             dayMaxEvents: true
         });
 
         calendar.render();
+
+        document.getElementById('saveScheduleBtn').addEventListener('click', function () {
+            var title = document.getElementById('addScheduleTitle').value.trim();
+            var startDate = document.getElementById('modalAddStartDate').value;
+            var startTime = document.getElementById('modalAddStartTime').value;
+            var endDate = document.getElementById('modalAddEndDate').value;
+            var endTime = document.getElementById('modalAddEndTime').value;
+            var description = document.getElementById('modalAddDescription').value.trim();
+
+            if (!title || !startDate || !startTime || !endDate || !endTime || !description) {
+                alert("모든 필드를 채워주세요.");
+                return;
+            }
+
+            const startDateTime = formatDateTime(startDate, startTime);
+            const endDateTime = formatDateTime(endDate, endTime);
+
+            const scheduleData = {
+                scheduleTitle: title,
+                scheduleStartDatetime: startDateTime,
+                scheduleEndDatetime: endDateTime,
+                scheduleDescription: description
+            };
+
+            $.ajax({
+                url: '/api/calendar/saveUserSchedule',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(scheduleData),
+                success: function(response) {
+                    alert("일정이 성공적으로 추가되었습니다.");
+                    calendar.addEvent({
+                        title: title,
+                        start: startDateTime,
+                        end: endDateTime,
+                        description: description
+                    });
+                    $('#scheduleAddModal').modal('hide');
+                },
+                error: function(error) {
+                    console.error("AJAX Error:", error);
+                    alert("일정 추가 중 오류가 발생했습니다.");
+                }
+            });
+        });
     });
 </script>

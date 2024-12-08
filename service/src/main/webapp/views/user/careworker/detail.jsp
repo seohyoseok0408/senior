@@ -17,7 +17,7 @@
         margin: 0 auto;
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         border-radius: 20px;
-        overflow: hidden;rPd
+        overflow: hidden;
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     }
 
@@ -259,15 +259,42 @@
                 </div>
             </div>
         </div>
-
         <div class="cwd-buttons">
+            <!-- 달력 추가 -->
+            <div id="calendar" style="margin-top: 20px; border: 1px solid #ddd; padding: 10px;"></div>
+
             <input type="hidden" id="careworkerId" value="${careworker.cwId}">
-            <input type="hidden" id="seniorId" value="${seniorId}"/>
-            <button type="button" id="contract-btn" class="cwd-btn cwd-btn-primary">계약 신청</button>
-            <a href="/user/careworkers" class="cwd-btn cwd-btn-secondary">목록으로</a>
+            <input type="hidden" id="seniorId" value="${seniorId}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="contractStartDate">시작 날짜</label>
+                    <input type="date" id="contractStartDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="contractStartTime">시작 시간</label>
+                    <input type="time" id="contractStartTime" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="contractEndDate">종료 날짜</label>
+                    <input type="date" id="contractEndDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="contractEndTime">종료 시간</label>
+                    <input type="time" id="contractEndTime" class="form-control">
+                </div>
+                <button type="button" id="contract-btn" class="cwd-btn cwd-btn-primary">계약 신청</button>
+                <a href="/user/careworkers" class="cwd-btn cwd-btn-secondary">목록으로</a>
+            </div>
         </div>
+
     </div>
 </div>
+<!-- Bootstrap CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- FullCalendar CSS & JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
 <script src="/js/careworker.js"></script>
-

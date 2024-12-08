@@ -14,12 +14,9 @@ import java.time.LocalDate;
 public class Contract {
     private int contractId;
     private LocalDate contractDate;
-    private LocalDate contractStartDate;
-    private LocalDate contractEndDate;
     private int contractPrice;
     private String contractStatus;
     private int cwId;
     private int userId;
     private int seniorId;
-    private int scheduleId;
 }

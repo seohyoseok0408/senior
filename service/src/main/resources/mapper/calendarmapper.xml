@@ -5,29 +5,56 @@
 
 <mapper namespace="edu.sm.repository.CalendarRepository">
 
-    <insert id="insertSchedule" parameterType="edu.sm.model.Schedule">
-        INSERT INTO schedule (
-            schedule_title,
-            schedule_description,
-            schedule_start_datetime,
-            schedule_end_datetime,
-            schedule_status,
-            schedule_group_id,
-            user_id,
-            cw_id
-        )
-        VALUES (
-                   #{scheduleTitle},
-                   #{scheduleDescription},
-                   #{scheduleStartDatetime},
-                   #{scheduleEndDatetime},
-                   #{scheduleStatus},
-                   #{scheduleGroupId},
-                   #{userId},
-                   #{cwId}
-               )
-
+    <insert id="insertNonContractSchedule" parameterType="edu.sm.model.Schedule">
+        INSERT INTO schedule (schedule_title,
+                              schedule_description,
+                              schedule_start_datetime,
+                              schedule_end_datetime,
+                              schedule_status,
+                              user_id,
+                              cw_id,
+                              contract_id)
+        VALUES (#{scheduleTitle},
+                #{scheduleDescription},
+                #{scheduleStartDatetime},
+                #{scheduleEndDatetime},
+                #{scheduleStatus},
+                #{userId},
+                #{cwId},
+                NULL -- 계약과 관련 없는 일정이므로 contract_id는 NULL
+               );
     </insert>
+
+    <insert id="insertContractSchedule" parameterType="edu.sm.model.Schedule">
+        INSERT INTO schedule (schedule_title,
+                              schedule_description,
+                              schedule_start_datetime,
+                              schedule_end_datetime,
+                              schedule_status,
+                              user_id,
+                              cw_id,
+                              contract_id)
+        SELECT
+            CONCAT(cw.cw_name, ' 보호사 방문') AS schedule_title,
+            CONCAT(cw.cw_name, ' 보호사가 ',
+                   DATEDIFF(#{scheduleEndDatetime}, #{scheduleStartDatetime}), '일간 ',
+                   s.senior_name, ' 시니어를 위하여 요양 방문 예정입니다') AS schedule_description,
+            #{scheduleStartDatetime} AS schedule_start_datetime,
+            #{scheduleEndDatetime} AS schedule_end_datetime,
+            'WAITING' AS schedule_status,
+            c.user_id AS user_id,
+            c.cw_id AS cw_id,
+            c.contract_id AS contract_id
+        FROM
+            contract c
+                JOIN
+            careworker cw ON c.cw_id = cw.cw_id
+                JOIN
+            senior s ON c.senior_id = s.senior_id
+        WHERE
+            c.contract_id = #{contractId};
+    </insert>
+
 
     <select id="selectSchedulesByUserId" parameterType="int" resultType="edu.sm.model.Schedule">
         SELECT schedule_id,
@@ -36,7 +63,6 @@
                schedule_start_datetime,
                schedule_end_datetime,
                schedule_status,
-               schedule_group_id,
                user_id,
                cw_id
         FROM schedule
@@ -50,7 +76,6 @@
                schedule_start_datetime,
                schedule_end_datetime,
                schedule_status,
-               schedule_group_id,
                user_id,
                cw_id
         FROM schedule
