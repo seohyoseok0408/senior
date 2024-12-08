@@ -238,29 +238,26 @@
                 <input type="hidden" id="contractId" value="${contractDetails.contract.contractId}">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label" for="contractStartDate">계약 시작일</label>
-                        <input type="date" class="form-control" id="contractStartDate"
-                               value="${contractDetails.contractStartDate}">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="contractEndDate">계약 종료일</label>
-                        <input type="date" class="form-control" id="contractEndDate"
-                               value="${contractDetails.contractEndDate}">
-                    </div>
-                    <div class="form-group">
                         <label class="form-label" for="contractPrice">계약 금액 (원)</label>
-                        <input type="number" class="form-control" id="contractPrice"
-                               value="${contractDetails.contractPrice}">
+                        <input type="number" class="form-control" id="contractPrice" value="${contractDetails.contractPrice}">
                     </div>
                 </div>
 
                 <div style="text-align: center;">
-                    <c:if test="${contractDetails.contract.contractStatus == 'PENDING'}">
-                        <button type="button" class="btn btn-success" id="btn-approve">계약 수락하기</button>
-                    </c:if>
-                    <a href="/careworker/contracts" class="btn btn-secondary">목록으로 돌아가기</a>
+                    <c:choose>
+                        <c:when test="${contractDetails.contract.contractStatus == 'PENDING'}">
+                            <button type="button" class="btn btn-success" id="btn-approve">계약 수락하기</button>
+                        </c:when>
+                        <c:when test="${contractDetails.contract.contractStatus == 'ACTIVE'}">
+                            <span class="badge bg-success">계약 활성화됨</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="badge bg-secondary">계약 상태: ${contractDetails.contract.contractStatus}</span>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </form>
+
         </div>
     </div>
 </div>

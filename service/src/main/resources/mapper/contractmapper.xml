@@ -48,11 +48,8 @@
 
     <update id="update" parameterType="Contract">
         UPDATE contract
-        SET
---             contract_start_date = #{contractStartDate},
---             contract_end_date = #{contractEndDate},
-contract_price  = #{contractPrice},
-contract_status = #{contractStatus}
+        SET contract_price  = #{contractPrice},
+            contract_status = #{contractStatus}
         WHERE contract_id = #{contractId}
     </update>
 </mapper>

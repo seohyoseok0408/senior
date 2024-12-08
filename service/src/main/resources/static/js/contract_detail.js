@@ -8,13 +8,11 @@ let index = {
     approveContract: function () {
         let contractData = {
             contractId: $("#contractId").val(),
-            contractStartDate: $("#contractStartDate").val(),
-            contractEndDate: $("#contractEndDate").val(),
             contractPrice: $("#contractPrice").val(),
         };
         console.log(contractData);
-        if (!contractData.contractStartDate || !contractData.contractEndDate || !contractData.contractPrice) {
-            alert("모든 필드를 입력해주세요.");
+        if (!contractData.contractPrice) {
+            alert("계약 금액을 입력해주세요.");
             return;
         }
         $.ajax({
