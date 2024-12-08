@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import edu.sm.model.Careworker;
 import edu.sm.model.Senior;
 import edu.sm.service.CareworkerService;
 import edu.sm.service.ContractService;
@@ -86,6 +87,27 @@ public class CareworkerController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return "index";
+    }
+
+    @RequestMapping("/map")
+    public String mapList(HttpSession session, Model model) {
+        Integer cwId = (Integer) session.getAttribute("principal");
+        if (cwId == null) {
+            return "redirect:/login/careworker"; // 로그인 페이지로 리다이렉트
+        }
+        try {
+            Careworker careworker = careworkerService.get(cwId);
+            List<Map<String, Object>> contractsWithDetails = contractService.getContractsWithDetails(cwId, "ACTIVE");
+            log.info("careworker: {}", careworker);
+            log.info("contractsWithDetails: {}", contractsWithDetails);
+            model.addAttribute("careworker", careworker);
+            model.addAttribute("contractsWithDetails", contractsWithDetails);
+            model.addAttribute("center", "careworker/map");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         return "index";
     }
 }
