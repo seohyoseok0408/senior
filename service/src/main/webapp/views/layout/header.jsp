@@ -170,7 +170,7 @@
 
                         <%-- 보호사 메뉴 --%>
                         <c:if test="${sessionScope.role == 'CAREWORKER'}">
-                            <a href="/senior-list">시니어 리스트</a>
+                            <a href="/careworker/seniors">시니어 리스트</a>
                             <a href="/careworker/map">지도보기</a>
                             <a href="/careworker/contracts">계약관리</a>
                             <a href="/fullcalendar-cw">일정관리</a>
