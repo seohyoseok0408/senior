@@ -45,7 +45,7 @@ public class CalendarApiController {
     @PostMapping("/saveCareworkerSchedule")
     public ResponseDto<String> saveCareworkerSchedule(@RequestBody Schedule schedule, HttpSession session) {
         try {
-            Integer cwId = (Integer) session.getAttribute("cwId");
+            Integer cwId = (Integer) session.getAttribute("principal");
             if (cwId == null) {
                 throw new Exception("유효한 보호사 정보가 없습니다.");
             }

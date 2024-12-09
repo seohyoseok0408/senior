@@ -8,7 +8,6 @@
     }
 </style>
 
-
 <div class="content-body">
     <div class="container-fluid">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
@@ -109,6 +108,14 @@
                         }
                     };
                 }),
+            select: function(arg) {
+                const adjustedEndDate = new Date(arg.end);
+                adjustedEndDate.setDate(adjustedEndDate.getDate());
+
+                document.getElementById('modalAddStartDate').value = arg.startStr;
+                document.getElementById('modalAddEndDate').value = adjustedEndDate.toISOString().slice(0, 10);
+                $('#scheduleAddModal').modal('show');
+            },
             eventClick: function(info) {
                 console.log("Clicked event:", info.event);
                 console.log("Extended props:", info.event.extendedProps);
@@ -119,15 +126,6 @@
                     (info.event.start ? info.event.start.toLocaleDateString('ko-KR') : '-'); // 로컬 날짜만 표시
                 document.getElementById('scheduleEndDatetime').textContent =
                     (info.event.end ? info.event.end.toLocaleDateString('ko-KR') : '-'); // 로컬 날짜만 표시
-            },
-            select: function(arg) {
-                // 종료 날짜 설정
-                const adjustedEndDate = new Date(arg.end);
-                adjustedEndDate.setDate(adjustedEndDate.getDate());
-
-                document.getElementById('modalAddStartDate').value = arg.startStr;
-                document.getElementById('modalAddEndDate').value = adjustedEndDate.toISOString().slice(0, 10);
-                $('#scheduleAddModal').modal('show');
             },
             editable: true,
             dayMaxEvents: true
@@ -146,7 +144,6 @@
                 return;
             }
 
-            // 하드코딩된 시간 추가
             const startDateTime = startDate + "T13:13:00";
             const endDateTime = endDate + "T13:13:00";
 
@@ -158,7 +155,7 @@
             };
 
             $.ajax({
-                url: '/api/calendar/saveUserSchedule',
+                url: '/api/calendar/saveCareworkerSchedule',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(scheduleData),
@@ -179,5 +176,7 @@
             });
         });
     });
+
+
 </script>
 

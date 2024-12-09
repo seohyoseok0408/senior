@@ -58,7 +58,7 @@ public class CalendarController {
         }
         log.info("User ID: {}", userId);
 
-        List<Schedule> schedules = calendarService.getSchedulesByUserId(userId);
+        List<Schedule> schedules = calendarService.getSchedulesByCwId(userId);
         try {
             // ObjectMapper 생성 및 JavaTimeModule 등록
             ObjectMapper objectMapper = new ObjectMapper();
@@ -75,7 +75,7 @@ public class CalendarController {
         }
 
 
-        model.addAttribute("center", dir + "calendar");
+        model.addAttribute("center", dir + "calendarCW");
         return "index";
     }
 }
