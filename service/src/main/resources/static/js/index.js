@@ -4,6 +4,7 @@ let chatbtn = {
         const principal = principalElement ? principalElement.innerText.trim() : "손님";
 
         const scrollBtn2 = document.createElement("button");
+        scrollBtn2.style.zIndex = 10;
         scrollBtn2.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
         scrollBtn2.setAttribute("id", "scroll-btn2");
         scrollBtn2.setAttribute("title", "채팅 시작");
@@ -13,13 +14,14 @@ let chatbtn = {
         const chatModal = document.createElement("div");
         chatModal.setAttribute("id", "chat-modal");
         chatModal.style.display = "none";
+        chatModal.style.zIndex = 10;
         chatModal.innerHTML = `
             <div id="chat-modal-header">
                 실시간 채팅
                 <span id="chat-modal-close">×</span>
             </div>
             <div id="chat-modal-body">
-                <h3 id="adm_id">${principal}</h3>
+                <h3 id="adm_id" hidden="hidden">${principal}</h3>
                 <p id="status">연결 끊김</p>
                 <div id="chat-box"></div>
                 <input type="text" id="totext" placeholder="메시지를 입력하세요">
@@ -78,7 +80,7 @@ let websocket = {
 
             this.stompClient.subscribe(`/send/to/${this.id}`, (msg) => {
                 const message = JSON.parse(msg.body);
-                this.addMessageToChatBox(message.sendid, message.content1);
+                this.addMessageToChatBoxAdmin(message.sendid, message.content1);
             });
 
             this.stompClient.subscribe("/send/to/0", (msg) => {
@@ -93,7 +95,14 @@ let websocket = {
     addMessageToChatBox: function (sender, message) {
         const chatBox = document.getElementById("chat-box");
         const newMessage = document.createElement("div");
-        newMessage.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        newMessage.innerHTML = `<strong>고객님:</strong> ${message}`;
+        chatBox.appendChild(newMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    },
+    addMessageToChatBoxAdmin: function (sender, message) {
+        const chatBox = document.getElementById("chat-box");
+        const newMessage = document.createElement("div");
+        newMessage.innerHTML = `<strong>관리자:</strong> ${message}`;
         chatBox.appendChild(newMessage);
         chatBox.scrollTop = chatBox.scrollHeight;
     },

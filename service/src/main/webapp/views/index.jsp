@@ -22,3 +22,4 @@
 <script src="/js/index.js"></script>
 <!-- Include Footer -->
 <%@ include file="layout/footer.jsp" %>
+
