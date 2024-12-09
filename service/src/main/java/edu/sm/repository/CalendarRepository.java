@@ -12,9 +12,7 @@ import java.util.List;
 public interface CalendarRepository {
     // userId로 스케줄 조회
     List<Schedule> selectSchedulesByUserId(@Param("userId") int userId);
+
     // cwId로 스케줄 조회
     List<Schedule> selectSchedulesByCwId(@Param("cwId") int cwId);
-
-    void insertSchedule(Schedule schedule);
-
 }
