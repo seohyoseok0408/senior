@@ -67,7 +67,19 @@ public class UserController {
         return "index";
     }
 
+    // 새로운 채팅 관리 추가
+    @RequestMapping("/customer-chatlist")
+    public String chatList(Model model) throws Exception {
+        // 모든 유저 리스트 가져오기
+        List<User> userList = userService.get(); // userService에서 모든 유저를 가져오는 메서드 호출
 
+        // 유저 리스트를 모델에 추가
+        model.addAttribute("userList", userList);
+
+        // JSP 경로 설정
+        model.addAttribute("center", "chat/chatList"); // JSP 경로
+        return "index";
+    }
     @RequestMapping("/customer-detail")
     public String detail(Model model, @RequestParam("id") Integer userId) throws Exception {
         User user = userService.get(userId);

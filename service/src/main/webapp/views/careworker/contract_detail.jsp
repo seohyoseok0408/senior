@@ -97,26 +97,29 @@
         gap: 1rem;
     }
 
-    .info-item {
+    cd.info-item {
         background: var(--white);
         padding: 1rem;
         border-radius: 8px;
         box-shadow: var(--shadow);
         transition: transform 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .info-item:hover {
         transform: translateY(-3px);
     }
 
-    .info-label {
+    info-label {
         font-size: 0.875rem;
         color: var(--text-light);
         margin-bottom: 0.25rem;
         text-transform: uppercase;
     }
 
-    .info-value {
+    .cd-info-value {
         font-weight: 600;
         color: var(--text);
     }
@@ -222,13 +225,13 @@
                 <div class="profile-info">
                     <h3>${contractDetails.senior.seniorName} 어르신</h3>
                     <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">생년월일</div>
-                            <div class="info-value">${contractDetails.senior.seniorBirth}</div>
+                        <div class="cd-info-item">
+                            <div class="cd-info-label">생년월일</div>
+                            <div class="cd-info-value">${contractDetails.senior.seniorBirth}</div>
                         </div>
-                        <div class="info-item">
-                            <div class="info-label">주소</div>
-                            <div class="info-value">${contractDetails.senior.seniorStreetAddr}</div>
+                        <div class="cd-info-item">
+                            <div class="cd-info-label">주소</div>
+                            <div class="cd-info-value">${contractDetails.senior.seniorStreetAddr}</div>
                         </div>
                     </div>
                 </div>
