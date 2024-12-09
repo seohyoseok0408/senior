@@ -131,19 +131,19 @@ public class CareworkerController {
     }
 
     @GetMapping("/seniors/detail")
-    public String senior(HttpSession session, Model model, @RequestParam(required = true) Integer seniorId) {
+    public String senior(HttpSession session, Model model, @RequestParam(required = true) Integer contractId) {
         Integer cwId = (Integer) session.getAttribute("principal");
         if (cwId == null) {
             return "redirect:/login/careworker"; // 로그인 페이지로 리다이렉트
         }
 
         try {
-            Map<String, Object> contractDetails = contractService.getContractDetails(cwId);
+            Map<String, Object> contractDetails = contractService.getContractDetails(contractId);
 
             model.addAttribute("contractDetails", contractDetails);
             model.addAttribute("center", "careworker/senior");
         } catch (Exception e) {
-            return "redirect:/";
+            throw new RuntimeException(e);
         }
         return "index";
     }

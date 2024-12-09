@@ -294,7 +294,7 @@
                             <span><strong>거리:</strong> ${details.distance} km</span>
                             <span><strong>연락처:</strong> ${details.senior.seniorTel}</span>
                         </div>
-                        <a href="/careworker/seniors/detail?seniorId=${details.senior.seniorId}" class="cw-btn-secondary">자세히 보기</a>
+                        <a href="/careworker/seniors/detail?contractId=${details.contract.contractId}" class="cw-btn-secondary">자세히 보기</a>
                     </div>
                 </div>
             </c:forEach>
