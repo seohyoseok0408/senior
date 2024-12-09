@@ -129,4 +129,22 @@ public class CareworkerController {
 
         return "index";
     }
+
+    @GetMapping("/seniors/detail")
+    public String senior(HttpSession session, Model model, @RequestParam(required = true) Integer seniorId) {
+        Integer cwId = (Integer) session.getAttribute("principal");
+        if (cwId == null) {
+            return "redirect:/login/careworker"; // 로그인 페이지로 리다이렉트
+        }
+
+        try {
+            Map<String, Object> contractDetails = contractService.getContractDetails(cwId);
+
+            model.addAttribute("contractDetails", contractDetails);
+            model.addAttribute("center", "careworker/senior");
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+        return "index";
+    }
 }
