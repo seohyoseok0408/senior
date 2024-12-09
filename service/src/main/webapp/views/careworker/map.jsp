@@ -38,7 +38,7 @@
 <input type="hidden" id="centerLng" value="${careworker.cwLongitude}">
 <c:forEach var="details" items="${contractsWithDetails}">
     <input type="hidden" class="senior" data-lat="${details.senior.seniorLatitude}"
-           data-lng="${details.senior.seniorLongitude}" data-name="${details.senior.seniorName}">
+           data-lng="${details.senior.seniorLongitude}" data-name="${details.senior.seniorName}" data-profile="${details.senior.seniorProfile}" data-code="${details.senior.seniorId}">
 </c:forEach>
 
 <!-- Kakao 지도 API -->

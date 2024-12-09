@@ -23,8 +23,9 @@ function initMap() {
         const lat = parseFloat(senior.dataset.lat);
         const lng = parseFloat(senior.dataset.lng);
         const name = senior.dataset.name;
-
-        addMarker(lat, lng, name);
+        const code = senior.dataset.code;
+        const image = senior.dataset.profile;
+        addMarker(lat, lng, name, image, code);
     });
 }
 
@@ -41,7 +42,7 @@ function addCenterMarker(lat, lng, imagePath) {
     overlay.setMap(map);
 }
 
-function addMarker(lat, lng, title) {
+function addMarker(lat, lng, name, image, code) {
     var imgSrc = "../../images/seniormap.png";
     var imageSize = new kakao.maps.Size(32, 32);
 
@@ -58,9 +59,35 @@ function addMarker(lat, lng, title) {
     seniorMarker.setMap(map);
     markers.push(seniorMarker);
 
-    // 마커 클릭 이벤트로 정보창 표시
+    const content = `
+        <div style="
+            width: 250px; 
+            padding: 15px; 
+            border-radius: 15px; 
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1); 
+            background: white; 
+            text-align: center; 
+            font-family: Arial, sans-serif;">
+            <img src="../imgs/senior/${image}" 
+                alt="Profile" 
+                style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; border: 2px solid #40c057;" />
+            <h3 style="margin: 10px 0; font-size: 18px; color: #333;">성함: ${name}</h3>
+            <p style="font-size: 13px; color: #f08c00; margin-bottom: 15px;">건강 상태: 양호</p>
+            <button onclick="window.location.href='/senior/details/${code}'" 
+                style="
+                    padding: 8px 15px; 
+                    background-color: #40c057; 
+                    color: white; 
+                    border: none; 
+                    border-radius: 5px; 
+                    cursor: pointer; 
+                    font-size: 14px;">
+                자세히 보기
+            </button>
+        </div>`;
+
     const infowindow = new kakao.maps.InfoWindow({
-        content: `<div style="padding:5px;z-index:1;">${title}</div>`,
+        content: content,
     });
 
     kakao.maps.event.addListener(seniorMarker, 'click', () => {
