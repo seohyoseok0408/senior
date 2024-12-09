@@ -69,4 +69,12 @@ public class SeniorController {
         model.addAttribute("center", "senior/move");
         return "index";
     }
+
+    @RequestMapping("/chart/{id}")
+    public String chart(@PathVariable Integer id, Model model) {
+        // id 값이 JSP에서 차트 렌더링에 사용됩니다.
+        model.addAttribute("seniorId", id);
+        model.addAttribute("center", "senior/healthchart");
+        return "index"; // index.jsp를 사용하여 공통 레이아웃 렌더링
+    }
 }

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -88,6 +89,14 @@ public class CareworkerController {
             throw new RuntimeException(e);
         }
         return "index";
+    }
+
+    @RequestMapping("/chart/{id}")
+    public String chart(@PathVariable Integer id, Model model) {
+        // id 값이 JSP에서 차트 렌더링에 사용됩니다.
+        model.addAttribute("seniorId", id);
+        model.addAttribute("center", "senior/healthchart");
+        return "index"; // index.jsp를 사용하여 공통 레이아웃 렌더링
     }
 
     @RequestMapping("/map")

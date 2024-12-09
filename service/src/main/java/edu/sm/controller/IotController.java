@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.ui.Model;
+
 
 @RestController
 @Slf4j
@@ -15,6 +18,20 @@ import java.util.stream.Collectors;
 public class IotController {
 
     private static final String LOG_FILE_PATH = "../logs/senior/senior_health.log";
+
+    @GetMapping("/health/{id}")
+    public List<Map<String, Object>> getHealthChartBySeniorId(@PathVariable int id) {
+        List<Map<String, Object>> healthData = new ArrayList<>();
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(LOG_FILE_PATH))) {
+            healthData = reader.lines()
+                    .filter(line -> line.contains("seniorId:" + id + ","))
+                    .map(this::parseLogLine)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.error("Error reading log file: {}", e.getMessage());
+        }
+        return healthData;
+    }
 
     // 데이터 처리 엔드포인트
     @PostMapping("/senior")
