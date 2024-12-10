@@ -347,7 +347,7 @@
 <script src="/js/contract_detail.js"></script>
 
 <script>
-    const seniorId = '${senior.seniorId}';
+    const seniorId = '${contractDetails.senior.seniorId}';
 
     function fetchDataAndUpdateCharts() {
         const url = '/iot/health/data/' + seniorId;
