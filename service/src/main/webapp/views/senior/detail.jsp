@@ -504,7 +504,7 @@
 
                             </div>
                         </div>
-                        <a href="/#" class="action-btn">
+                        <a href="/user/worklog?workLogId=${worklog.workLogId}" class="action-btn">
                             자세히 보기
                         </a>
                     </div>

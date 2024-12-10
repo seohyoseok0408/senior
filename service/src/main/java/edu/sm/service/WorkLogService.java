@@ -32,8 +32,9 @@ public class WorkLogService implements SMService<Integer, WorkLog> {
     }
 
     @Override
-    public WorkLog get(Integer integer) throws Exception {
-        return null;
+    public WorkLog get(Integer workLogId) throws Exception {
+        WorkLog workLog = workLogRepository.selectOne(workLogId);
+        return workLog;
     }
 
     @Override

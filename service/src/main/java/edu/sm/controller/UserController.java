@@ -134,4 +134,27 @@ public class UserController {
             return "redirect:/user/senior/insert";
         }
     }
+
+    @GetMapping("/worklog")
+    public String worklog(@RequestParam Integer workLogId, HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("principal");
+        if (userId == null) {
+            return "redirect:/login/user"; // 로그인 페이지로 리다이렉트
+        }
+
+        try {
+            Senior senior = seniorService.getSeniorsByUserId(userId);
+            WorkLog workLog = workLogService.get(workLogId);
+            Careworker careworker = careworkerService.get(workLog.getCwId());
+
+            model.addAttribute("senior", senior);
+            model.addAttribute("workLog", workLog);
+            model.addAttribute("careworker", careworker);
+            model.addAttribute("center", "user/senior/worklog");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return "index";
+    }
 }
