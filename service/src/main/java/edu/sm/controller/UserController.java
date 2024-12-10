@@ -1,13 +1,7 @@
 package edu.sm.controller;
 
-import edu.sm.model.Careworker;
-import edu.sm.model.HealthInfo;
-import edu.sm.model.Senior;
-import edu.sm.model.User;
-import edu.sm.service.CareworkerService;
-import edu.sm.service.HealthinfoService;
-import edu.sm.service.SeniorService;
-import edu.sm.service.UserService;
+import edu.sm.model.*;
+import edu.sm.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +23,7 @@ public class UserController {
     private final SeniorService seniorService;
     private final HealthinfoService healthinfoService;
     private final CareworkerService careworkerService;
+    private final WorkLogService workLogService;
 
     @GetMapping("/senior")
     public String seniors(HttpSession session, Model model) {
@@ -39,8 +34,10 @@ public class UserController {
 
         try {
             Senior senior = seniorService.getSeniorsByUserId(userId);
+            List<WorkLog> workLogs = workLogService.getBySeniorId(senior.getSeniorId());
 
             model.addAttribute("senior", senior);
+            model.addAttribute("workLogs", workLogs);
             model.addAttribute("center", "senior/detail");
         } catch (Exception e) {
             return "redirect:/user/senior/insert";
