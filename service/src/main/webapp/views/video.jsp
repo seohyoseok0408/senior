@@ -11,11 +11,8 @@
     <!-- 룸 컨트롤 -->
     <div class="room-controls">
         <div class="input-group">
-            <input type="number" id="roomIdInput" placeholder="방 번호를 입력하세요" min="1">
-            <button class="btn btn-primary" id="enterRoomBtn">
-                <i class="fas fa-door-open"></i> 입장하기
-            </button>
-            <button class="btn btn-success d-none" id="startSteamBtn">
+            <input type="hidden" id="roomId" value="${contractId}">
+            <button class="btn btn-success" id="startSteamBtn">
                 <i class="fas fa-video"></i> 스트리밍 시작
             </button>
         </div>
@@ -27,7 +24,13 @@
         <!-- 로컬 스트림 -->
         <div class="stream-card">
             <div class="stream-header">
-                <i class="fas fa-user"></i> 보호사
+                <i class="fas fa-user"></i>
+                <c:choose>
+                    <c:when test="${sessionScope.role == 'USER'}">
+                    고객</c:when>
+                <c:when test="${sessionScope.role == 'CAREWORKER'}">
+                    보호사</c:when>
+                </c:choose>
             </div>
             <div class="stream-body">
                 <div class="video-container">
@@ -39,11 +42,17 @@
         <!-- 원격 스트림 -->
         <div class="stream-card">
             <div class="stream-header">
-                <i class="fas fa-users"></i> 고객
+                <i class="fas fa-users"></i>
+                <c:choose>
+                    <c:when test="${sessionScope.role == 'USER'}">
+                        보호사</c:when>
+                    <c:when test="${sessionScope.role == 'CAREWORKER'}">
+                        고객</c:when>
+                </c:choose>
             </div>
             <div class="stream-body">
                 <div id="remoteStreamDiv">
-                    <!-- 고객 스트림이 동적으로 추가됩니다 -->
+                    <!-- 상대 스트림이 동적으로 추가됩니다 -->
                 </div>
             </div>
         </div>
