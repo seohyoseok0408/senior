@@ -6,13 +6,18 @@
 
     :root {
         --primary: #5a67d8;
+        --primary-light: #e6e8ff;
         --primary-dark: #4c51bf;
+        --secondary: #7c3aed;
+        --secondary-light: #ede9fe;
+        --secondary-dark: #6d28d9;
+        --disabled: #a0aec0;
         --background: #f7fafc;
         --text: #2d3748;
         --text-light: #718096;
         --border: #e2e8f0;
         --white: #ffffff;
-        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow: 0 4px 6px rgba(90, 103, 216, 0.1);
     }
 
     body {
@@ -34,18 +39,19 @@
         box-shadow: var(--shadow);
         margin-bottom: 2rem;
         overflow: hidden;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     .section:hover {
         transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
     }
 
     .section-header {
-        background: linear-gradient(135deg, var(--primary) 0%, #7f9cf5 100%);
+        background-color: var(--primary);
         color: var(--white);
         padding: 1.5rem 2rem;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: 700;
     }
 
@@ -68,58 +74,102 @@
 
     .profile-section {
         display: flex;
-        align-items: center;
+        align-items: stretch;
         gap: 2rem;
         margin-bottom: 2rem;
-        background-color: #ebf4ff;
-        padding: 1.5rem;
-        border-radius: 10px;
+        background-color: var(--primary-light);
+        padding: 2rem;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image-container {
+        flex: 0 0 auto;
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .profile-image-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(90, 103, 216, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .profile-image-container:hover::before {
+        opacity: 1;
     }
 
     .profile-image {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        border: 4px solid var(--primary);
-        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+    }
+
+    .profile-image-container:hover .profile-image {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .profile-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .profile-info h3 {
         color: var(--primary);
         margin: 0 0 1rem;
-        font-size: 1.8rem;
+        font-size: 2.2rem;
+        font-weight: 700;
     }
 
     .info-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
-    cd.info-item {
+    .cd-info-item {
         background: var(--white);
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: var(--shadow);
-        transition: transform 0.3s ease;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        padding: 1.2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
     }
 
-    .info-item:hover {
+    .cd-info-item:hover {
         transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
-    info-label {
-        font-size: 0.875rem;
+    .cd-info-label {
+        font-size: 0.9rem;
         color: var(--text-light);
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
         text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
     .cd-info-value {
+        font-size: 1.1rem;
         font-weight: 600;
         color: var(--text);
     }
@@ -155,7 +205,7 @@
     .form-control:focus {
         outline: none;
         border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
+        box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2);
     }
 
     .btn {
@@ -176,25 +226,61 @@
 
     .btn-success:hover {
         background-color: var(--primary-dark);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow);
+    }
+
+    .btn-success:disabled {
+        background-color: var(--disabled);
+        color: var(--white);
+        opacity: 0.7;
+        cursor: not-allowed;
     }
 
     .btn-secondary {
-        background-color: var(--text-light);
+        background-color: var(--secondary);
         color: var(--white);
     }
 
     .btn-secondary:hover {
-        background-color: var(--text);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow);
+        background-color: var(--secondary-dark);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.5em 1em;
+        font-size: 0.75rem;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+        transition: all 0.3s ease;
+    }
+
+    .bg-success {
+        background-color: var(--primary);
+        color: var(--white);
+    }
+
+    .bg-secondary {
+        background-color: var(--secondary);
+        color: var(--white);
+    }
+
+    .btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
     }
 
     @media (max-width: 768px) {
         .profile-section {
             flex-direction: column;
+            align-items: center;
             text-align: center;
+        }
+
+        .profile-image-container {
+            margin-bottom: 1rem;
         }
 
         .form-grid {
@@ -219,9 +305,11 @@
             </div>
 
             <div class="profile-section">
-                <img src="/imgs/senior/${contractDetails.senior.seniorProfile}"
-                     alt="${contractDetails.senior.seniorName} 어르신 프로필"
-                     class="profile-image">
+                <div class="profile-image-container">
+                    <img src="/imgs/senior/${contractDetails.senior.seniorProfile}"
+                         alt="${contractDetails.senior.seniorName} 어르신 프로필"
+                         class="profile-image">
+                </div>
                 <div class="profile-info">
                     <h3>${contractDetails.senior.seniorName} 어르신</h3>
                     <div class="info-grid">
@@ -246,18 +334,19 @@
                     </div>
                 </div>
 
-                <div style="text-align: center;">
+                <div style="text-align: center; margin-top: 2rem;">
                     <c:choose>
                         <c:when test="${contractDetails.contract.contractStatus == 'PENDING'}">
                             <button type="button" class="btn btn-success" id="btn-approve">계약 수락하기</button>
                         </c:when>
                         <c:when test="${contractDetails.contract.contractStatus == 'ACTIVE'}">
-                            <span class="badge bg-success">계약 활성화됨</span>
+                            <button type="button" class="btn btn-success" disabled>계약 활성화됨</button>
                         </c:when>
                         <c:otherwise>
-                            <span class="badge bg-secondary">계약 상태: ${contractDetails.contract.contractStatus}</span>
+                            <button type="button" class="btn btn-secondary" disabled>계약 상태: ${contractDetails.contract.contractStatus}</button>
                         </c:otherwise>
                     </c:choose>
+                    <a href="contracts" class="btn btn-secondary" style="margin-left: 1rem;">목록으로</a>
                 </div>
             </form>
 

@@ -6,14 +6,14 @@
 
     .cwd-wrapper {
         font-family: 'Noto Sans KR', sans-serif;
-        background-color: #f8f9fa;
+        background-color: #ffffff;
         color: #333;
         line-height: 1.6;
         padding: 2rem;
     }
 
     .cwd-container {
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 0 auto;
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         border-radius: 20px;
@@ -148,7 +148,8 @@
 
     .cwd-buttons {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         gap: 1.5rem;
         padding: 40px;
     }
@@ -205,6 +206,65 @@
         background-color: #b2dfdb;
         box-shadow: 0 5px 15px rgba(55, 167, 148, 0.3);
     }
+
+    .cwd-calendar-form-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        width: 100%;
+    }
+
+    .cwd-calendar {
+        flex: 2;
+        margin-top: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .cwd-form-grid {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .cwd-form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cwd-form-label {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .cwd-form-control {
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 0.9rem;
+    }
+
+    .cwd-button-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .cwd-gender {
+        font-size: 0.9rem;
+        background-color: #37a794;
+        color: #fff;
+        padding: 0.25rem 1rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+    }
 </style>
 
 <div class="cwd-wrapper">
@@ -217,7 +277,8 @@
             <div class="cwd-profile">
                 <c:choose>
                     <c:when test="${not empty careworker.cwProfile}">
-                        <img src="/imgs/careworker/${careworker.cwProfile}" class="cwd-profile-image" alt="${careworker.cwName}">
+                        <img src="/imgs/careworker/${careworker.cwProfile}" class="cwd-profile-image"
+                             alt="${careworker.cwName}">
                     </c:when>
                     <c:otherwise>
                         <img src="/static/images/default-profile.png" class="cwd-profile-image" alt="Default Profile">
@@ -228,8 +289,12 @@
             <div class="cwd-info">
                 <div class="cwd-name">
                     ${careworker.cwName}
-                    <span class="cwd-gender">${careworker.cwGender}</span>
-                </div>
+                    <span class="cwd-gender">
+                        <c:choose>
+                            <c:when test="${senior.seniorGender == 'M'}">남성</c:when>
+                            <c:otherwise>여성</c:otherwise>
+                        </c:choose>
+                    </span></div>
 
                 <div class="cwd-details">
                     <div class="cwd-detail-item">
@@ -259,42 +324,70 @@
                 </div>
             </div>
         </div>
-        <div class="cwd-buttons">
-            <!-- 달력 추가 -->
-            <div id="calendar" style="margin-top: 20px; border: 1px solid #ddd; padding: 10px;"></div>
 
+        <div class="cwd-buttons">
+            <div class="cwd-calendar-form-container">
+                <div id="calendar" class="cwd-calendar"></div>
+                <div class="cwd-form-grid">
+                    <div class="cwd-form-group">
+                        <label for="contractStartDate" class="cwd-form-label">시작 날짜</label>
+                        <input type="date" id="contractStartDate" class="cwd-form-control">
+                    </div>
+                    <div class="cwd-form-group">
+                        <label for="contractStartTime" class="cwd-form-label">시작 시간</label>
+                        <input type="time" id="contractStartTime" class="cwd-form-control">
+                    </div>
+                    <div class="cwd-form-group">
+                        <label for="contractEndDate" class="cwd-form-label">종료 날짜</label>
+                        <input type="date" id="contractEndDate" class="cwd-form-control">
+                    </div>
+                    <div class="cwd-form-group">
+                        <label for="contractEndTime" class="cwd-form-label">종료 시간</label>
+                        <input type="time" id="contractEndTime" class="cwd-form-control">
+                    </div>
+                </div>
+            </div>
             <input type="hidden" id="careworkerId" value="${careworker.cwId}">
-            <input type="hidden" id="seniorId" value="${seniorId}">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="contractStartDate">시작 날짜</label>
-                    <input type="date" id="contractStartDate" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="contractStartTime">시작 시간</label>
-                    <input type="time" id="contractStartTime" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="contractEndDate">종료 날짜</label>
-                    <input type="date" id="contractEndDate" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="contractEndTime">종료 시간</label>
-                    <input type="time" id="contractEndTime" class="form-control">
-                </div>
+            <input type="hidden" id="seniorId" value="${seniorId}"/>
+            <div class="cwd-button-container">
                 <button type="button" id="contract-btn" class="cwd-btn cwd-btn-primary">계약 신청</button>
                 <a href="/user/careworkers" class="cwd-btn cwd-btn-secondary">목록으로</a>
             </div>
         </div>
-
     </div>
 </div>
-<!-- Bootstrap CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- FullCalendar CSS & JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-
 <script src="/js/careworker.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            locale: 'ko',
+            buttonText: {
+                today: '오늘',
+                month: '월',
+                week: '주',
+                day: '일'
+            },
+            events: [
+                // 여기에 이벤트를 추가할 수 있습니다.
+            ],
+            eventClick: function (info) {
+                alert('이벤트: ' + info.event.title);
+            },
+            dateClick: function (info) {
+                alert('선택한 날짜: ' + info.dateStr);
+            }
+        });
+        calendar.render();
+    });
+</script>
+

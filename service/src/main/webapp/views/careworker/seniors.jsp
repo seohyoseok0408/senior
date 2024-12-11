@@ -3,40 +3,40 @@
 
 <style>
     :root {
-        --cw-color-primary: #74db34;
-        --cw-color-primary-dark: #2980b9;
-        --cw-color-primary-light: #ebf5fb;
-        --cw-color-secondary: #2ecc71;
-        --cw-color-secondary-dark: #27ae60;
-        --cw-color-background: #f9f9f9;
-        --cw-color-surface: #ffffff;
-        --cw-color-text: #333333;
-        --cw-color-text-light: #777777;
-        --cw-color-border: #e0e0e0;
-        --cw-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-        --cw-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        --cw-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --senior-color-primary: #74db34;
+        --senior-color-primary-dark: #2980b9;
+        --senior-color-primary-light: #ebf5fb;
+        --senior-color-secondary: #2ecc71;
+        --senior-color-secondary-dark: #27ae60;
+        --senior-color-background: #f9f9f9;
+        --senior-color-surface: #ffffff;
+        --senior-color-text: #333333;
+        --senior-color-text-light: #777777;
+        --senior-color-border: #e0e0e0;
+        --senior-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+        --senior-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --senior-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .cw-body {
+    .senior-page {
         font-family: 'Noto Sans KR', sans-serif;
-        background-color: var(--cw-color-background);
-        color: var(--cw-color-text);
+        background-color: var(--senior-color-background);
+        color: var(--senior-color-text);
         line-height: 1.6;
         margin: 0;
         padding: 0;
     }
 
-    .cw-hero {
-        background: linear-gradient(135deg, var(--cw-color-primary) 0%, var(--cw-color-primary-dark) 100%);
-        color: var(--cw-color-surface);
+    .senior-hero {
+        background: linear-gradient(135deg, var(--senior-color-primary) 0%, var(--senior-color-primary-dark) 100%);
+        color: var(--senior-color-surface);
         padding: 4rem 2rem;
         text-align: center;
         position: relative;
         overflow: hidden;
     }
 
-    .cw-hero::before {
+    .senior-hero::before {
         content: '';
         position: absolute;
         top: 0;
@@ -47,7 +47,7 @@
         opacity: 0.5;
     }
 
-    .cw-hero-title {
+    .senior-hero-title {
         font-size: 3.5rem;
         font-weight: 700;
         margin-bottom: 1rem;
@@ -55,49 +55,30 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .cw-hero-subtitle {
-        font-size: 1.25rem;
-        opacity: 0.9;
-        max-width: 600px;
-        margin: 0 auto;
-        position: relative;
-    }
-
-    .cw-container {
+    .senior-container {
         max-width: 1200px;
         margin: -3rem auto 2rem;
         padding: 0 2rem;
         position: relative;
     }
 
-    .cw-search-panel {
-        background-color: var(--cw-color-surface);
+    .senior-list-panel {
+        background-color: var(--senior-color-surface);
         border-radius: 1rem;
-        box-shadow: var(--cw-shadow-lg);
+        box-shadow: var(--senior-shadow-lg);
         padding: 2rem;
         margin-bottom: 3rem;
-        border: 1px solid var(--cw-color-primary-light);
+        border: 1px solid var(--senior-color-primary-light);
         transition: all 0.3s ease;
     }
 
-    .cw-search-panel:hover {
+    .senior-list-panel:hover {
         transform: translateY(-5px);
-        box-shadow: var(--cw-shadow-lg), 0 10px 25px rgba(52, 152, 219, 0.2);
+        box-shadow: var(--senior-shadow-lg), 0 10px 25px rgba(52, 152, 219, 0.2);
     }
 
-    .cw-search-form {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 1.5rem;
-        align-items: end;
-    }
-
-    .cw-form-group {
-        position: relative;
-    }
-
-    .cw-senior-info {
-        background-color: var(--cw-color-primary-light);
+    .senior-summary {
+        background-color: var(--senior-color-primary-light);
         padding: 1.5rem;
         border-radius: 0.5rem;
         margin-bottom: 1.5rem;
@@ -105,130 +86,79 @@
         transition: all 0.3s ease;
     }
 
-    .cw-senior-info:hover {
-        box-shadow: var(--cw-shadow);
+    .senior-summary:hover {
+        box-shadow: var(--senior-shadow);
     }
 
-    .cw-senior-info-title {
-        color: var(--cw-color-primary-dark);
+    .senior-summary-title {
+        color: var(--senior-color-primary-dark);
         font-size: 1.5rem;
         margin: 0;
         font-weight: 600;
     }
 
-    .cw-form-label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-        color: var(--cw-color-text);
-        font-size: 0.95rem;
-    }
-
-    .cw-form-control {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: 2px solid var(--cw-color-border);
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233498db'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        background-size: 1rem;
-        padding-right: 2.5rem;
-    }
-
-    .cw-form-control:focus {
-        outline: none;
-        border-color: var(--cw-color-primary);
-        box-shadow: 0 0 0 3px var(--cw-color-primary-light);
-    }
-
-    .cw-btn {
-        padding: 0.75rem 2rem;
-        border: none;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .cw-btn-primary {
-        background-color: #2ecc71;
-        color: var(--cw-color-surface);
-    }
-
-    .cw-btn-primary:hover {
-        background-color: #27ae60;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
-    }
-
-
-    .cw-senior-list {
+    .senior-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 2rem;
     }
 
-    .cw-careworker-card {
-        background-color: var(--cw-color-surface);
+    .senior-card {
+        background-color: var(--senior-color-surface);
         border-radius: 1rem;
         overflow: hidden;
         transition: all 0.3s ease;
-        border: 1px solid var(--cw-color-border);
+        border: 1px solid var(--senior-color-border);
     }
 
-    .cw-careworker-card:hover {
+    .senior-card:hover {
         transform: translateY(-5px);
-        box-shadow: var(--cw-shadow-lg);
-        border-color: var(--cw-color-primary-light);
+        box-shadow: var(--senior-shadow-lg);
+        border-color: var(--senior-color-primary-light);
     }
 
-    .cw-careworker-image {
+    .senior-image {
         width: 100%;
         height: 300px;
         object-fit: cover;
         transition: all 0.3s ease;
     }
 
-    .cw-careworker-card:hover .cw-careworker-image {
+    .senior-card:hover .senior-image {
         transform: scale(1.05);
     }
 
-    .cw-careworker-info {
+    .senior-details {
         padding: 1.5rem;
     }
 
-    .cw-careworker-name {
+    .senior-name {
         font-size: 1.25rem;
         font-weight: 700;
         margin-bottom: 1rem;
-        color: var(--cw-color-primary-dark);
+        color: var(--senior-color-primary-dark);
     }
 
-    .cw-careworker-details {
+    .senior-info {
         display: grid;
         gap: 0.5rem;
         font-size: 0.95rem;
-        color: var(--cw-color-text-light);
+        color: var(--senior-color-text-light);
         margin-bottom: 1.5rem;
     }
 
-    .cw-careworker-details span {
+    .senior-info span {
         display: flex;
         align-items: center;
         gap: 0.5rem;
     }
 
-    .cw-btn-secondary {
+    .senior-action-btn {
         display: block;
         width: 100%;
         text-align: center;
-        background-color: var(--cw-color-secondary);
-        color: var(--cw-color-surface);
+        background-color: var(--senior-color-secondary);
+        color: var(--senior-color-surface);
         text-decoration: none;
         padding: 0.75rem;
         border-radius: 0.5rem;
@@ -236,68 +166,53 @@
         transition: all 0.3s ease;
     }
 
-    .cw-btn-secondary:hover {
-        background-color: var(--cw-color-secondary-dark);
+    .senior-action-btn:hover {
+        background-color: var(--senior-color-secondary-dark);
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
     }
 
     @media (max-width: 768px) {
-        .cw-hero {
+        .senior-hero {
             padding: 3rem 1rem;
         }
 
-        .cw-hero-title {
+        .senior-hero-title {
             font-size: 2.5rem;
         }
 
-        .cw-hero-subtitle {
-            font-size: 1rem;
-        }
-
-        .cw-container {
+        .senior-container {
             padding: 0 1rem;
             margin-top: -2rem;
         }
-
-        .cw-search-form {
-            grid-template-columns: 1fr;
-        }
-
-        .cw-form-group {
-            margin-bottom: 1rem;
-        }
-
-        .cw-btn {
-            width: 100%;
-        }
     }
 </style>
-<div class="cw-hero">
-    <h1 class="cw-hero-title">관리 중인 시니어 목록</h1>
-    <p class="cw-hero-subtitle">환영합니다.</p>
-</div>
+<div class="senior-page">
+    <div class="senior-hero">
+        <h1 class="senior-hero-title">시니어케어 동반자</h1>
+    </div>
 
-<div class="cw-container">
-    <div class="cw-search-panel">
-        <div class="cw-senior-info">
-            <h2 class="cw-senior-info-title"> 시니어</h2>
-        </div>
-        <div class="cw-senior-list">
-            <c:forEach var="details" items="${contractsWithDetails}">
-                <div class="cw-careworker-card">
-                    <img src="/imgs/careworker/${details.senior.seniorProfile}" class="cw-careworker-image"
-                         alt="${details.senior.seniorName}" onerror="this.src='/imgs/default-profile.jpg'">
-                    <div class="cw-careworker-info">
-                        <h3 class="cw-careworker-name">${details.senior.seniorName}</h3>
-                        <div class="cw-careworker-details">
-                            <span><strong>거리:</strong> ${details.distance} km</span>
-                            <span><strong>연락처:</strong> ${details.senior.seniorTel}</span>
+    <div class="senior-container">
+        <div class="senior-list-panel">
+            <div class="senior-summary">
+                <h2 class="senior-summary-title">함께하는 어르신 목록</h2>
+            </div>
+            <div class="senior-grid">
+                <c:forEach var="details" items="${contractsWithDetails}">
+                    <div class="senior-card">
+                        <img src="/imgs/careworker/${details.senior.seniorProfile}" class="senior-image"
+                             alt="${details.senior.seniorName}" onerror="this.src='/imgs/default-profile.jpg'">
+                        <div class="senior-details">
+                            <h3 class="senior-name">${details.senior.seniorName}</h3>
+                            <div class="senior-info">
+                                <span><strong>거리:</strong> ${details.distance} km</span>
+                                <span><strong>연락처:</strong> ${details.senior.seniorTel}</span>
+                            </div>
+                            <a href="/careworker/seniors/detail?contractId=${details.contract.contractId}" class="senior-action-btn">상세정보</a>
                         </div>
-                        <a href="/careworker/seniors/detail?contractId=${details.contract.contractId}" class="cw-btn-secondary">자세히 보기</a>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </div>
         </div>
     </div>
 </div>

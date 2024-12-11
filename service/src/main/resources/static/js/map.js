@@ -4,7 +4,7 @@ var markers = [];
 // 시니어 중심 좌표
 var lat = $('#seniorLat').val();
 var lng = $('#seniorLng').val();
-var profileImagePath = "../../images/house.jpg"; // 고정된 이미지 경로
+var profileImagePath = "../../images/seniormap.png"; // 고정된 이미지 경로
 
 console.log("lat:", lat);
 console.log("lng:", lng);
@@ -23,7 +23,10 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var ps = new kakao.maps.services.Places();
 
 // 검색 결과 목록과 마커를 클릭 시 표시할 인포윈도우
-var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+var infowindow = new kakao.maps.InfoWindow({
+    zIndex: 1,
+    boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
+});
 
 // 초기 중앙 마커 추가
 addCenterMarker(lat, lng, profileImagePath);
@@ -41,17 +44,12 @@ document.getElementById('pharmacyBtn').addEventListener('click', function () {
 
 // 카테고리 변경 후 검색하는 함수
 function updateCategory(category) {
-    // 버튼 스타일 변경
-    document.querySelectorAll('#category_wrap button').forEach((btn) => btn.classList.remove('active'));
+    document.querySelectorAll('#category_wrap button').forEach((btn) => {
+        btn.classList.remove('active');
+    });
 
-    // 선택된 버튼에 스타일 적용
-    if (category === "HP8") {
-        document.getElementById('hospitalBtn').classList.add('active');
-    } else if (category === "PM9") {
-        document.getElementById('pharmacyBtn').classList.add('active');
-    }
+    document.getElementById(category === "HP8" ? 'hospitalBtn' : 'pharmacyBtn').classList.add('active');
 
-    // 기존 마커 제거 및 새로운 카테고리로 검색 실행
     removeMarker();
     searchPlaces(category);
 }
@@ -59,8 +57,8 @@ function updateCategory(category) {
 // 중앙 마커 추가 함수
 function addCenterMarker(lat, lng, imagePath) {
     var content = `
-        <div class="custom-overlay">
-            <img src="${imagePath}" style="width:50px; height:50px; border-radius:50%;" />
+        <div>
+            <img src="${imagePath}" style="width:40px; height:40px; border-radius:50%; border: 2px solid #45C65A;" />
         </div>`;
     var overlay = new kakao.maps.CustomOverlay({
         position: new kakao.maps.LatLng(lat, lng),
@@ -71,7 +69,7 @@ function addCenterMarker(lat, lng, imagePath) {
 
 // 장소 검색 요청 함수
 function searchPlaces(category) {
-    removeMarker(); // 기존 마커 제거
+    removeMarker();
     ps.categorySearch(category, placesSearchCB, {
         location: new kakao.maps.LatLng(lat, lng),
         radius: 5000 // 반경 5km
@@ -81,8 +79,8 @@ function searchPlaces(category) {
 // 장소 검색 결과 콜백 함수
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
-        displayPlaces(data); // 검색된 장소 목록 및 마커 표시
-        displayPagination(pagination); // 페이지네이션 표시
+        displayPlaces(data);
+        displayPagination(pagination);
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert('검색 결과가 존재하지 않습니다.');
     } else if (status === kakao.maps.services.Status.ERROR) {
@@ -96,35 +94,27 @@ function displayPlaces(places) {
     var fragment = document.createDocumentFragment();
     var bounds = new kakao.maps.LatLngBounds();
 
-    // 기존 목록 초기화
     removeAllChildNods(listEl);
-
-    // 기존 마커 제거
     removeMarker();
 
-    // 검색 결과 처리
     places.forEach((place, i) => {
         var placePosition = new kakao.maps.LatLng(place.y, place.x);
-        var marker = addMarker(placePosition, i); // 마커 생성
-        var itemEl = getListItem(i, place); // 목록 항목 생성
-        // 지도 범위 확장
+        var marker = addMarker(placePosition, i);
+        var itemEl = getListItem(i, place);
+
         bounds.extend(placePosition);
 
-        // 마커 및 목록 항목에 이벤트 추가
-        (function (marker, title) {
+        (function(marker, title) {
             kakao.maps.event.addListener(marker, 'mouseover', () => displayInfowindow(marker, title));
             kakao.maps.event.addListener(marker, 'mouseout', () => infowindow.close());
             itemEl.onmouseover = () => displayInfowindow(marker, title);
             itemEl.onmouseout = () => infowindow.close();
         })(marker, place.place_name);
 
-        fragment.appendChild(itemEl); // 목록에 항목 추가
+        fragment.appendChild(itemEl);
     });
 
-    // 완성된 목록 추가
     listEl.appendChild(fragment);
-
-    // 지도 범위 설정
     map.setBounds(bounds);
 }
 
@@ -134,9 +124,9 @@ function getListItem(index, place) {
     el.className = 'item';
 
     el.innerHTML = `
-        <span class="markerbg marker_${index + 1}"></span>
+        <span class="markerbg marker_${index+1}"></span>
         <div class="info">
-            <h5>${place.place_name}</h5>
+            <h5>${index+1}. ${place.place_name}</h5>
             ${place.road_address_name ? `<span>${place.road_address_name}</span>` : ''}
             <span class="jibun gray">${place.address_name}</span>
             <span class="tel">${place.phone || '전화번호 없음'}</span>
@@ -150,7 +140,7 @@ function addMarker(position, idx) {
     var imageSize = new kakao.maps.Size(36, 37);
     var imgOptions = {
         spriteSize: new kakao.maps.Size(36, 691),
-        spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10),
+        spriteOrigin: new kakao.maps.Point(0, (idx * 46) + 10),
         offset: new kakao.maps.Point(13, 37)
     };
 
@@ -177,29 +167,30 @@ function displayPagination(pagination) {
     var paginationEl = document.getElementById('pagination');
     var fragment = document.createDocumentFragment();
 
-    // 기존 페이지 번호 제거
     while (paginationEl.hasChildNodes()) {
         paginationEl.removeChild(paginationEl.lastChild);
     }
 
-    // 새 페이지 번호 생성
     for (var i = 1; i <= pagination.last; i++) {
         var el = document.createElement('a');
         el.href = "#";
         el.innerHTML = i;
         el.className = i === pagination.current ? 'on' : '';
-        el.onclick = (function (i) {
-            return () => pagination.gotoPage(i);
+
+        el.onclick = (function(i) {
+            return function() {
+                pagination.gotoPage(i);
+            }
         })(i);
+
         fragment.appendChild(el);
     }
-
     paginationEl.appendChild(fragment);
 }
 
 // 인포윈도우 표시
 function displayInfowindow(marker, title) {
-    var content = `<div style="padding:5px;z-index:1;">${title}</div>`;
+    var content = `<div style="padding:10px;font-size:14px;font-weight:500;">${title}</div>`;
     infowindow.setContent(content);
     infowindow.open(map, marker);
 }

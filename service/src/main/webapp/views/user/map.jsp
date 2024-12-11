@@ -2,228 +2,187 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-    .map_wrap, .map_wrap * {
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+    body, html {
         margin: 0;
         padding: 0;
-        font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-        font-size: 12px;
+        font-family: 'Noto Sans KR', sans-serif;
+        background-color: #f8f9fa;
     }
 
     .map_wrap {
         position: relative;
         width: 100%;
-        height: 800px;
+        height: 100vh;
+        overflow: hidden;
     }
 
     #senior_address_wrap {
-        position: relative;
-        width: 100%;
-        height: 70px; /* 상단 영역 높이 설정 */
-        background-color: rgba(255, 255, 255, 0.9);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background-color: #f8f9fa;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
-        color: #333;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 0 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         z-index: 3;
     }
 
     #seniorAddressDisplay {
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+        margin-left: 10px;
     }
 
     #seniorDetailAddressDisplay {
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 16px;
+        color: #666;
+        margin-left: 5px;
     }
 
     #map {
         width: 100%;
-        height: calc(100% - 70px); /* 상단 영역 제외한 높이 */
-        position: relative;
-        overflow: hidden;
-        margin-top: 0;
+        height: calc(100% - 70px);
+        position: absolute;
+        top: 70px;
+        left: 0;
     }
 
     #category_wrap {
         position: absolute;
-        top: 70px; /* 지도 상단에서 카테고리 버튼 위치 */
+        top: 80px;
         left: 10px;
         z-index: 2;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
     }
 
     #category_wrap button {
-        margin: 5px;
-        padding: 10px 20px;
+        padding: 12px 20px;
         border: none;
-        border-radius: 5px;
-        background-color: #f5f5f5;
+        background-color: #ffffff;
         cursor: pointer;
         font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    #category_wrap button:hover {
+        background-color: #f0f0f0;
     }
 
     #category_wrap button.active {
-        background-color: #81c147;
+        background-color: #45C65A;
         color: white;
-        font-weight: bold;
     }
 
     #menu_wrap {
         position: absolute;
-        top: 110px;
+        top: 140px;
         left: 10px;
-        width: 250px;
-        height: calc(100% - 120px);
+        width: 350px;
+        max-height: calc(100% - 160px);
         overflow-y: auto;
-        background: rgba(255, 255, 255, 0.8);
+        background: #ffffff;
         z-index: 1;
-        font-size: 12px;
-        border-radius: 10px;
-        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #placesList {
+        padding: 0;
+        margin: 0;
     }
 
     #placesList li {
         list-style: none;
-    }
-
-    #placesList .item {
-        position: relative;
-        border-bottom: 1px solid #888;
-        overflow: hidden;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
         cursor: pointer;
-        min-height: 65px;
+        transition: background-color 0.3s ease;
     }
 
-    #placesList .item span {
-        display: block;
-        margin-top: 4px;
+    #placesList li:hover {
+        background-color: #f9f9f9;
     }
 
-    #placesList .item h5, #placesList .item .info {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+    #placesList .item h5 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0 0 5px 0;
+        color: #333;
     }
 
     #placesList .item .info {
-        padding: 10px 0 10px 55px;
-    }
-
-    #placesList .info .gray {
-        color: #8a8a8a;
-    }
-
-    #placesList .info .jibun {
-        padding-left: 26px;
-        background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
+        font-size: 14px;
+        color: #666;
     }
 
     #placesList .info .tel {
-        color: #009900;
+        color: #45C65A;
+        font-weight: 500;
+        margin-top: 5px;
     }
 
-    #placesList .item .markerbg {
-        float: left;
-        position: absolute;
-        width: 36px;
-        height: 37px;
-        margin: 10px 0 0 10px;
-        background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
+    #pagination {
+        margin-top: 10px;
+        text-align: center;
     }
 
-    #placesList .item .marker_1 {
-        background-position: 0 -10px;
+    #pagination a {
+        display: inline-block;
+        margin: 0 5px;
+        padding: 5px 10px;
+        border-radius: 3px;
+        background-color: #f0f0f0;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
     }
 
-    #placesList .item .marker_2 {
-        background-position: 0 -56px;
+    #pagination a.on {
+        background-color: #45C65A;
+        color: white;
     }
 
-    #placesList .item .marker_3 {
-        background-position: 0 -102px
-    }
-
-    #placesList .item .marker_4 {
-        background-position: 0 -148px;
-    }
-
-    #placesList .item .marker_5 {
-        background-position: 0 -194px;
-    }
-
-    #placesList .item .marker_6 {
-        background-position: 0 -240px;
-    }
-
-    #placesList .item .marker_7 {
-        background-position: 0 -286px;
-    }
-
-    #placesList .item .marker_8 {
-        background-position: 0 -332px;
-    }
-
-    #placesList .item .marker_9 {
-        background-position: 0 -378px;
-    }
-
-    #placesList .item .marker_10 {
-        background-position: 0 -423px;
-    }
-
-    #placesList .item .marker_11 {
-        background-position: 0 -470px;
-    }
-
-    #placesList .item .marker_12 {
-        background-position: 0 -516px;
-    }
-
-    #placesList .item .marker_13 {
-        background-position: 0 -562px;
-    }
-
-    #placesList .item .marker_14 {
-        background-position: 0 -608px;
-    }
-
-    #placesList .item .marker_15 {
-        background-position: 0 -654px;
+    .material-icons {
+        vertical-align: middle;
     }
 </style>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <div class="map_wrap">
-
     <div id="senior_address_wrap">
-        <span class="material-icons" style="font-size: 34px; margin-left:0; color:#45C65A;">place</span>
+        <span class="material-icons" style="font-size: 28px; color:#45C65A;">place</span>
         <span id="seniorAddressDisplay">${senior.seniorStreetAddr}</span>
-        <span id="seniorDetailAddressDisplay">, ${senior.seniorDetailAddr2}</span>
+        <span id="seniorDetailAddressDisplay">${senior.seniorDetailAddr2}</span>
     </div>
 
-    <!-- 지도 영역 -->
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+    <div id="map"></div>
 
-    <!-- 카테고리 버튼 -->
     <div id="category_wrap">
         <button id="hospitalBtn" onclick="updateCategory('HP8')" class="active">병원</button>
         <button id="pharmacyBtn" onclick="updateCategory('PM9')">약국</button>
     </div>
 
-    <!-- 장소 정보 -->
-    <div id="menu_wrap" class="bg_white">
+    <div id="menu_wrap">
         <ul id="placesList"></ul>
+        <div id="pagination"></div>
     </div>
 
-    <!-- 시니어 좌표 -->
     <input type="hidden" value="${senior.seniorLatitude}" id="seniorLat">
     <input type="hidden" value="${senior.seniorLongitude}" id="seniorLng">
     <input type="hidden" id="seniorProfile" value="/images/default-profile.jpg">
-
 </div>
 
-<!-- Kakao 지도 API -->
-<script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24292fb5ce2d2498c2ed88d0a951d790&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24292fb5ce2d2498c2ed88d0a951d790&libraries=services"></script>
 <script src="/js/map.js"></script>
+
