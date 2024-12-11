@@ -52,4 +52,19 @@
             contract_status = #{contractStatus}
         WHERE contract_id = #{contractId}
     </update>
+
+    <select id="findByUserId" parameterType="Integer" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE user_id = #{userId}
+        AND contract_status = 'ACTIVE';
+    </select>
+
+    <select id="findBycwIdUserId" parameterType="Integer" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE cw_id = #{cwId}
+          AND user_id = #{userId}
+          AND contract_status = 'ACTIVE';
+    </select>
 </mapper>
