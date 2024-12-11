@@ -1,12 +1,10 @@
 package edu.sm.controller;
 
-import edu.sm.model.Careworker;
-import edu.sm.model.Contract;
-import edu.sm.model.Senior;
-import edu.sm.model.User;
+import edu.sm.model.*;
 import edu.sm.service.CareworkerService;
 import edu.sm.service.ContractService;
 import edu.sm.service.SeniorService;
+import edu.sm.service.WorkLogService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +26,7 @@ public class CareworkerController {
     private final SeniorService seniorService;
     private final CareworkerService careworkerService;
     private final ContractService contractService;
+    private final WorkLogService workLogService;
 
     @RequestMapping("/mypage")
     public String mypage(HttpSession session, Model model) {
@@ -150,7 +149,10 @@ public class CareworkerController {
 
         try {
             Map<String, Object> contractDetails = contractService.getContractDetails(contractId);
-
+            Senior senior = (Senior) contractDetails.get("senior");
+            List<WorkLog> workLogs = workLogService.getBySeniorId(senior.getSeniorId());
+            log.info(senior.toString());
+            model.addAttribute("workLogs", workLogs);
             model.addAttribute("contractDetails", contractDetails);
             model.addAttribute("center", "careworker/senior");
         } catch (Exception e) {
@@ -174,6 +176,23 @@ public class CareworkerController {
             model.addAttribute("user", careworker);
             model.addAttribute("contractId", contractId);
             model.addAttribute("center", "video");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return "index";
+    }
+    @GetMapping("/worklog")
+    public String workLogDetail(HttpSession session, Model model, @RequestParam(required = true) Integer workLogId) {
+        Integer cwId = (Integer) session.getAttribute("principal");
+        if (cwId == null) {
+            return "redirect:/login/careworker"; // 로그인 페이지로 리다이렉트
+        }
+
+        try {
+            WorkLog workLog = workLogService.get(workLogId);
+
+            model.addAttribute("workLog", workLog);
+            model.addAttribute("center", "careworker/worklog");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
