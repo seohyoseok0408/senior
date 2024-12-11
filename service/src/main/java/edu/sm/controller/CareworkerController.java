@@ -1,7 +1,9 @@
 package edu.sm.controller;
 
 import edu.sm.model.Careworker;
+import edu.sm.model.Contract;
 import edu.sm.model.Senior;
+import edu.sm.model.User;
 import edu.sm.service.CareworkerService;
 import edu.sm.service.ContractService;
 import edu.sm.service.SeniorService;
@@ -156,4 +158,26 @@ public class CareworkerController {
         }
         return "index";
     }
+
+    @RequestMapping("/rtc")
+    public String video(@RequestParam Integer userId, Model model, HttpSession session) {
+        Integer cwid = (Integer) session.getAttribute("principal");
+        if (cwid == null) {
+            return "redirect:/";
+        }
+
+        try {
+            Contract contract = contractService.getContractByCwIdUserId(cwid, userId);
+            Integer contractId = contract.getContractId();
+            Careworker careworker = careworkerService.get(cwid);
+
+            model.addAttribute("user", careworker);
+            model.addAttribute("contractId", contractId);
+            model.addAttribute("center", "video");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return "index";
+    }
+
 }

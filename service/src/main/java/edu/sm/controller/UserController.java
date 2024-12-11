@@ -24,6 +24,7 @@ public class UserController {
     private final HealthinfoService healthinfoService;
     private final CareworkerService careworkerService;
     private final WorkLogService workLogService;
+    private final ContractService contractService;
 
     @GetMapping("/senior")
     public String seniors(HttpSession session, Model model) {
@@ -111,9 +112,24 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("/video")
-    public String video(Model model) {
-        model.addAttribute("center", "user/video");
+    @RequestMapping("/rtc")
+    public String video(Model model, HttpSession session) {
+        Integer id = (Integer) session.getAttribute("principal");
+        if (id == null) {
+            return "redirect:/";
+        }
+
+        try {
+            Contract contract = contractService.getContractByUserId(id);
+            Integer contractId = contract.getContractId();
+            User user = userService.get(id);
+
+            model.addAttribute("user", user);
+            model.addAttribute("contractId", contractId);
+            model.addAttribute("center", "video");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return "index";
     }
 
