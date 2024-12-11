@@ -140,4 +140,15 @@ public class ContractService implements SMService<Integer, Contract> {
             throw e; // 트랜잭션 롤백
         }
     }
+
+    @Transactional
+    public Contract getContractByUserId(Integer userId) throws Exception {
+        return contractRepository.findByUserId(userId);
+    }
+
+    @Transactional
+    public Contract getContractByCwIdUserId(Integer cwId, Integer userId) throws Exception {
+        return contractRepository.findBycwIdUserId(cwId, userId);
+    }
 }
+

@@ -6,6 +6,21 @@ let otherKeyList = [];
 let localStream = undefined;
 let isSwapped = false;
 
+// JSP의 roomId를 가져와 자동 설정
+document.addEventListener("DOMContentLoaded", async () => {
+    roomId = document.getElementById('roomId').value; // JSP에서 전달된 roomId
+    console.log(`Room ID set: ${roomId}`);
+
+    await startCam();
+
+    if (localStream !== undefined) {
+        localStreamElement.classList.remove('d-none');
+        document.querySelector('#localStream').classList.remove('d-none');
+    }
+
+    await connectSocket();
+});
+
 const startCam = async () =>{
     if(navigator.mediaDevices !== undefined){
         await navigator.mediaDevices.getUserMedia({ audio: true, video : true })
@@ -163,22 +178,6 @@ let sendAnswer = (pc,otherKey) => {
 const setLocalAndSendMessage = (pc ,sessionDescription) =>{
     pc.setLocalDescription(sessionDescription);
 }
-
-//룸 번호 입력 후 캠 + 웹소켓 실행
-document.querySelector('#enterRoomBtn').addEventListener('click', async () =>{
-    await startCam();
-
-    if(localStream !== undefined){
-        localStreamElement.classList.remove('d-none');
-        document.querySelector('#localStream').classList.remove('d-none');
-        document.querySelector('#startSteamBtn').classList.remove('d-none');
-    }
-    roomId = document.querySelector('#roomIdInput').value;
-    document.querySelector('#roomIdInput').disabled = true;
-    document.querySelector('#enterRoomBtn').disabled = true;
-
-    await connectSocket();
-});
 
 // 스트림 버튼 클릭시 , 다른 웹 key들 웹소켓을 가져 온뒤에 offer -> answer -> iceCandidate 통신
 // peer 커넥션은 pcListMap 으로 저장

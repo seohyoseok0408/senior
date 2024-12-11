@@ -13,4 +13,8 @@ import java.util.List;
 public interface ContractRepository extends SMRepository<Integer, Contract> {
     List<Contract> findAllByCareworkerId(@Param("cwId") Integer cwId);
     List<Contract> findByCareworkerIdAndStatus(@Param("cwId") Integer cwId, @Param("status") String status);
+    Contract findByUserId(@Param("userId") Integer userId) throws Exception;
+    Contract findBycwIdUserId(@Param("cwId") Integer cwId, @Param("userId") Integer userId) throws Exception;
+
+
 }

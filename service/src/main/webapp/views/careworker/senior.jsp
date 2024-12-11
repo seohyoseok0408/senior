@@ -251,6 +251,8 @@
                          alt="${contractDetails.senior.seniorName} 어르신 프로필"
                          class="profile-image">
                     <h2 class="profile-name">${contractDetails.senior.seniorName} 어르신</h2>
+                    <a href="/careworker/rtc?userId=${contractDetails.user.userId}"
+                       class="btn btn-primary">고객 화상통화 연결</a>
                     <div class="profile-details">
                         <div class="profile-item">
                             <div class="profile-label">성별</div>
