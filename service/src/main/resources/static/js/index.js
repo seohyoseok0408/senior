@@ -3,6 +3,14 @@ let chatbtn = {
         const principalElement = document.getElementById("principal");
         const principal = principalElement ? principalElement.innerText.trim() : "손님";
 
+        // const scrollBtn = document.createElement("button");
+        // scrollBtn.innerHTML = "chatbot";
+        // scrollBtn.setAttribute("id", "scroll-btn");
+        // document.body.appendChild(scrollBtn);
+        // scrollBtn.classList.add("show");
+        // scrollBtn.addEventListener("click", function(){
+        //     location.href='<c:url value="/chatbot"/>';
+        // });
         const scrollBtn2 = document.createElement("button");
         scrollBtn2.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
         scrollBtn2.setAttribute("id", "scroll-btn2");
