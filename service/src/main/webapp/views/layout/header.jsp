@@ -13,7 +13,8 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <link href="/css/font-awesome.min.css'" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
     <link href="value='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'" rel="stylesheet"/>
     <link href="/css/style.css" rel="stylesheet"/>
     <link href="/css/responsive.css" rel="stylesheet"/>
@@ -37,7 +38,7 @@
 
     .header_section {
         background: white;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .navbar-brand {
@@ -140,6 +141,34 @@
     .ml-auto {
         margin-left: 0 !important;
     }
+
+    /* 메시지 알림 아이콘 스타일 */
+    .notification-link {
+        color: #333;
+        text-decoration: none;
+        font-size: 1.2rem;
+        position: relative;
+        border: none !important;
+        padding: 0 !important; /* 불필요한 패딩 제거 */
+    }
+
+    .notification-link:hover {
+        color: #40c057;
+        background-color: transparent; /* 배경색 유지 */
+        box-shadow: none; /* 호버 시 그림자 제거 */
+    }
+
+    .notification-link .badge {
+        position: absolute;
+        top: 2px;
+        right: 3px;
+        background-color: #ff6b6b;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        padding: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 </style>
 
 <body>
@@ -157,32 +186,42 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="user_option">
-                        <%-- 고객 메뉴 --%>
-                        <c:if test="${sessionScope.role == 'USER'}">
-                            <a href="/user/careworkers">보호사 신청</a>
-                            <a href="/user/senior">시니어 관리</a>
-                            <a href="/user/map">지도보기</a>
-                            <a href="/user/rtc">실시간 통화</a>
-                            <a href="/fullcalendar-u">일정관리</a>
-                            <a href="/help">문의</a>
-                            <a href="/user/mypage">내 정보</a>
-                        </c:if>
+                    <c:if test="${not empty sessionScope.principal}">
+                        <div class="user_option">
+                                <%-- 고객 메뉴 --%>
+                            <c:if test="${sessionScope.role == 'USER'}">
+                                <a href="/user/careworkers">보호사 신청</a>
+                                <a href="/user/senior">시니어 관리</a>
+                                <a href="/user/map">지도보기</a>
+                                <a href="/user/rtc">실시간 통화</a>
+                                <a href="/fullcalendar-u">일정관리</a>
+                                <a href="/help">문의</a>
+                                <a href="/user/mypage">내 정보</a>
+                            </c:if>
 
-                        <%-- 보호사 메뉴 --%>
-                        <c:if test="${sessionScope.role == 'CAREWORKER'}">
-                            <a href="/careworker/seniors">시니어 리스트</a>
-                            <a href="/careworker/map">지도보기</a>
-                            <a href="/careworker/contracts">계약관리</a>
-                            <a href="/fullcalendar-cw">일정관리</a>
-                            <a href="/careworker/mypage">내 정보</a>
-                        </c:if>
-                    </div>
+                                <%-- 보호사 메뉴 --%>
+                            <c:if test="${sessionScope.role == 'CAREWORKER'}">
+                                <a href="/careworker/seniors">시니어 리스트</a>
+                                <a href="/careworker/map">지도보기</a>
+                                <a href="/careworker/contracts">계약관리</a>
+                                <a href="/fullcalendar-cw">일정관리</a>
+                                <a href="/careworker/mypage">내 정보</a>
+                            </c:if>
+                        </div>
+                    </c:if>
                 </div>
+
                 <!-- 로그인/로그아웃 -->
                 <div class="auth-buttons">
                     <c:choose>
                         <c:when test="${not empty sessionScope.principal}">
+                            <!-- 알림 아이콘 -->
+                            <div class="user-info">
+                                <a href="#" id="messageIcon" class="notification-link" data-toggle="modal" data-target="#messageModal">
+                                    <i class="fas fa-envelope"></i>
+                                    <span id="unreadMessageCount" class="badge badge-danger"></span>
+                                </a>
+                            </div>
                             <div class="user-info">
                                 <c:if test="${sessionScope.role == 'USER'}">
                                     <p>${sessionScope.name}고객님</p>
@@ -205,3 +244,4 @@
 </div>
 <%@ include file="../auth/login/modal-login.jsp" %>
 <%@ include file="../auth/signup/modal-signup.jsp" %>
+<%@ include file="../user/messageModal.jsp" %>

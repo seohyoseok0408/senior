@@ -44,6 +44,7 @@
     <p>&copy; <span id="displayYear"></span> All Rights Reserved.</p>
 </footer>
 </body>
+<script src="/js/header.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/custom.js"></script>
 </html>
