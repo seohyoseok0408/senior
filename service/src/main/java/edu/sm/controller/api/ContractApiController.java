@@ -3,8 +3,10 @@ package edu.sm.controller.api;
 
 import edu.sm.dto.ResponseDto;
 import edu.sm.model.Contract;
+import edu.sm.model.Message;
 import edu.sm.model.Schedule;
 import edu.sm.service.ContractService;
+import edu.sm.service.MessageService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/contract")
 public class ContractApiController {
     private final ContractService contractService;
+    private final MessageService messageService;
 
     @PostMapping("")
     public ResponseDto<String> contract(@RequestBody Map<String, Object> request, HttpSession session) {
@@ -81,6 +84,9 @@ public class ContractApiController {
     public ResponseDto<String> approveContract(@RequestBody Contract contract) {
         try {
             contractService.modify(contract);
+            log.info("고객아이디: " + contract.getUserId());
+            log.info("보호사아이디: " + contract.getCwId());
+            messageService.aproveContract(contract.getUserId(), contract.getCwId());
             return new ResponseDto<>(HttpStatus.OK.value(), "계약 승인 성공");
         } catch (Exception e) {
             log.error("Error approving contract", e);

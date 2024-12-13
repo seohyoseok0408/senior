@@ -327,6 +327,8 @@
 
             <form>
                 <input type="hidden" id="contractId" value="${contractDetails.contract.contractId}">
+                <input type="hidden" id="cwId" value="${contractDetails.careworker.cwId}">
+                <input type="hidden" id="userId" value="${contractDetails.user.userId}">
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label" for="contractPrice">계약 금액 (원)</label>

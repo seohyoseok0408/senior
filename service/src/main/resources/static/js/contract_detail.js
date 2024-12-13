@@ -9,6 +9,8 @@ let index = {
         let contractData = {
             contractId: $("#contractId").val(),
             contractPrice: $("#contractPrice").val(),
+            cwId: $("#cwId").val(),
+            userId: $("#userId").val(),
         };
         console.log(contractData);
         if (!contractData.contractPrice) {
