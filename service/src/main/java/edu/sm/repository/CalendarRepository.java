@@ -21,4 +21,7 @@ public interface CalendarRepository {
 
     // 계약과 관련된 일정 추가
     void insertContractSchedule(Schedule schedule);
+    Schedule findCalendarByContractId(Integer contractId);
+
+
 }

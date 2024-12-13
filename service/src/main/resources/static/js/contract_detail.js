@@ -3,33 +3,58 @@ let index = {
         $("#btn-approve").on("click", () => {
             this.approveContract();
         });
+
+        $("#btn-reject").on("click", () => {
+            this.rejectContract();
+        });
+
         this.initKakaoMap();
     },
+
     approveContract: function () {
         let contractData = {
             contractId: $("#contractId").val(),
-            contractPrice: $("#contractPrice").val(),
-            cwId: $("#cwId").val(),
-            userId: $("#userId").val(),
+
         };
-        console.log(contractData);
-        if (!contractData.contractPrice) {
-            alert("계약 금액을 입력해주세요.");
-            return;
-        }
+
         $.ajax({
             type: "PUT",
             url: "/api/contract",
             data: JSON.stringify(contractData),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-        }).done(function (resp) {
-            alert("계약이 승인되었습니다.");
-            location.href = "/careworker/contracts";
-        }).fail(function (error) {
-            alert(JSON.stringify(error));
-        });
+        })
+            .done(function (resp) {
+                alert("계약이 승인되었습니다.");
+                location.href = "/careworker/contracts";
+            })
+            .fail(function (error) {
+                alert("계약 승인 중 오류 발생: " + JSON.stringify(error));
+            });
     },
+
+    rejectContract: function () {
+        let contractId = $("#contractId").val();
+
+        if (!confirm("정말로 이 계약을 거절하시겠습니까?")) {
+            return;
+        }
+
+        $.ajax({
+            type: "DELETE",
+            url: `/api/contract/`+contractId,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        })
+            .done(function (resp) {
+                alert("계약이 거절되었습니다.");
+                location.href = "/careworker/contracts";
+            })
+            .fail(function (error) {
+                alert("계약 거절 중 오류 발생: " + JSON.stringify(error));
+            });
+    },
+
     initKakaoMap: function () {
         const careworkerLat = parseFloat($("#map").data("cw-lat"));
         const careworkerLng = parseFloat($("#map").data("cw-lng"));
@@ -37,12 +62,12 @@ let index = {
         const seniorLng = parseFloat($("#map").data("sr-lng"));
 
         kakao.maps.load(() => {
-            const mapContainer = document.getElementById('map'); // 지도 컨테이너
+            const mapContainer = document.getElementById("map");
             const centerPosition = new kakao.maps.LatLng(careworkerLat, careworkerLng);
 
             const mapOption = {
                 center: centerPosition,
-                level: 5 // 확대 레벨
+                level: 5,
             };
 
             const map = new kakao.maps.Map(mapContainer, mapOption);
@@ -122,9 +147,9 @@ let index = {
             const polyline = new kakao.maps.Polyline({
                 path: linePath,
                 strokeWeight: 5,
-                strokeColor: '#FFAE00',
+                strokeColor: "#FFAE00",
                 strokeOpacity: 0.8,
-                strokeStyle: 'dashed'
+                strokeStyle: "dashed",
             });
 
             polyline.setMap(map);

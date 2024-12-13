@@ -35,13 +35,16 @@ public class ContractService implements SMService<Integer, Contract> {
 
     @Override
     public void modify(Contract contract) throws Exception {
-        contract.setContractStatus("ACTIVE");
-        contractRepository.update(contract);
+        log.info(contract.toString());
+        Contract contract1 = contractRepository.selectOne(contract.getContractId());
+        contract1.setContractStatus("ACTIVE");
+        log.info(contract1.toString());
+        contractRepository.update(contract1);
     }
 
     @Override
     public void del(Integer integer) throws Exception {
-
+        contractRepository.delete(integer);
     }
 
     @Override
@@ -96,12 +99,14 @@ public class ContractService implements SMService<Integer, Contract> {
     public Map<String, Object> getContractDetails(Integer contractId) throws Exception {
         Contract contract = contractRepository.selectOne(contractId);
         Careworker careworker = careworkerService.get(contract.getCwId());
+        Schedule schedule = calendarService.getCalendarByContractId(contractId);
         if (contract == null) {
             throw new RuntimeException("Contract not found");
         }
 
         Map<String, Object> contractDetails = new HashMap<>();
         contractDetails.put("contract", contract);
+        contractDetails.put("schedule", schedule);
         contractDetails.put("careworker", careworker);
         contractDetails.put("senior", seniorService.get(contract.getSeniorId()));
         contractDetails.put("user", userService.get(contract.getUserId()));
@@ -127,6 +132,7 @@ public class ContractService implements SMService<Integer, Contract> {
         try {
             // 1. 계약 생성
             contract.setContractStatus("PENDING");
+            log.info(contract.toString());
             contractRepository.insert(contract); // contract_id가 자동 설정됨
             log.info("Contract created with ID: {}", contract.getContractId());
 

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
@@ -30,15 +31,15 @@
     .container {
         max-width: 1200px;
         margin: 2rem auto;
-        padding: 0 1rem;
+        padding: 1rem;
     }
 
     .section {
         background: var(--white);
         border-radius: 15px;
         box-shadow: var(--shadow);
+        padding: 2rem;
         margin-bottom: 2rem;
-        overflow: hidden;
         transition: all 0.3s ease;
     }
 
@@ -53,6 +54,7 @@
         padding: 1.5rem 2rem;
         font-size: 1.8rem;
         font-weight: 700;
+        text-align: center;
     }
 
     .section-content {
@@ -74,7 +76,8 @@
 
     .profile-section {
         display: flex;
-        align-items: stretch;
+        flex-direction: column; /* 세로 정렬 */
+        align-items: center;
         gap: 2rem;
         margin-bottom: 2rem;
         background-color: var(--primary-light);
@@ -308,50 +311,65 @@
                 <div class="profile-image-container">
                     <img src="/imgs/senior/${contractDetails.senior.seniorProfile}"
                          alt="${contractDetails.senior.seniorName} 어르신 프로필"
-                         class="profile-image">
+                         class="profile-image"
+                         onerror="this.src='/imgs/default-profile.png'">
                 </div>
-                <div class="profile-info">
-                    <h3>${contractDetails.senior.seniorName} 어르신</h3>
-                    <div class="info-grid">
-                        <div class="cd-info-item">
-                            <div class="cd-info-label">생년월일</div>
-                            <div class="cd-info-value">${contractDetails.senior.seniorBirth}</div>
-                        </div>
-                        <div class="cd-info-item">
-                            <div class="cd-info-label">주소</div>
-                            <div class="cd-info-value">${contractDetails.senior.seniorStreetAddr}</div>
-                        </div>
+                <div class="info-grid">
+                    <div class="info-row">
+                        <span class="info-label">생년월일</span>
+                        <span class="info-value">${contractDetails.senior.seniorBirth}</span>
                     </div>
+                    <div class="info-row">
+                        <span class="info-label">주소</span>
+                        <span class="info-value">${contractDetails.senior.seniorStreetAddr}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">계약 시작일</span>
+                        <span class="info-value">
+                            <fmt:parseDate value="${contractDetails.schedule.scheduleStartDatetime}"
+                                           pattern="yyyy-MM-dd'T'HH:mm" var="parseStart" type="both"/>
+                            <fmt:formatDate pattern="yyyy년 MM월 dd일" value="${ parseStart }"/>
+                            </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">계약 종료일</span>
+                        <span class="info-value">
+                            <fmt:parseDate value="${contractDetails.schedule.scheduleEndDatetime}"
+                                           pattern="yyyy-MM-dd'T'HH:mm" var="parseEnd" type="both"/>
+                            <fmt:formatDate pattern="yyyy년 MM월 dd일" value="${ parseEnd }"/>
+                       </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">계약 금액</span>
+                        <span class="info-value">
+                            <fmt:formatNumber type="number" pattern="###,###원" value="${contractDetails.contract.contractPrice}" />
+                            </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">계약 내용</span>
+                        <span class="info-value">${contractDetails.contract.contractInfo}</span>
+                    </div>
+                    <input type="hidden" value="${contractDetails.contract.contractId}" id="contractId">
                 </div>
             </div>
 
-            <form>
-                <input type="hidden" id="contractId" value="${contractDetails.contract.contractId}">
-                <input type="hidden" id="cwId" value="${contractDetails.careworker.cwId}">
-                <input type="hidden" id="userId" value="${contractDetails.user.userId}">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label" for="contractPrice">계약 금액 (원)</label>
-                        <input type="number" class="form-control" id="contractPrice" value="${contractDetails.contractPrice}">
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 2rem;">
-                    <c:choose>
-                        <c:when test="${contractDetails.contract.contractStatus == 'PENDING'}">
-                            <button type="button" class="btn btn-success" id="btn-approve">계약 수락하기</button>
-                        </c:when>
-                        <c:when test="${contractDetails.contract.contractStatus == 'ACTIVE'}">
-                            <button type="button" class="btn btn-success" disabled>계약 활성화됨</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="button" class="btn btn-secondary" disabled>계약 상태: ${contractDetails.contract.contractStatus}</button>
-                        </c:otherwise>
-                    </c:choose>
-                    <a href="contracts" class="btn btn-secondary" style="margin-left: 1rem;">목록으로</a>
-                </div>
-            </form>
-
+            <!-- 버튼 -->
+            <div class="btn-container">
+                <c:choose>
+                    <c:when test="${contractDetails.contract.contractStatus == 'PENDING'}">
+                        <button type="button" class="btn btn-success" id="btn-approve">계약 수락</button>
+                        <button type="button" class="btn btn-danger" id="btn-reject">거절</button>
+                    </c:when>
+                    <c:when test="${contractDetails.contract.contractStatus == 'ACTIVE'}">
+                        <button type="button" class="btn btn-success" disabled>계약 활성화됨</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button type="button" class="btn btn-secondary" disabled>계약
+                            상태: ${contractDetails.contract.contractStatus}</button>
+                    </c:otherwise>
+                </c:choose>
+                <a href="contracts" class="btn btn-secondary">목록</a>
+            </div>
         </div>
     </div>
 </div>

@@ -82,4 +82,10 @@
         WHERE cw_id = #{cwId}
     </select>
 
+  <select id="findCalendarByContractId" parameterType="int" resultType="Schedule">
+        SELECT *
+        FROM schedule
+        WHERE contract_id = #{contractId}
+    </select>
+
 </mapper>

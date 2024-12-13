@@ -60,58 +60,32 @@ let index = {
 
     careworkerDetail: {
         init: function () {
-            this.initializeCalendar();
             $("#contract-btn").on("click", () => {
                 this.addContract();
             });
-        }, initializeCalendar: function () {
-            const calendarEl = document.getElementById('calendar');
-
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                headerToolbar: {
-                    left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }, timeZone: 'local', // 또는 'local'을 명시적으로 지정
-                selectable: true, selectMirror: true, select: function (info) {
-                    // 시작 날짜와 시간
-                    const startDate = info.start.toISOString().split('T')[0];
-                    const startTime = '12:00'; // 기본 시간 설정
-
-                    // 종료 날짜와 시간
-                    const endDate = new Date(info.end);
-                    endDate.setDate(endDate.getDate() - 1); // 하루 빼기
-                    const formattedEndDate = endDate.toISOString().split('T')[0];
-                    const endTime = '12:00'; // 기본 시간 설정
-
-                    // 폼에 값 입력
-                    document.getElementById('contractStartDate').value = startDate;
-                    document.getElementById('contractStartTime').value = startTime;
-                    document.getElementById('contractEndDate').value = formattedEndDate;
-                    document.getElementById('contractEndTime').value = endTime;
-
-                    // 알림 표시
-                    alert(`선택한 일정: ${startDate} ${startTime} ~ ${formattedEndDate} ${endTime}`);
-                }, editable: true, dayMaxEvents: true
-            });
-
-            calendar.render();
         }, addContract: function () {
             if (confirm("계약을 신청하시겠습니까?")) {
                 // 시작 날짜와 시간 결합
                 const startDate = $('#contractStartDate').val();
-                const startTime = $('#contractStartTime').val();
+                const startTime = "00:00"
+                console.log(startTime)
                 const startDateTime = startDate + "T" + startTime + ":00";
 
                 // 종료 날짜와 시간 결합
                 const endDate = $('#contractEndDate').val();
-                const endTime = $('#contractEndTime').val();
+                const endTime = "00:00"
                 const endDateTime = endDate + "T" + endTime + ":00";
 
                 const data = {
                     cwId: $('#careworkerId').val(),
                     seniorId: $('#seniorId').val(),
                     contractStartDatetime: startDateTime,
-                    contractEndDatetime: endDateTime
+                    contractEndDatetime: endDateTime,
+                    contractInfo: $("#contractInfo").val(),
+                    contractPrice: $("#contractAmount").val()
                 };
+
+                console.log(data)
 
                 $.ajax({
                     url: `/api/contract`,

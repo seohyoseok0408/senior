@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -51,9 +52,11 @@ public class ContractApiController {
             // 계약 데이터 설정
             int cwId = Integer.parseInt(request.get("cwId").toString());
             int seniorId = Integer.parseInt(request.get("seniorId").toString());
-
-            Contract contract = Contract.builder().userId(userId).cwId(cwId).seniorId(seniorId).build();
-
+            String contractInfo = request.get("contractInfo").toString();
+            int contractPrice = Integer.parseInt(request.get("contractPrice").toString());
+            log.info(contractInfo);
+            Contract contract = Contract.builder().userId(userId).cwId(cwId).seniorId(seniorId).contractInfo(contractInfo).contractPrice(contractPrice).build();
+            log.info(contract.toString());
             // 스케줄 데이터 설정
             String startDatetimeStr = (String) request.get("contractStartDatetime");
             String endDatetimeStr = (String) request.get("contractEndDatetime");
@@ -94,7 +97,16 @@ public class ContractApiController {
         }
     }
 
-
+    @DeleteMapping("/{contractId}")
+    public ResponseDto<String> rejectContract(@PathVariable Integer contractId) {
+        try {
+            contractService.del(contractId); // 계약 거절(삭제) 처리
+            return new ResponseDto<>(HttpStatus.OK.value(), "계약 거절 성공");
+        } catch (Exception e) {
+            log.error("계약 거절 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "계약 거절 중 오류 발생");
+        }
+    }
 }
 
 

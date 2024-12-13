@@ -81,9 +81,10 @@ public class CareworkerController {
         if (cwId == null) {
             return "redirect:/login/careworker";
         }
+
         try {
             Map<String, Object> contractDetails = contractService.getContractDetails(contractId);
-
+            log.info(contractDetails.toString());
             model.addAttribute("contractDetails", contractDetails);
             model.addAttribute("center", "careworker/contract_detail");
         } catch (Exception e) {

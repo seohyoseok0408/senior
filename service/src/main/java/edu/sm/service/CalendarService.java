@@ -53,6 +53,16 @@ public class CalendarService implements SMService<Integer, Schedule> {
             throw new Exception("Error adding contract-related schedule", e);
         }
     }
+    public Schedule getCalendarByContractId(Integer contractId) throws Exception {
+        Schedule schedule = null;
+        try {
+            schedule = calendarRepository.findCalendarByContractId(contractId);
+        } catch (Exception e) {
+            throw new Exception("Error adding contract-related schedule", e);
+        }
+        return schedule;
+    }
+
 
     @Override
     public void add(Schedule schedule) throws Exception {

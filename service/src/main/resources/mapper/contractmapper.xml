@@ -5,18 +5,20 @@
 <mapper namespace="edu.sm.repository.ContractRepository">
 
     <insert id="insert" parameterType="Contract" useGeneratedKeys="true" keyProperty="contractId">
-        INSERT INTO contract (contract_date,
+        INSERT INTO contract (
                               contract_price,
                               contract_status,
                               cw_id,
                               user_id,
-                              senior_id)
-        VALUES (NOW(),
+                              senior_id,
+                              contract_info)
+        VALUES (
                 #{contractPrice},
                 #{contractStatus},
                 #{cwId},
                 #{userId},
-                #{seniorId});
+                #{seniorId},
+                #{contractInfo});
     </insert>
 
 
@@ -40,7 +42,7 @@
           AND contract_status = #{status}
     </select>
 
-    <select id="selectOne" resultType="Contract">
+    <select id="selectOne" parameterType="Integer" resultType="Contract">
         SELECT *
         FROM contract
         WHERE contract_id = #{contractId}
@@ -48,8 +50,7 @@
 
     <update id="update" parameterType="Contract">
         UPDATE contract
-        SET contract_price  = #{contractPrice},
-            contract_status = #{contractStatus}
+        SET contract_status = #{contractStatus}
         WHERE contract_id = #{contractId}
     </update>
 
@@ -67,4 +68,9 @@
           AND user_id = #{userId}
           AND contract_status = 'ACTIVE';
     </select>
+
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM contract
+        WHERE contract_id = #{contractId};
+    </delete>
 </mapper>
