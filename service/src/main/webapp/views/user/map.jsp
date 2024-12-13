@@ -183,6 +183,5 @@
     <input type="hidden" id="seniorProfile" value="/images/default-profile.jpg">
 </div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=24292fb5ce2d2498c2ed88d0a951d790&libraries=services"></script>
 <script src="/js/map.js"></script>
 

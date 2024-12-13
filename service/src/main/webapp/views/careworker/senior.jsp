@@ -219,26 +219,6 @@
         transform: translateY(-2px);
     }
 
-    @media (max-width: 1200px) {
-        .dashboard {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            padding: 1rem;
-        }
-
-        .health-charts {
-            grid-template-columns: 1fr;
-        }
-
-        .profile-details {
-            grid-template-columns: 1fr;
-        }
-    }
-
     .tabs {
         display: flex;
         justify-content: center;
@@ -272,61 +252,101 @@
         display: block;
     }
 
-    .contracts-list {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 새로 추가된 스타일 */
+    .btn-video-call {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
-    .contract-item {
+    .btn-video-call:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    #liveMap {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .worklog-list {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .worklog-item {
         display: flex;
         align-items: center;
-        padding: 1.5rem;
-        border-bottom: 1px solid #e9ecef;
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
         transition: all 0.3s ease;
     }
 
-    .contract-item:last-child {
+    .worklog-item:last-child {
         border-bottom: none;
     }
 
-    .contract-item:hover {
-        background-color: #f8f9fa;
+    .worklog-item:hover {
+        background-color: #f5f5f5;
     }
 
-    .contract-main {
+    .worklog-date {
         flex: 1;
-        display: grid;
-        align-items: center;
-    }
-    .customer-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .title-name {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: #40c057;
-        margin-bottom: 0.25rem;
+        color: #333;
     }
 
-    .action-btn {
-        background-color: #40c057;
+    .worklog-action {
+        background-color: #4CAF50;
         color: white;
         border: none;
+        padding: 10px 20px;
         border-radius: 25px;
-        padding: 0.5rem 1.5rem;
-        font-weight: 500;
+        font-size: 0.9rem;
         text-decoration: none;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
-    .action-btn:hover {
-        background-color: #2b8a3e;
+    .worklog-action:hover {
+        background-color: #45a049;
         transform: translateY(-2px);
     }
 
+    @media (max-width: 1200px) {
+        .dashboard {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+
+        .health-charts {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-details {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 
 <div class="container">
@@ -342,7 +362,9 @@
                          class="profile-image">
                     <h2 class="profile-name">${contractDetails.senior.seniorName} 어르신</h2>
                     <a href="/careworker/rtc?userId=${contractDetails.user.userId}"
-                       class="btn btn-primary">고객 화상통화 연결</a>
+                       class="btn-video-call">
+                        <i class="fas fa-video"></i> 고객 화상통화 연결
+                    </a>
                     <div class="profile-details">
                         <div class="profile-item">
                             <div class="profile-label">성별</div>
@@ -426,34 +448,27 @@
                             </div>
                         </div>
                     </div>
-                    <div id="liveMap" style="width:100%;height:500px;"
+                    <div id="liveMap" style="width:100%;height:600px;"
                          data-sr-lat="${contractDetails.senior.seniorLatitude}"
                          data-sr-lng="${contractDetails.senior.seniorLongitude}"></div>
                 </div>
             </div>
             <div class="tab-content" id="content-worklog">
-                <div class="contracts-list">
+                <div class="worklog-list">
                     <c:forEach var="worklog" items="${workLogs}">
-                        <div class="contract-item">
-                            <div class="contract-main">
-                                <div class="customer-info">
-                                <span class="title-name">
-                                    <fmt:parseDate value="${worklog.workLogRdate}"
-                                                   pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                                    <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${ parsedDateTime }" />
-                                </span>
-                                </div>
-                                <div class="status-info">
-
-                                </div>
+                        <div class="worklog-item">
+                            <div class="worklog-date">
+                                <fmt:parseDate value="${worklog.workLogRdate}"
+                                               pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both"/>
+                                <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${parsedDateTime}"/>
                             </div>
-                            <a href="/careworker/worklog?workLogId=${worklog.workLogId}" class="action-btn">
+                            <a href="/careworker/worklog?workLogId=${worklog.workLogId}" class="worklog-action">
                                 자세히 보기
                             </a>
                         </div>
                     </c:forEach>
                 </div>
-                <div>
+                <div class="card-body">
                     <a href="/careworker/worklog/saveform?seniorId=${contractDetails.senior.seniorId}"
                        class="btn btn-primary">업무일지 작성</a>
                     <a href="/careworker/seniors" class="btn btn-secondary">목록으로</a>
@@ -468,31 +483,25 @@
 
     let index = {
         init: function () {
-            // 탭 클릭 이벤트 설정
             this.setupTabs();
-
-            // 주기적으로 데이터를 가져오고 업데이트
-            this.fetchDataAndUpdateCharts(); // 초기 호출
+            this.fetchDataAndUpdateCharts();
             setInterval(this.fetchDataAndUpdateCharts, 2000);
-
-            // 지도 초기화
             this.initKakaoMap();
             this.initLiveKakaoMap();
         },
         setupTabs: function () {
-            // 탭 버튼 클릭 이벤트 등록
             $("#tab-live").click(function () {
-                $(".tab").removeClass("active"); // 모든 탭에서 'active' 제거
-                $(this).addClass("active"); // 현재 클릭된 탭에 'active' 추가
-                $(".tab-content").removeClass("active"); // 모든 탭 콘텐츠 숨김
-                $("#content-info").addClass("active"); // 선택된 탭 콘텐츠 표시
+                $(".tab").removeClass("active");
+                $(this).addClass("active");
+                $(".tab-content").removeClass("active");
+                $("#content-info").addClass("active");
             });
 
             $("#tab-worklog").click(function () {
-                $(".tab").removeClass("active"); // 모든 탭에서 'active' 제거
-                $(this).addClass("active"); // 현재 클릭된 탭에 'active' 추가
-                $(".tab-content").removeClass("active"); // 모든 탭 콘텐츠 숨김
-                $("#content-worklog").addClass("active"); // 선택된 탭 콘텐츠 표시
+                $(".tab").removeClass("active");
+                $(this).addClass("active");
+                $(".tab-content").removeClass("active");
+                $("#content-worklog").addClass("active");
             });
         },
         fetchDataAndUpdateCharts: function () {
@@ -508,10 +517,8 @@
                         return;
                     }
 
-                    // 최신 로그 데이터를 기반으로 업데이트
                     const latestData = response[response.length - 1];
                     if (latestData) {
-                        // 텍스트 직접 업데이트 (직접 ID로 접근)
                         let p1 = latestData.systolicBP;
                         let p2 = latestData.diastolicBP;
                         let p3 = latestData.heartRate;
@@ -536,22 +543,6 @@
                 }
             });
         },
-        updateCard: function (elementId, value, progressBarId, min, max) {
-            const element = document.getElementById(elementId);
-            const progressBar = document.getElementById(progressBarId);
-
-            // 텍스트 업데이트
-            if (element) {
-                element.innerText = value;
-            }
-
-            // Progress Bar 업데이트
-            if (progressBar) {
-                const percentage = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
-                progressBar.style.width = `${percentage}%`; // Progress Bar 너비 조정
-                progressBar.setAttribute("aria-valuenow", percentage); // 접근성 속성 업데이트
-            }
-        },
         initKakaoMap: function () {
             const careworkerLat = parseFloat($("#map").data("cw-lat"));
             const careworkerLng = parseFloat($("#map").data("cw-lng"));
@@ -559,17 +550,16 @@
             const seniorLng = parseFloat($("#map").data("sr-lng"));
 
             kakao.maps.load(() => {
-                const mapContainer = document.getElementById('map'); // 지도 컨테이너
+                const mapContainer = document.getElementById('map');
                 const centerPosition = new kakao.maps.LatLng(careworkerLat, careworkerLng);
 
                 const mapOption = {
                     center: centerPosition,
-                    level: 5 // 확대 레벨
+                    level: 5
                 };
 
                 const map = new kakao.maps.Map(mapContainer, mapOption);
 
-                // 보호사 마커 및 커스텀 오버레이 설정
                 const careworkerMarkerImage = new kakao.maps.MarkerImage(
                     "../../images/caregiver.png",
                     new kakao.maps.Size(32, 32)
@@ -597,12 +587,11 @@
                 const careworkerOverlay = new kakao.maps.CustomOverlay({
                     position: centerPosition,
                     content: careworkerOverlayContent,
-                    yAnchor: 2.2 // 마커 바로 위에 위치
+                    yAnchor: 2.2
                 });
 
                 careworkerOverlay.setMap(map);
 
-                // 시니어 마커 및 커스텀 오버레이 설정
                 const seniorMarkerImage = new kakao.maps.MarkerImage(
                     "../../images/seniormap.png",
                     new kakao.maps.Size(32, 32)
@@ -630,12 +619,11 @@
                 const seniorOverlay = new kakao.maps.CustomOverlay({
                     position: new kakao.maps.LatLng(seniorLat, seniorLng),
                     content: seniorOverlayContent,
-                    yAnchor: 2.2 // 마커 바로 위에 위치
+                    yAnchor: 2.2
                 });
 
                 seniorOverlay.setMap(map);
 
-                // 선(Polyline) 그리기
                 const linePath = [
                     new kakao.maps.LatLng(careworkerLat, careworkerLng),
                     new kakao.maps.LatLng(seniorLat, seniorLng)
@@ -644,7 +632,7 @@
                 const polyline = new kakao.maps.Polyline({
                     path: linePath,
                     strokeWeight: 5,
-                    strokeColor: '#FFAE00',
+                    strokeColor: '#4CAF50',
                     strokeOpacity: 0.8,
                     strokeStyle: 'dashed'
                 });
@@ -664,35 +652,32 @@
 
             var map = new kakao.maps.Map(mapContainer, mapOption);
 
-            var seniorMovingMarker = null; // 단일 마커 객체로 선언
-            const MIN_STEP_SIZE = 1.5; // 최소 이동 거리 (1.5m)
-            const MAX_STEP_SIZE = 5;  // 최대 이동 거리 (10m)
+            var seniorMovingMarker = null;
+            const MIN_STEP_SIZE = 1.5;
+            const MAX_STEP_SIZE = 5;
 
-            setInterval(updateSeniorMovingMarker, 1000); // 1초 간격
+            setInterval(updateSeniorMovingMarker, 1000);
 
             function getWalkingPosition(currentLat, currentLng) {
-                const randomStepSize = Math.random() * (MAX_STEP_SIZE - MIN_STEP_SIZE) + MIN_STEP_SIZE; // 랜덤 이동 거리
-                const randomAngle = Math.random() * Math.PI * 2; // 랜덤 방향 (0 ~ 360도)
-                const deltaLat = randomStepSize * Math.cos(randomAngle) / 111000; // 위도 변위 계산
-                const deltaLng = randomStepSize * Math.sin(randomAngle) / (111000 * Math.cos(currentLat * Math.PI / 180)); // 경도 변위 계산
+                const randomStepSize = Math.random() * (MAX_STEP_SIZE - MIN_STEP_SIZE) + MIN_STEP_SIZE;
+                const randomAngle = Math.random() * Math.PI * 2;
+                const deltaLat = randomStepSize * Math.cos(randomAngle) / 111000;
+                const deltaLng = randomStepSize * Math.sin(randomAngle) / (111000 * Math.cos(currentLat * Math.PI / 180));
                 return {
                     lat: currentLat + deltaLat,
                     lng: currentLng + deltaLng
                 };
             }
 
-            // 이동 마커 생성 및 위치 업데이트 함수
             function updateSeniorMovingMarker() {
-                // 새로운 위치 계산
                 const randomPosition = getWalkingPosition(lat, lng);
                 console.log("New Position:", randomPosition);
                 if (!seniorMovingMarker) {
-                    // 초기 이동 마커 생성
                     var content = `
-            <div class="custom-overlay">
-                <img src="../../images/seniormove.png" style="width:50px; height:50px; border-radius:50%;" />
-            </div>
-        `;
+                <div class="custom-overlay">
+                    <img src="../../images/move.png" style="width:30px; height:30px;" />
+                </div>
+            `;
 
                     seniorMovingMarker = new kakao.maps.CustomOverlay({
                         position: new kakao.maps.LatLng(randomPosition.lat, randomPosition.lng),
@@ -700,12 +685,10 @@
                         map: map
                     });
                 } else {
-                    // 기존 마커 위치 업데이트
                     const newLatLng = new kakao.maps.LatLng(randomPosition.lat, randomPosition.lng);
                     seniorMovingMarker.setPosition(newLatLng);
                 }
 
-                // 현재 위치를 기준으로 다음 이동 기준 좌표 업데이트
                 this.lat = randomPosition.lat;
                 this.lng = randomPosition.lng;
             }
@@ -713,4 +696,3 @@
     }
     index.init();
 </script>
-

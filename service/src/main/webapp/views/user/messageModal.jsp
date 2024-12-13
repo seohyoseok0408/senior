@@ -5,7 +5,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">쪽지함</h2>
+                <h2 class="modal-title" style="color: #40c057">쪽지함</h2>
             </div>
             <div class="modal-body">
                 <div id="messageListContainer">

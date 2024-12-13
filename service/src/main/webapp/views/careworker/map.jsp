@@ -185,7 +185,6 @@
 </c:forEach>
 
 <!-- Kakao 지도 API -->
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_API_KEY&libraries=services,clusterer,drawing"></script>
 <script src="/js/careMap.js"></script>
 
 <script>

@@ -125,7 +125,7 @@
         </div>
 
         <div class="worklog-buttons">
-            <a href="/user/senior" class="btn btn-secondary">목록으로</a>
+            <a href="/careworker/seniors" class="btn btn-secondary">목록으로</a>
         </div>
     </div>
 </div>

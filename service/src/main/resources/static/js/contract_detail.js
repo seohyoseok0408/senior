@@ -13,8 +13,9 @@ let index = {
 
     approveContract: function () {
         let contractData = {
-            contractId: $("#contractId").val(),
-
+                contractId: $("#contractId").val(),
+                cwId: $("#cwId").val(),
+                userId: $("#userId").val()
         };
 
         $.ajax({
