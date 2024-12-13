@@ -70,4 +70,15 @@ public class MessageService implements SMService<Integer, Message> {
         log.info("Message: {}", message);
         messageRepository.insert(message);
     }
+
+    @Transactional
+    public void sendEmergencyMessage(Integer userId, String seniorName, String emergencyDetails) throws Exception {
+        Message message = new Message();
+        message.setReceiverId(userId);
+        message.setTitle("⚠️ 비상 상황 알림");
+        message.setContent("시니어 성함: " + seniorName + "에서 비상 상황 발생! " + emergencyDetails);
+        message.setIsRead(false);
+        log.info("Emergency Message: {}", message);
+        messageRepository.insert(message);
+    }
 }

@@ -1,6 +1,10 @@
 package edu.sm.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.sm.model.Senior;
+import edu.sm.service.MessageService;
+import edu.sm.service.SeniorService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +18,11 @@ import org.springframework.ui.Model;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/iot")
 public class IotController {
-
+    private final MessageService messageService;
+    private final SeniorService seniorService;
     private static final String LOG_FILE_PATH = "../logs/senior/senior_health.log";
 
     @GetMapping("/health/{id}")
@@ -46,6 +52,15 @@ public class IotController {
 
             log.info("seniorId:{}, systolicBP:{}, diastolicBP:{}, heartRate:{}, temperature:{}",
                     seniorId, systolicBP, diastolicBP, heartRate, temperature);
+
+            // 비상 상황 감지
+            if (isEmergency(systolicBP, diastolicBP, heartRate, temperature)) {
+                String emergencyDetails = String.format("심박수: %d, 수축기 혈압: %d, 이완기 혈압: %d, 체온: %.1f",
+                        heartRate, systolicBP, diastolicBP, temperature);
+
+                // 비상 상황 메시지 전송
+                messageService.sendEmergencyMessage(getUserIdBySeniorId(seniorId), seniorService.get(seniorId).getSeniorName(), emergencyDetails);
+            }
 
             return "Data processed successfully for seniorId: " + seniorId;
         } catch (Exception e) {
@@ -101,5 +116,19 @@ public class IotController {
             log.error("Error parsing log line: {}", e.getMessage());
         }
         return data;
+    }
+
+    private boolean isEmergency(int systolicBP, int diastolicBP, int heartRate, float temperature) {
+        return systolicBP > 180 || diastolicBP > 120 || heartRate > 120 || temperature < 35.0 || temperature > 38.0;
+    }
+
+    private Integer getUserIdBySeniorId(Integer seniorId) {
+        int userId = 0;
+        try {
+            userId = seniorService.get(seniorId).getUserId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return userId;
     }
 }
