@@ -64,11 +64,11 @@
                                 <form id="loginForm" onsubmit="return false;">
                                     <div class="form-group">
                                         <label><strong>User Name</strong></label>
-                                        <input type="text" class="form-control" id="username" placeholder="Enter Username" value="admin1">
+                                        <input type="text" class="form-control" id="username" placeholder="Enter Username" value="123">
                                     </div>
                                     <div class="form-group">
                                         <label><strong>Password</strong></label>
-                                        <input type="password" class="form-control" id="password" placeholder="Enter Password" value="adminpass123">
+                                        <input type="password" class="form-control" id="password" placeholder="Enter Password" value="123">
                                     </div>
                                     <div class="form-row d-flex justify-content-between mt-4 mb-2">
                                         <div class="form-group">

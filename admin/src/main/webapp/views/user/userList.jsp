@@ -33,7 +33,7 @@
                 </figure>
             </div>
         </div>
-        <h1>User List</h1>
+        <h1>유저 리스트</h1>
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -45,11 +45,6 @@
                                 <th>Username</th>
                                 <th>Tel</th>
                                 <th>Email</th>
-                                <th>Name</th>
-                                <th>Zipcode</th>
-                                <th>Street</th>
-                                <th>Address2</th>
-                                <th>Address3</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
@@ -59,14 +54,9 @@
                                 <tr onclick="window.location.href='customer-detail?id=${user.userId}'"
                                     style="cursor: pointer;">
                                     <td>${user.userId}</td>
-                                    <td>${user.userUsername}</td>
+                                    <td>${user.userName}</td>
                                     <td>${user.userTel}</td>
                                     <td>${user.userEmail}</td>
-                                    <td>${user.userName}</td>
-                                    <td>${user.userZipcode}</td>
-                                    <td>${user.userStreetAddr}</td>
-                                    <td>${user.userDetailAddr1}</td>
-                                    <td>${user.userDetailAddr2}</td>
                                     <td>${user.userStatus}</td>
                                 </tr>
                             </c:forEach>

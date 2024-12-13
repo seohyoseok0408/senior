@@ -80,11 +80,13 @@ public class UserController {
         model.addAttribute("center", "chat/chatList"); // JSP 경로
         return "index";
     }
+
     @RequestMapping("/customer-detail")
     public String detail(Model model, @RequestParam("id") Integer userId) throws Exception {
         User user = userService.get(userId);
         List<Senior> senior = userService.getSeniorsByUserId(userId);
 
+        log.info(user.toString());
         model.addAttribute("user", user);
         model.addAttribute("senior", senior);
         model.addAttribute("center", dir + "userDetail");

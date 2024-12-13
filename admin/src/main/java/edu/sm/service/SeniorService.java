@@ -6,6 +6,7 @@ import edu.sm.model.Senior;
 import edu.sm.repository.SeniorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class SeniorService implements SMService<Integer, Senior> {
+    private final StandardPBEStringEncryptor textEncoder;
 
     private final SeniorRepository seniorRepository;
 
@@ -38,12 +40,20 @@ public class SeniorService implements SMService<Integer, Senior> {
 
     @Override
     public Senior get(Integer integer) throws Exception {
-        return seniorRepository.selectOne(integer);
+        Senior senior = seniorRepository.selectOne(integer);
+        decryptAddress(senior);
+        return senior;
     }
 
     @Override
     public List<Senior> get() throws Exception {
-        return seniorRepository.findAll();
+        List<Senior> seniors = seniorRepository.findAll();
+
+        for (Senior senior : seniors) {
+            decryptAddress(senior); // 주소 복호화
+        }
+        log.info(seniors.toString());
+        return seniors;
     }
 
     // 지역별 인원 수 조회 메서드 추가
@@ -65,6 +75,17 @@ public class SeniorService implements SMService<Integer, Senior> {
         return ageGroupDistribution;
     }
 
+    private void decryptAddress(Senior senior) {
+        if (senior.getSeniorStreetAddr() != null) {
+            senior.setSeniorStreetAddr(textEncoder.decrypt(senior.getSeniorStreetAddr()));
+        }
+        if (senior.getSeniorDetailAddr1() != null) {
+            senior.setSeniorDetailAddr1(textEncoder.decrypt(senior.getSeniorDetailAddr1()));
+        }
+        if (senior.getSeniorDetailAddr2() != null) {
+            senior.setSeniorDetailAddr2(textEncoder.decrypt(senior.getSeniorDetailAddr2()));
+        }
+    }
 
     // 기존 메서드들 유지
     public void modifyById(Integer id, Senior updatedSenior) throws Exception {
@@ -117,16 +138,34 @@ public class SeniorService implements SMService<Integer, Senior> {
     }
 
     public Map<String, Object> getRecentContractInfo(Integer seniorId) {
-        return seniorRepository.findRecentContractInfoBySeniorId(seniorId);
+        Map<String, Object> recentContractInfo = seniorRepository.findRecentContractInfoBySeniorId(seniorId);
+
+        // null 값을 기본값으로 처리
+        if (recentContractInfo == null || recentContractInfo.isEmpty()) {
+            recentContractInfo = Map.of(
+                    "userId", "",
+                    "userName", "정보 없음",
+                    "careworkerId", "",
+                    "careworkerName", "정보 없음"
+            );
+        }
+        return recentContractInfo;
     }
 
     public Long getTotalContractAmount(Integer seniorId) {
-        return seniorRepository.selectTotalContractAmountByseniorId(seniorId);
+        Long totalAmount = seniorRepository.selectTotalContractAmountByseniorId(seniorId);
+
+        // null 값을 0으로 처리
+        return totalAmount != null ? totalAmount : 0L;
     }
 
     public Long getContractRenewalCount(Integer seniorId) {
-        return seniorRepository.selectContractRenewalCountByseniorId(seniorId);
+        Long renewalCount = seniorRepository.selectContractRenewalCountByseniorId(seniorId);
+
+        // null 값을 0으로 처리
+        return renewalCount != null ? renewalCount : 0L;
     }
+
 
 
 }

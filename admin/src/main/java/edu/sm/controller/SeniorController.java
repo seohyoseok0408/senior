@@ -1,6 +1,6 @@
 package edu.sm.controller;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sm.model.HealthInfo;
 import edu.sm.model.Senior;
 import edu.sm.service.SeniorService;
@@ -66,27 +66,28 @@ public class SeniorController {
     public String detail(Model model, @RequestParam("id") Integer seniorId) throws Exception {
         Senior senior = seniorService.get(seniorId);
         List<HealthInfo> healthInfo = seniorService.getHealthInfoBySeniorId(seniorId);
-        log.info(senior.toString());
-        log.info("여기 : " + healthInfo.toString());
+
         model.addAttribute("senior", senior);
         model.addAttribute("healthInfo", healthInfo);
         model.addAttribute("center", dir + "seniorDetail");
         // 위에는 건들지 마시오
 
-        // 최근 계약 정보
+// 최근 계약 정보
         Map<String, Object> recentContractInfo = seniorService.getRecentContractInfo(seniorId);
-        log.info("최근 계약 정보: " + recentContractInfo.toString());
-        model.addAttribute("recentContractInfo", recentContractInfo);
+        if (recentContractInfo == null || recentContractInfo.isEmpty()) {
+            model.addAttribute("recentContractInfo", "정보가 없습니다.");
+        } else {
+            model.addAttribute("recentContractInfo", recentContractInfo);
+        }
 
-        // 계약 금액 총합
+// 계약 금액 총합
         Long totalContractAmount = seniorService.getTotalContractAmount(seniorId);
-        log.info("계약 금액 총합: " + totalContractAmount);
-        model.addAttribute("totalContractAmount", totalContractAmount);
+        model.addAttribute("totalContractAmount", totalContractAmount != null ? totalContractAmount : 0L);
 
-        // 계약 갱신 횟수
+// 계약 갱신 횟수
         Long contractRenewalCount = seniorService.getContractRenewalCount(seniorId);
-        log.info("계약 갱신 횟수: " + contractRenewalCount);
-        model.addAttribute("contractRenewalCount", contractRenewalCount);
+        model.addAttribute("contractRenewalCount", contractRenewalCount != null ? contractRenewalCount : 0L);
+
 
         return "index";
     }

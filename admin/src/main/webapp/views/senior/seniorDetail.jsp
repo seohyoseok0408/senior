@@ -3,136 +3,157 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 <div class="content-body">
     <div class="container-fluid">
-
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block">
-                            <i class="ti-money text-success border-success"></i>
-                        </div>
-                        <div class="stat-content d-inline-block">
-                            <div class="stat-text">총 계약 금액</div>
-                            <!-- 계약 금액 총합 동적 표시 -->
-                            <div class="stat-digit">${totalContractAmount} 원</div>
-                        </div>
-                    </div>
+            <!-- Left Column: Profile and Statistics -->
+            <div class="col-lg-4 text-center">
+                <!-- Profile Photo -->
+                <div class="profile-photo">
+                    <c:choose>
+                        <c:when test="${not empty senior.seniorProfile}">
+                            <img src="/imgs/senior/${senior.seniorProfile}" style="max-width: 100%; height: auto;"
+                                 alt="프로필 이미지">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/static/images/default-profile.png" style="max-width: 100%; height: auto;"
+                                 alt="Default Profile">
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block">
-                            <i class="ti-layout-grid2 text-pink border-pink"></i>
-                        </div>
-                        <div class="stat-content d-inline-block">
-                            <div class="stat-text">계약 유지 회수</div>
-                            <!-- 계약 갱신 횟수 동적 표시 -->
-                            <div class="stat-digit">${contractRenewalCount} 회</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card" onclick="window.location.href='customer-detail?id=${recentContractInfo.userId}'" style="cursor: pointer;">
-                    <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block">
-                            <i class="ti-user text-primary border-primary"></i>
-                        </div>
-                        <div class="stat-content d-inline-block">
-                            <div class="stat-text">자녀</div>
-                            <div class="stat-digit">${recentContractInfo.userName}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card" onclick="window.location.href='careworker-detail?id=${recentContractInfo.careworkerId}'" style="cursor: pointer;">
-                    <div class="stat-widget-one card-body">
-                        <div class="stat-icon d-inline-block">
-                            <i class="ti-link text-danger border-danger"></i>
-                        </div>
-                        <div class="stat-content d-inline-block">
-                            <div class="stat-text">연결된 보호자</div>
-                            <div class="stat-digit">${recentContractInfo.careworkerName}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 시니어 정보 헤더 -->
-        <div class="profile">
-            <div class="profile-head">
-                <div class="profile-info text-center mt-3">
-                    <h4 class="text-primary">${senior.seniorName}</h4>
-                    <p class="mb-1">ID: ${senior.seniorId}</p>
-                    <p>Phone: ${senior.seniorTel}</p>
-                    <p>Gender: ${senior.seniorGender == 'male' ? '남성' : '여성'}</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- 시니어 상세 정보 -->
-        <div class="row mt-4">
-            <div class="col-lg-8">
-                <!-- 수정 가능한 폼 -->
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h5 class="text-primary">Edit Senior Information</h5>
-                        <form action="updateSenior" method="post">
-                            <input type="hidden" name="seniorId" value="${senior.seniorId}" />
-
-                            <div class="form-group">
-                                <label for="seniorName">Name</label>
-                                <input type="text" class="form-control" id="seniorName" name="seniorName" value="${senior.seniorName}">
+                <!-- Statistics Cards -->
+                <div class="mt-4">
+                    <div class="card mb-2">
+                        <div class="stat-widget-one card-body">
+                            <div class="stat-icon d-inline-block">
+                                <i class="ti-money text-success border-success"></i>
                             </div>
-                            <div class="form-group">
-                                <label for="seniorTel">Phone</label>
-                                <input type="text" class="form-control" id="seniorTel" name="seniorTel" value="${senior.seniorTel}">
+                            <div class="stat-content d-inline-block">
+                                <div class="stat-text">총 계약 금액</div>
+                                <div class="stat-digit">${totalContractAmount} 원</div>
                             </div>
-                            <div class="form-group">
-                                <label for="seniorBirth">Birth Date</label>
-                                <input type="date" class="form-control" id="seniorBirth" name="seniorBirth" value="<fmt:formatDate value='${senior.seniorBirth}' pattern='yyyy-MM-dd' />">
+                        </div>
+                    </div>
+                    <div class="card mb-2">
+                        <div class="stat-widget-one card-body">
+                            <div class="stat-icon d-inline-block">
+                                <i class="ti-layout-grid2 text-pink border-pink"></i>
                             </div>
-
-                            <!-- 주소 입력 필드 및 우편번호 검색 버튼 -->
-                            <div class="form-group">
-                                <label for="seniorZipcode">Address</label>
-                                <div class="d-flex align-items-center mb-2">
-                                    <input type="text" class="form-control mr-2" id="seniorZipcode" name="seniorZipcode" placeholder="우편번호" value="${senior.seniorZipcode}" readonly />
-                                    <a href="javascript:void(0);" onclick="popupZipSearch();" class="btn btn-primary px-4">우편번호 찾기</a>
+                            <div class="stat-content d-inline-block">
+                                <div class="stat-text">계약 유지 회수</div>
+                                <div class="stat-digit">${contractRenewalCount} 회</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-2"
+                            <c:if test="${not empty recentContractInfo.userId}">
+                                onclick="window.location.href='customer-detail?id=${recentContractInfo.userId}'" style="cursor: pointer;"
+                            </c:if>
+                            <c:if test="${empty recentContractInfo.userId}">
+                                style="cursor: not-allowed; opacity: 0.5;"
+                            </c:if>>
+                        <div class="stat-widget-one card-body">
+                            <div class="stat-icon d-inline-block">
+                                <i class="ti-user text-primary border-primary"></i>
+                            </div>
+                            <div class="stat-content d-inline-block">
+                                <div class="stat-text">자녀</div>
+                                <div class="stat-digit">
+                                    <c:choose>
+                                        <c:when test="${not empty recentContractInfo.userName}">${recentContractInfo.userName}</c:when>
+                                        <c:otherwise>정보 없음</c:otherwise>
+                                    </c:choose>
                                 </div>
-                                <input type="text" class="form-control mb-2" id="seniorStreetAddr" name="seniorStreetAddr" placeholder="Street" value="${senior.seniorStreetAddr}" readonly />
-                                <input type="text" class="form-control mb-2" id="seniorDetailAddr1" name="seniorDetailAddr1" placeholder="Apartment" value="${senior.seniorDetailAddr1}">
-                                <input type="text" class="form-control" id="seniorDetailAddr2" name="seniorDetailAddr2" placeholder="Building Name" value="${senior.seniorDetailAddr2}">
                             </div>
-
-                            <div class="form-group">
-                                <label for="seniorStatus">Status</label>
-                                <select class="form-control" id="seniorStatus" name="seniorStatus">
-                                    <option value="active" ${senior.seniorStatus == 'active' ? 'selected' : ''}>Active</option>
-                                    <option value="inactive" ${senior.seniorStatus == 'inactive' ? 'selected' : ''}>Inactive</option>
-                                </select>
+                        </div>
+                    </div>
+                    <div class="card"
+                            <c:if test="${not empty recentContractInfo.careworkerId}">
+                                onclick="window.location.href='careworker-detail?id=${recentContractInfo.careworkerId}'" style="cursor: pointer;"
+                            </c:if>
+                            <c:if test="${empty recentContractInfo.careworkerId}">
+                                style="cursor: not-allowed; opacity: 0.5;"
+                            </c:if>>
+                        <div class="stat-widget-one card-body">
+                            <div class="stat-icon d-inline-block">
+                                <i class="ti-link text-danger border-danger"></i>
                             </div>
-
-                            <div class="form-group">
-                                <label for="seniorSignificant">Significant Information</label>
-                                <textarea class="form-control" id="seniorSignificant" name="seniorSignificant" rows="3">${senior.seniorSignificant}</textarea>
+                            <div class="stat-content d-inline-block">
+                                <div class="stat-text">연결된 보호자</div>
+                                <div class="stat-digit">
+                                    <c:choose>
+                                        <c:when test="${not empty recentContractInfo.careworkerName}">${recentContractInfo.careworkerName}</c:when>
+                                        <c:otherwise>정보 없음</c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
-
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Senior 목록 표시 -->
-            <div class="col-lg-4">
-                <h4 class="text-primary mb-3">Senior Detail</h4>
+            <!-- Right Column: Senior Details and Editable Form -->
+            <div class="col-lg-8">
                 <div class="card">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Senior Details -->
+                            <div class="text-center mb-4">
+                                <h1 class="display-4 text-primary">${senior.seniorName}</h1>
+                                <p class="h5 mb-2">
+                                    ID: ${senior.seniorId}
+                                </p>
+                                <p class="h5">
+                                    Phone: ${senior.seniorTel}
+                                </p>
+                                <p class="h5">
+                                    Gender: ${senior.seniorGender == 'male' ? '남성' : '여성'}
+                                </p>
+                            </div>
+
+                            <h5 class="text-primary">시니어 정보 수정</h5>
+
+                            <form action="updateSenior" method="post">
+                                <input type="hidden" name="seniorId" value="${senior.seniorId}"/>
+                                <div class="form-group">
+                                    <label for="seniorName">Name</label>
+                                    <input type="text" class="form-control" id="seniorName" name="seniorName"
+                                           value="${senior.seniorName}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="seniorTel">Phone</label>
+                                    <input type="text" class="form-control" id="seniorTel" name="seniorTel"
+                                           value="${senior.seniorTel}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="seniorBirth">Birth Date</label>
+                                    <input type="date" class="form-control" id="seniorBirth" name="seniorBirth"
+                                           value="<fmt:formatDate value='${senior.seniorBirth}' pattern='yyyy-MM-dd' />">
+                                </div>
+                                <div class="form-group">
+                                    <label for="seniorZipcode">Address</label>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <input type="text" class="form-control mr-2" id="seniorZipcode"
+                                               name="seniorZipcode" value="${senior.seniorZipcode}" readonly/>
+                                        <a href="javascript:void(0);" onclick="popupZipSearch();"
+                                           class="btn btn-primary px-4">우편번호 찾기</a>
+                                    </div>
+                                    <input type="text" class="form-control mb-2" id="seniorStreetAddr"
+                                           name="seniorStreetAddr" value="${senior.seniorStreetAddr}" readonly/>
+                                    <input type="text" class="form-control mb-2" id="seniorDetailAddr1"
+                                           name="seniorDetailAddr1" value="${senior.seniorDetailAddr1}">
+                                    <input type="text" class="form-control" id="seniorDetailAddr2"
+                                           name="seniorDetailAddr2" value="${senior.seniorDetailAddr2}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health Information -->
+                <div class="card mt-4">
                     <div class="card-body">
                         <h5 class="card-title text-primary">Health Information</h5>
                         <c:if test="${not empty healthInfo}">
@@ -163,8 +184,9 @@
     </div>
 </div>
 
+
 <script>
-    document.querySelector("form[action='updateSenior']").addEventListener("submit", function(event) {
+    document.querySelector("form[action='updateSenior']").addEventListener("submit", function (event) {
         event.preventDefault(); // 폼 기본 제출 동작 방지
 
         const formData = new FormData(this);
@@ -190,9 +212,9 @@
             });
     });
 
-    function popupZipSearch(){
+    function popupZipSearch() {
         new daum.Postcode({
-            oncomplete: function(data) {
+            oncomplete: function (data) {
                 var fullAddr = ''; // 최종 주소 변수
                 var extraAddr = ''; // 조합형 주소 변수
 
@@ -203,14 +225,14 @@
                 }
 
                 // 도로명 주소에 추가 정보가 있을 경우
-                if(data.userSelectedType === 'R'){
-                    if(data.bname !== ''){
+                if (data.userSelectedType === 'R') {
+                    if (data.bname !== '') {
                         extraAddr += data.bname;
                     }
-                    if(data.buildingName !== ''){
+                    if (data.buildingName !== '') {
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
-                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
                 }
 
                 // 주소와 괄호 내용을 분리

@@ -66,7 +66,7 @@ public class CareworkerController {
     public String detail(Model model, @RequestParam("id") Integer cwId) throws Exception {
         Careworker careworker = careworkerService.get(cwId);
         List<License> licenses = careworkerService.getLicensesByCareworkerId(cwId);
-
+        log.info(careworker.toString());
         model.addAttribute("enumStatuses", CwStatus.values());
         model.addAttribute("user", careworker);
         model.addAttribute("licenses", licenses);

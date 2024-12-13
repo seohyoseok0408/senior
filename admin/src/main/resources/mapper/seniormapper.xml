@@ -36,13 +36,10 @@
             u.user_id AS userId,
             u.user_name AS userName
         FROM
-            contract c
-                JOIN
-            senior s ON c.senior_id = s.senior_id
-                JOIN
-            careworker cw ON c.cw_id = cw.cw_id
-                JOIN
-            user u ON c.user_id = u.user_id
+            senior s
+                LEFT JOIN contract c ON s.senior_id = c.senior_id
+                LEFT JOIN careworker cw ON c.cw_id = cw.cw_id
+                JOIN user u ON s.user_id = u.user_id
         WHERE
             s.senior_id = #{seniorId}
         ORDER BY

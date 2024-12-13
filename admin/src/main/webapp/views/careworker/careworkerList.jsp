@@ -38,7 +38,6 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Username</th>
                                 <th>Name</th>
                                 <th>Tel</th>
                                 <th>Email</th>
@@ -54,7 +53,6 @@
                             <c:forEach var="careworker" items="${user}">
                                 <tr onclick="window.location.href='careworker-detail?id=${careworker.cwId}'" style="cursor: pointer;">
                                     <td>${careworker.cwId}</td>
-                                    <td>${careworker.cwUsername}</td>
                                     <td>${careworker.cwName}</td>
                                     <td>${careworker.cwTel}</td>
                                     <td>${careworker.cwEmail}</td>

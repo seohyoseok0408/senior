@@ -6,6 +6,7 @@ import edu.sm.model.User;
 import edu.sm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class UserService implements SMService<Integer, User> {
 
     private final UserRepository userRepository;
+    private final StandardPBEStringEncryptor textEncoder;
 
     @Override
     public void add(User user) throws Exception {
@@ -38,12 +40,19 @@ public class UserService implements SMService<Integer, User> {
 
     @Override
     public User get(Integer integer) throws Exception {
-        return userRepository.selectOne(integer);
+        User user = userRepository.selectOne(integer);
+        decryptAddress(user);
+
+        return user;
     }
 
     @Override
     public List<User> get() throws Exception {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            decryptAddress(user);
+        }
+        return users;
     }
 
     public void modifyById(Integer id, User updatedUser) throws Exception {
@@ -84,7 +93,6 @@ public class UserService implements SMService<Integer, User> {
         userRepository.update(existingUser); // 병합된 데이터를 DB에 저장
     }
 
-    // userId로 senior 데이터 조회
     public List<Senior> getSeniorsByUserId(Integer userId) throws Exception {
         return userRepository.selectSeniorByUserId(userId);
     }
@@ -122,5 +130,19 @@ public class UserService implements SMService<Integer, User> {
     // 계약 갱신 빈도 조회
     public Long getContractRenewalCountByUserId(Integer userId) {
         return userRepository.selectContractRenewalCountByUserId(userId);
+    }
+
+
+
+    private void decryptAddress(User user) {
+        if (user.getUserStreetAddr() != null) {
+            user.setUserStreetAddr(textEncoder.decrypt(user.getUserStreetAddr()));
+        }
+        if (user.getUserDetailAddr1() != null) {
+            user.setUserDetailAddr1(textEncoder.decrypt(user.getUserDetailAddr1()));
+        }
+        if (user.getUserDetailAddr2() != null) {
+            user.setUserDetailAddr2(textEncoder.decrypt(user.getUserDetailAddr2()));
+        }
     }
 }

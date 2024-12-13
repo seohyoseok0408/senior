@@ -67,12 +67,18 @@ public class CareworkerService implements SMService<Integer, Careworker> {
 
     @Override
     public List<Careworker> get() throws Exception {
-        return careworkerRepository.findAll();
+        List<Careworker> careworkers =careworkerRepository.findAll();
+        for (Careworker careworker : careworkers) {
+            decryptAddressFields(careworker);
+        }
+        return careworkers;
     }
 
     @Override
     public Careworker get(Integer integer) throws Exception {
-        return careworkerRepository.selectById(integer);
+        Careworker careworker = careworkerRepository.selectById(integer);
+        decryptAddressFields(careworker);
+        return careworker;
     }
 
     @Transactional
@@ -115,5 +121,15 @@ public class CareworkerService implements SMService<Integer, Careworker> {
     }
     public List<Map<String, Object>> getMonthlyAverageRatings() {
         return careworkerRepository.findMonthlyAverageRatings();
+    }
+    private void decryptAddressFields(Careworker careworker) {
+        if (careworker != null) {
+            if (careworker.getCwStreetAddr() != null)
+                careworker.setCwStreetAddr(textEncoder.decrypt(careworker.getCwStreetAddr()));
+            if (careworker.getCwDetailAddr1() != null)
+                careworker.setCwDetailAddr1(textEncoder.decrypt(careworker.getCwDetailAddr1()));
+            if (careworker.getCwDetailAddr2() != null)
+                careworker.setCwDetailAddr2(textEncoder.decrypt(careworker.getCwDetailAddr2()));
+        }
     }
 }

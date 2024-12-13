@@ -33,13 +33,11 @@ logging:
 app:
   url:
     server-url: ENC(fRoRGxzjgDDpIiL+Odv9zgjEyFnnozQRoMD1wGvhypE=)
-    chatbot: https://3vd0tljt1i.apigw.ntruss.com/custom/v1/16308/666a97771dda26840dabd3b6e7f98189d7ea6fe4ea0d799e38296158475cc917
-
   dir:
     imgdir: ENC(ct2qQbo6cc8jeyPu7XCPetaZuu6qVQDB)
     uploaddir: ENC(/2TpcDLKatu3EYdSypcT7A==)
-
+    logdir: ../logs
+    uploadlogdir: ../logs/uploadlog
   key:
     algo: PBEWithMD5AndDES
     skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780
-    chatbot: aHF5dWtHV0hpcHpUa090WG54VGlkTXdwVmh3bnNvWGg=

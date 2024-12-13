@@ -2,574 +2,388 @@
 <!-- JSTL -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!-- Google Fonts 및 ZingChart 라이브러리 -->
+<link href="https://fonts.googleapis.com/css?family=Crete+Round" rel="stylesheet">
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://cdn.zingchart.com/modules/zingchart-wordcloud.min.js"></script>
+
+<!-- Highcharts 라이브러리 -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 <div class="content-body">
-    <!-- row -->
     <div class="container-fluid">
+
+        <!-- 통계 영역 -->
         <div class="row">
             <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-two card-body">
+                <div class="card shadow">
+                    <div class="stat-widget-two card-body text-center">
                         <div class="stat-content">
-                            <div class="stat-text">Today Expenses </div>
-                            <div class="stat-digit"> <i class="fa fa-usd"></i>8500</div>
+                            <div class="stat-text" style="font-size: 1.2rem;">고객 수</div>
+                            <div class="stat-digit mb-2" style="font-size: 2rem; font-weight: bold; color: #6B51DF; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">648 명</div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success w-85" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-two card-body">
-                        <div class="stat-content">
-                            <div class="stat-text">Income Detail</div>
-                            <div class="stat-digit"> <i class="fa fa-usd"></i>7800</div>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-primary w-75" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                        <a href="<c:url value='/customer-list'/>" class="btn btn-outline-primary btn-sm" style="border-color: #6B51DF;">고객 리스트 바로가기</a>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-two card-body">
+                <div class="card shadow">
+                    <div class="stat-widget-two card-body text-center">
                         <div class="stat-content">
-                            <div class="stat-text">Task Completed</div>
-                            <div class="stat-digit"> <i class="fa fa-usd"></i> 500</div>
+                            <div class="stat-text" style="font-size: 1.2rem;">채팅 활성도</div>
+                            <div class="stat-digit mb-2" style="font-size: 2rem; font-weight: bold; color: #28A745; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">352 번</div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-warning w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                        <a href="<c:url value='/customer-chatlist'/>" class="btn btn-outline-success btn-sm" style="border-color: #28A745;">채팅 리스트 바로가기</a>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-two card-body">
+                <div class="card shadow">
+                    <div class="stat-widget-two card-body text-center">
                         <div class="stat-content">
-                            <div class="stat-text">Task Completed</div>
-                            <div class="stat-digit"> <i class="fa fa-usd"></i>650</div>
+                            <div class="stat-text" style="font-size: 1.2rem;">시니어 수</div>
+                            <div class="stat-digit mb-2" style="font-size: 2rem; font-weight: bold; color: #FFC107; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">612 명</div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-danger w-65" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /# card -->
-            </div>
-            <!-- /# column -->
-        </div>
-        <div class="row">
-            <div class="col-xl-8 col-lg-8 col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Sales Overview</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-8">
-                                <div id="morris-bar-chart"></div>
-                            </div>
-                        </div>
+                        <a href="<c:url value='/senior-list'/>" class="btn btn-outline-warning btn-sm" style="border-color: #FFC107;">시니어 리스트 바로가기</a>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div class="m-t-10">
-                            <h4 class="card-title">Customer Feedback</h4>
-                            <h2 class="mt-3">385749</h2>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card shadow">
+                    <div class="stat-widget-two card-body text-center">
+                        <div class="stat-content">
+                            <div class="stat-text" style="font-size: 1.2rem;">보호사 수</div>
+                            <div class="stat-digit mb-2" style="font-size: 2rem; font-weight: bold; color: #DC3545; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">452 명</div>
                         </div>
-                        <div class="widget-card-circle mt-5 mb-5" id="info-circle-card">
-                            <i class="ti-control-shuffle pa"></i>
-                        </div>
-                        <ul class="widget-line-list m-b-15">
-                            <li class="border-right">92% <br><span class="text-success"><i
-                                    class="ti-hand-point-up"></i> Positive</span></li>
-                            <li>8% <br><span class="text-danger"><i
-                                    class="ti-hand-point-down"></i>Negative</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Project</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="current-progress">
-                            <div class="progress-content py-2">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="progress-text">Website</div>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="current-progressbar">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-primary w-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                                    40%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="progress-content py-2">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="progress-text">Android</div>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="current-progressbar">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-primary w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-                                                    60%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="progress-content py-2">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="progress-text">Ios</div>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="current-progressbar">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-primary w-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
-                                                    70%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="progress-content py-2">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="progress-text">Mobile</div>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="current-progressbar">
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-primary w-90" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                                    90%
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="testimonial-widget-one p-17">
-                            <div class="testimonial-widget-one owl-carousel owl-theme">
-                                <div class="item">
-                                    <div class="testimonial-content">
-                                        <div class="testimonial-text">
-                                            <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-                                            consectetur adipisicing elit.
-                                            <i class="fa fa-quote-right"></i>
-                                        </div>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <div class="testimonial-author">TYRION LANNISTER</div>
-                                                <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                </div>
-                                            </div>
-                                            <img class="testimonial-author-img ml-3" src="./images/avatar/1.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="testimonial-content">
-                                        <div class="testimonial-text">
-                                            <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-                                            consectetur adipisicing elit.
-                                            <i class="fa fa-quote-right"></i>
-                                        </div>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <div class="testimonial-author">TYRION LANNISTER</div>
-                                                <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                </div>
-                                            </div>
-                                            <img class="testimonial-author-img ml-3" src="./images/avatar/1.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="testimonial-content">
-                                        <div class="testimonial-text">
-                                            <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-                                            consectetur adipisicing elit.
-                                            <i class="fa fa-quote-right"></i>
-                                        </div>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <div class="testimonial-author">TYRION LANNISTER</div>
-                                                <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                </div>
-                                            </div>
-                                            <img class="testimonial-author-img ml-3" src="./images/avatar/1.png" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Web Server</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="cpu-load-chart">
-                            <div id="cpu-load" class="cpu-load"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /# card -->
-            </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Country</h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="vmap13" class="vmap"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">New Orders</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Product</th>
-                                    <th>quantity</th>
-                                    <th>Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="round-img">
-                                            <a href=""><img width="35" src="./images/avatar/1.png" alt=""></a>
-                                        </div>
-                                    </td>
-                                    <td>Lew Shawon</td>
-                                    <td><span>Dell-985</span></td>
-                                    <td><span>456 pcs</span></td>
-                                    <td><span class="badge badge-success">Done</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="round-img">
-                                            <a href=""><img width="35" src="./images/avatar/1.png" alt=""></a>
-                                        </div>
-                                    </td>
-                                    <td>Lew Shawon</td>
-                                    <td><span>Asus-565</span></td>
-                                    <td><span>456 pcs</span></td>
-                                    <td><span class="badge badge-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="round-img">
-                                            <a href=""><img width="35" src="./images/avatar/1.png" alt=""></a>
-                                        </div>
-                                    </td>
-                                    <td>lew Shawon</td>
-                                    <td><span>Dell-985</span></td>
-                                    <td><span>456 pcs</span></td>
-                                    <td><span class="badge badge-success">Done</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="round-img">
-                                            <a href=""><img width="35" src="./images/avatar/1.png" alt=""></a>
-                                        </div>
-                                    </td>
-                                    <td>Lew Shawon</td>
-                                    <td><span>Asus-565</span></td>
-                                    <td><span>456 pcs</span></td>
-                                    <td><span class="badge badge-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="round-img">
-                                            <a href=""><img width="35" src="./images/avatar/1.png" alt=""></a>
-                                        </div>
-                                    </td>
-                                    <td>lew Shawon</td>
-                                    <td><span>Dell-985</span></td>
-                                    <td><span>456 pcs</span></td>
-                                    <td><span class="badge badge-success">Done</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="round-img">
-                                            <a href=""><img width="35" src="./images/avatar/1.png" alt=""></a>
-                                        </div>
-                                    </td>
-                                    <td>Lew Shawon</td>
-                                    <td><span>Asus-565</span></td>
-                                    <td><span>456 pcs</span></td>
-                                    <td><span class="badge badge-warning">Pending</span></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 col-xl-4 col-xxl-6 col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Timeline</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="widget-timeline">
-                            <ul class="timeline">
-                                <li>
-                                    <div class="timeline-badge primary"></div>
-                                    <a class="timeline-panel text-muted" href="#">
-                                        <span>10 minutes ago</span>
-                                        <h6 class="m-t-5">Youtube, a video-sharing website, goes live.</h6>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <div class="timeline-badge warning">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="#">
-                                        <span>20 minutes ago</span>
-                                        <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <div class="timeline-badge danger">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="#">
-                                        <span>30 minutes ago</span>
-                                        <h6 class="m-t-5">Google acquires Youtube.</h6>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <div class="timeline-badge success">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="#">
-                                        <span>15 minutes ago</span>
-                                        <h6 class="m-t-5">StumbleUpon is acquired by eBay. </h6>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <div class="timeline-badge warning">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="#">
-                                        <span>20 minutes ago</span>
-                                        <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <div class="timeline-badge dark">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="#">
-                                        <span>20 minutes ago</span>
-                                        <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <div class="timeline-badge info">
-                                    </div>
-                                    <a class="timeline-panel text-muted" href="#">
-                                        <span>30 minutes ago</span>
-                                        <h6 class="m-t-5">Google acquires Youtube.</h6>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-xxl-6 col-lg-6 col-md-6 col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Todo</h4>
-                    </div>
-                    <div class="card-body px-0">
-                        <div class="todo-list">
-                            <div class="tdl-holder">
-                                <div class="tdl-content widget-todo mr-4">
-                                    <ul id="todo_list">
-                                        <li><label><input type="checkbox"><i></i><span>Get up</span><a href='#'
-                                                                                                       class="ti-trash"></a></label></li>
-                                        <li><label><input type="checkbox" checked><i></i><span>Stand up</span><a
-                                                href='#' class="ti-trash"></a></label></li>
-                                        <li><label><input type="checkbox"><i></i><span>Don't give up the
-                                                            fight.</span><a href='#' class="ti-trash"></a></label></li>
-                                        <li><label><input type="checkbox" checked><i></i><span>Do something
-                                                            else</span><a href='#' class="ti-trash"></a></label></li>
-                                        <li><label><input type="checkbox" checked><i></i><span>Stand up</span><a
-                                                href='#' class="ti-trash"></a></label></li>
-                                        <li><label><input type="checkbox"><i></i><span>Don't give up the
-                                                            fight.</span><a href='#' class="ti-trash"></a></label></li>
-                                    </ul>
-                                </div>
-                                <div class="px-4">
-                                    <input type="text" class="tdl-new form-control" placeholder="Write new item and hit 'Enter'...">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-xxl-6 col-xl-4 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Product Sold</h4>
-                        <div class="card-action">
-                            <div class="dropdown custom-dropdown">
-                                <div data-toggle="dropdown">
-                                    <i class="ti-more-alt"></i>
-                                </div>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Option 1</a>
-                                    <a class="dropdown-item" href="#">Option 2</a>
-                                    <a class="dropdown-item" href="#">Option 3</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart py-4">
-                            <canvas id="sold-product"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-12 col-xxl-6 col-lg-6 col-md-12">
-                <div class="row">
-                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6 col-md-6">
-                        <div class="card">
-                            <div class="social-graph-wrapper widget-facebook">
-                                <span class="s-icon"><i class="fa fa-facebook"></i></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 border-right">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">89</span> k</h4>
-                                        <p class="m-0">Friends</p>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">119</span> k</h4>
-                                        <p class="m-0">Followers</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6 col-md-6">
-                        <div class="card">
-                            <div class="social-graph-wrapper widget-linkedin">
-                                <span class="s-icon"><i class="fa fa-linkedin"></i></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 border-right">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">89</span> k</h4>
-                                        <p class="m-0">Friends</p>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">119</span> k</h4>
-                                        <p class="m-0">Followers</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6 col-md-6">
-                        <div class="card">
-                            <div class="social-graph-wrapper widget-googleplus">
-                                <span class="s-icon"><i class="fa fa-google-plus"></i></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 border-right">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">89</span> k</h4>
-                                        <p class="m-0">Friends</p>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">119</span> k</h4>
-                                        <p class="m-0">Followers</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6 col-md-6">
-                        <div class="card">
-                            <div class="social-graph-wrapper widget-twitter">
-                                <span class="s-icon"><i class="fa fa-twitter"></i></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 border-right">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">89</span> k</h4>
-                                        <p class="m-0">Friends</p>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="pt-3 pb-3 pl-0 pr-0 text-center">
-                                        <h4 class="m-1"><span class="counter">119</span> k</h4>
-                                        <p class="m-0">Followers</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="<c:url value='/careworker-list'/>" class="btn btn-outline-danger btn-sm" style="border-color: #DC3545;">보호사 리스트 바로가기</a>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- 서버 사용량 추이 -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="card-title">서버 사용량 추이</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="container1" style="height: 300px;"></div>
+                    </div>
+                    <div class="card-footer">
+                        <form id="pollingForm" style="display: none;">
+                            <div class="row mb-3">
+                                <label for="fetchURL" class="col-sm-4 col-form-label">CSV URL:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="fetchURL" class="form-control" value="https://demo-live-data.highcharts.com/time-data.csv" />
+                                </div>
+                            </div>
+                            <div class="row mb-3 align-items-center">
+                                <label for="enablePolling" class="col-sm-4 col-form-label">Enable Polling:</label>
+                                <div class="col-sm-8">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="enablePolling" class="form-check-input" checked />
+                                        <label for="enablePolling" class="form-check-label">활성화</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="pollingTime" class="col-sm-4 col-form-label">Polling Time (초):</label>
+                                <div class="col-sm-8">
+                                    <input type="number" id="pollingTime" class="form-control" value="1" />
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 차트 및 분석 영역 -->
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">시니어 지역 분석</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="seniorRegionChart" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">월별 매출</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="monthlyRevenueChart" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 업셀링 및 추천 분석 -->
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h4 class="card-title">업셀링 및 추천 분석</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="info-box border p-3 rounded">
+                                    <p class="info-title mb-2">추천 성공률</p>
+                                    <p class="info-value text-primary mb-0"><strong>45%</strong></p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="info-box border p-3 rounded">
+                                    <p class="info-title mb-2">마케팅 기여율</p>
+                                    <p class="info-value text-success mb-0"><strong>30%</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center mt-4">
+                            <div class="col-12">
+                                <div class="info-box border p-3 rounded">
+                                    <p class="info-title mb-2">재계약 비율</p>
+                                    <p class="info-value text-warning mb-0"><strong>47%</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title mb-0">피드백 키워드 분석</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="feedbackWordcloud" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- ZingChart 및 Highcharts 스크립트 -->
+<script>
+    // 시니어 지역 차트 데이터
+    const seniorRegionData = [
+        { region: '서울', count: 142 },
+        { region: '경기', count: 108 },
+        { region: '부산', count: 82 },
+        { region: '인천', count: 56 },
+        { region: '대구', count: 48 },
+        { region: '대전', count: 36 },
+        { region: '광주', count: 20 },
+        { region: '울산', count: 10 },
+        { region: '세종', count: 18 },
+        { region: '강원', count: 29 },
+        { region: '충북', count: 14 },
+        { region: '충남', count: 25 },
+        { region: '전북', count: 10 },
+        { region: '전남', count: 16 },
+        { region: '경북', count: 15 },
+        { region: '경남', count: 20 },
+        { region: '제주', count: 7 },
+    ];
+
+    // Highcharts 시니어 지역 차트 생성
+    Highcharts.chart('seniorRegionChart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '지역별 시니어 수'
+        },
+        xAxis: {
+            categories: seniorRegionData.map(data => data.region),
+            title: {
+                text: '지역'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '시니어 수 (명)'
+            }
+        },
+        tooltip: {
+            pointFormat: '시니어 수: <b>{point.y}명</b>'
+        },
+        series: [{
+            name: '시니어 수',
+            data: seniorRegionData.map(data => data.count),
+            color: '#17a2b8' // info 색상
+        }]
+    });
+
+    // 케어워커 상태 차트 데이터
+    var careworkerStatusData = {
+        type: 'bar',
+        series: [
+            { values: [300], text: 'Active' },
+            { values: [100], text: 'Inactive' },
+            { values: [50], text: 'On Leave' },
+        ]
+    };
+
+    // ZingChart 케어워커 상태 차트 생성
+    zingchart.render({
+        id: 'careworkerStatusChart',
+        data: careworkerStatusData,
+        height: '100%',
+        width: '100%'
+    });
+
+    // 피드백 키워드 분석 워드클라우드 데이터
+    // 피드백 키워드 분석 워드클라우드 데이터
+    var feedbackData = [
+        { text: "친절", count: 20 },
+        { text: "응답 빠름", count: 15 },
+        { text: "전문적", count: 10 },
+        { text: "정확함", count: 8 },
+        { text: "신속함", count: 12 },
+        { text: "불친절", count: 5 },
+        { text: "대기 시간 길음", count: 6 },
+        { text: "비전문적", count: 4 },
+        { text: "오류 빈번", count: 7 },
+        { text: "불만족", count: 9 },
+        { text: "응대 미흡", count: 3 },
+        { text: "복잡함", count: 4 },
+        { text: "사용자 친화적", count: 14 },
+        { text: "깨끗함", count: 11 },
+        { text: "가성비 좋음", count: 13 },
+        { text: "편리함", count: 16 },
+        { text: "소통 어려움", count: 5 },
+        { text: "추천함", count: 18 },
+        { text: "기대 이하", count: 7 },
+        { text: "친절함 부족", count: 6 },
+        { text: "효율적", count: 12 },
+        { text: "시간 낭비", count: 4 },
+        { text: "명확한 안내", count: 14 },
+        { text: "비싸다", count: 3 },
+        { text: "문제 해결 능력 부족", count: 5 },
+        { text: "쾌적함", count: 13 },
+        { text: "정돈된 환경", count: 10 },
+        { text: "지연 발생", count: 6 },
+        { text: "깔끔함", count: 15 },
+        { text: "서비스 품질 높음", count: 17 },
+        { text: "불만 처리 미흡", count: 4 },
+        { text: "현대적", count: 9 },
+        { text: "따뜻한 분위기", count: 11 },
+        { text: "반복된 문제 발생", count: 3 },
+        { text: "직원 태도 불만", count: 5 },
+        { text: "정확한 정보 제공", count: 8 },
+        { text: "친절하고 신속함", count: 19 },
+        { text: "전문성 부족", count: 3 },
+        { text: "불쾌감", count: 2 },
+        { text: "편안함", count: 12 },
+        { text: "깔끔한 인터페이스", count: 16 },
+        { text: "불편함", count: 7 },
+        { text: "강력 추천", count: 19 },
+        { text: "반복 요청", count: 3 },
+        { text: "적극적", count: 11 },
+        { text: "성과 좋음", count: 14 },
+        { text: "성의 부족", count: 5 }
+    ];
+
+
+    // ZingChart 피드백 워드클라우드 생성
+    zingchart.render({
+        id: 'feedbackWordcloud',
+        data: {
+            type: 'wordcloud',
+            options: {
+                words: feedbackData,
+                palette: ['#1976D2', '#D32F2F', '#388E3C'],
+            }
+        },
+        height: '100%',
+        width: '100%'
+    });
+</script>
+<script>
+    Highcharts.chart('monthlyRevenueChart', {
+        chart: { type: 'line' },
+        title: { text: '월별 매출 추이' },
+        xAxis: { categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] },
+        yAxis: { title: { text: '매출 (만원)' } },
+        series: [{
+            name: '매출',
+            data: [500, 600, 550, 800, 750, 900, 950, 1000, 1200, 1100, 1050, 1250],
+            color: '#FF5722'
+        }]
+    });
+</script>
+<script>
+    const defaultData = 'https://demo-live-data.highcharts.com/time-data.csv';
+    const urlInput = document.getElementById('fetchURL');
+    const pollingCheckbox = document.getElementById('enablePolling');
+    const pollingInput = document.getElementById('pollingTime');
+
+    function createChart() {
+        Highcharts.chart('container1', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: ''
+            },
+            accessibility: {
+                announceNewData: {
+                    enabled: true,
+                    minAnnounceInterval: 15000,
+                    announcementFormatter: function (
+                        allSeries,
+                        newSeries,
+                        newPoint
+                    ) {
+                        if (newPoint) {
+                            return `새 데이터 추가됨: ${newPoint.y}`;
+                        }
+                        return false;
+                    }
+                }
+            },
+            plotOptions: {
+                line: {
+                    color: '#007BFF',
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: null,
+                        fillColor: 'white'
+                    }
+                }
+            },
+            data: {
+                csvURL: urlInput.value,
+                enablePolling: pollingCheckbox.checked === true,
+                dataRefreshRate: parseInt(pollingInput.value, 10)
+            }
+        });
+
+        if (pollingInput.value < 1 || !pollingInput.value) {
+            pollingInput.value = 1;
+        }
+    }
+
+    urlInput.value = defaultData;
+
+    pollingCheckbox.onchange = urlInput.onchange = pollingInput.onchange = createChart;
+
+    createChart();
+
+</script>

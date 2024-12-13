@@ -55,10 +55,6 @@
                             <th>Gender</th>
                             <th>Tel</th>
                             <th>Birth</th>
-                            <th>Zipcode</th>
-                            <th>Street Address</th>
-                            <th>Detail Address 1</th>
-                            <th>Detail Address 2</th>
                             <th>Status</th>
                         </tr>
                         </thead>
@@ -71,10 +67,6 @@
                                 <td>${senior.seniorGender}</td>
                                 <td>${senior.seniorTel}</td>
                                 <td>${senior.seniorBirth}</td>
-                                <td>${senior.seniorZipcode}</td>
-                                <td>${senior.seniorStreetAddr}</td>
-                                <td>${senior.seniorDetailAddr1}</td>
-                                <td>${senior.seniorDetailAddr2}</td>
                                 <td>${senior.seniorStatus}</td>
                             </tr>
                         </c:forEach>

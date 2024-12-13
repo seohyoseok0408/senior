@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard</title>
+    <title>관리자</title>
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="<c:url value='/images/favicon.png'/>">
@@ -57,7 +57,7 @@
         Nav header start
     ***********************************-->
     <div class="nav-header">
-        <a href="" class="brand-logo">
+        <a href="/" class="brand-logo">
             <img class="logo-abbr" src="<c:url value='/images/logo.png'/>" alt="">
             <img class="logo-compact" src="<c:url value='/images/logo-text.png'/>" alt="">
             <img class="brand-title" src="<c:url value='/images/logo-text.png'/>" alt="">

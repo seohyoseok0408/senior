@@ -14,7 +14,7 @@
 
 <div class="content-body">
   <div class="container-fluid">
-    <h1>User List</h1>
+    <h1>채팅 리스트</h1>
     <div class="col-12">
       <div class="card">
         <div class="card-body">

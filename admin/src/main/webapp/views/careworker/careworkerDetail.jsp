@@ -6,17 +6,57 @@
 
 <div class="content-body">
     <div class="container-fluid">
-        <div class="row mt-4">
-            <!-- 왼쪽: 보호사 정보 수정 폼 -->
+        <div class="row">
+            <!-- 왼쪽: 프로필 사진과 통계 -->
+            <div class="col-lg-4 text-center">
+                <div class="profile-photo">
+                    <c:choose>
+                        <c:when test="${not empty user.cwProfile}">
+                            <img src="/imgs/careworker/${user.cwProfile}" style="max-width: 100%; height: auto;" alt="프로필 이미지">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/images/profile/default-profile.jpg" style="max-width: 100%; height: auto;" alt="Default Profile">
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
+                <div class="mt-4">
+                    <div class="col-lg-12 mt-4">
+                        <h5 class="text-primary mb-3">Licenses</h5>
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                            <c:forEach items="${licenses}" var="license">
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title text-primary">${license.licenseName}</h5>
+                                            <p class="card-text">Start Date: ${license.licenseStartDate}</p>
+                                            <p class="card-text">End Date: ${license.licenseEndDate}</p>
+                                            <p class="card-text">Status:
+                                                <span class="${license.licenseStatus == 1 ? 'text-success' : 'text-danger'}">
+                                                        ${license.licenseStatus == 1 ? 'Valid' : 'Expired'}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 오른쪽: 보호사 정보 수정 -->
             <div class="col-lg-8">
                 <div class="card mt-3">
                     <div class="card-body">
+
                         <h5 class="text-primary">Edit Careworker Information</h5>
                         <form id="updateCareworkerForm" action="<c:url value='/api/careworker/update' />" method="post">
                             <input type="hidden" name="cwId" value="${user.cwId}"/>
                             <input type="hidden" name="cwUsername" value="${user.cwUsername}"/>
 
-                            <!-- 폼 그룹 반복 로직 간소화 -->
+                            <!-- 이름, 이메일, 전화번호 입력 -->
                             <c:forEach var="field" items="${['cwName:Name', 'cwEmail:Email', 'cwTel:Phone']}">
                                 <div class="form-group">
                                     <label for="${field.split(':')[0]}">${field.split(':')[1]}</label>
@@ -62,21 +102,21 @@
                         </form>
                     </div>
                 </div>
-            </div>
 
-            <!-- 오른쪽: 자격증 리스트 -->
-            <div class="col-lg-4">
-                <h5 class="text-primary">Licenses</h5>
-                <c:forEach items="${licenses}" var="license">
-                    <div class="card mb-3">
-                        <div class="card-body text-center">
-                            <h5 class="text-primary">${license.licenseName}</h5>
-                            <p>Start Date: ${license.licenseStartDate}</p>
-                            <p>End Date: ${license.licenseEndDate}</p>
-                            <p>Status: ${license.licenseStatus == 1 ? 'Valid' : 'Expired'}</p>
+                <!-- 자격증 리스트 -->
+                <div class="col-lg-12">
+                    <h5 class="text-primary">Licenses</h5>
+                    <c:forEach items="${licenses}" var="license">
+                        <div class="card mb-3">
+                            <div class="card-body text-center">
+                                <h5 class="text-primary">${license.licenseName}</h5>
+                                <p>Start Date: ${license.licenseStartDate}</p>
+                                <p>End Date: ${license.licenseEndDate}</p>
+                                <p>Status: ${license.licenseStatus == 1 ? 'Valid' : 'Expired'}</p>
+                            </div>
                         </div>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </div>
