@@ -5,6 +5,7 @@ Footer start
   <div class="copyright">
     <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
     <p>Distributed by <a href="https://themewagon.com/" target="_blank">Themewagon</a></p>
+    <audio id="emergencySound" src="/sounds/alert.mp3" preload="auto"></audio>
   </div>
 </div>
 <!--**********************************
@@ -41,6 +42,7 @@ Scripts
 
 <script src="<c:url value='/js/dashboard/dashboard-2.js'/>"></script>
 <!-- Circle progress -->
+<script src="/js/emergency-check.js"></script>
 
 </body>
 
