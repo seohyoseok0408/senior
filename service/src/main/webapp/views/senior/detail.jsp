@@ -5,6 +5,219 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
+    :root {
+        --primary: #2ecc71;
+        --primary-light: #e8f8f5;
+        --secondary: #27ae60;
+        --background: #f9f9f9;
+        --text: #2c3e50;
+        --text-light: #7f8c8d;
+        --border: #a5d6a7;
+        --white: #ffffff;
+        --shadow: 0 4px 6px rgba(46, 204, 113, 0.1);
+        --transition: all 0.3s ease;
+    }
+
+    body {
+        font-family: 'Noto Sans KR', sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .dashboard {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+    }
+
+    .card {
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(46, 204, 113, 0.2);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: var(--white);
+        padding: 1.5rem 2rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .profile-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--primary);
+        box-shadow: var(--shadow);
+        margin-bottom: 1.5rem;
+    }
+
+    .profile-name {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .profile-item {
+        background: var(--primary-light);
+        padding: 1rem;
+        border-radius: 10px;
+        transition: var(--transition);
+    }
+
+    .profile-item:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow);
+    }
+
+    .profile-label {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 0.25rem;
+        text-transform: uppercase;
+    }
+
+    .profile-value {
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .map-container {
+        height: 300px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        margin-top: 2rem;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .health-charts {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .health-chart-card {
+        background: var(--white);
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: var(--transition);
+    }
+
+    .health-chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(46, 204, 113, 0.2);
+    }
+
+    .health-chart-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .health-chart-title {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+    }
+
+    .health-chart-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 1rem;
+    }
+
+    .progress {
+        height: 10px;
+        background-color: var(--border);
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: var(--secondary);
+        transition: width 0.5s ease-in-out;
+    }
+
+    .btn {
+        display: block;
+        padding: 15px 20px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        text-align: center;
+        width: 100%;
+        margin-top: 1rem;
+        height: 58px;
+    }
+
+    .btn-primary {
+        background-color: var(--primary);
+        color: var(--white);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--secondary);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: var(--text-light);
+        color: var(--white);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--text);
+        transform: translateY(-2px);
+    }
+
     .tabs {
         display: flex;
         justify-content: center;
@@ -26,12 +239,8 @@
     }
 
     .tab.active {
-        background: #2c786c;
+        background: #2ECC71FF;
         color: white;
-    }
-
-    .tab:hover {
-        background: #b2dfdb;
     }
 
     .tab-content {
@@ -42,350 +251,150 @@
         display: block;
     }
 
-    .srd-wrapper {
-        font-family: 'Noto Sans KR', sans-serif;
-        background-color: #f8f9fa;
-        color: #333;
-        line-height: 1.6;
-        padding: 2rem;
-    }
-
-    .srd-container {
-        max-width: 1000px;
-        margin: 0 auto;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    .srd-content {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 3rem 2rem;
-        position: relative;
-        z-index: 1;
-        gap: 2rem;
-    }
-
-    .srd-profile, .srd-info {
-        flex: 1;
-        min-width: 300px;
-        max-width: calc(50% - 1rem);
-    }
-
-    .srd-profile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .srd-profile-image {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 5px solid #fff;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        margin-bottom: 2rem;
-    }
-
-    .srd-profile-image:hover {
-        transform: scale(1.05) rotate(3deg);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .srd-info {
-        min-width: 300px;
-    }
-
-    .srd-name {
-        font-size: 2.2rem;
-        color: #2c786c;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .srd-gender {
-        font-size: 0.9rem;
-        background-color: #37a794;
-        color: #fff;
-        padding: 0.25rem 1rem;
-        border-radius: 20px;
-        text-transform: uppercase;
-    }
-
-    .srd-details {
-        display: grid;
-        gap: 1.9rem;
-    }
-
-    .srd-detail-item {
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 10px;
-        padding: 1.2rem;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .srd-detail-item::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, #2c786c, #37a794);
-        z-index: -1;
-        filter: blur(5px);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .srd-detail-item:hover {
-        transform: translateY(-5px);
-    }
-
-    .srd-detail-item:hover::before {
-        opacity: 1;
-    }
-
-    .srd-detail-label {
-        font-weight: 600;
-        color: #2c786c;
-        margin-bottom: 0.5rem;
-        display: block;
-    }
-
-    .srd-detail-value {
-        color: #333;
-    }
-
-    .srd-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        padding: 40px;
-    }
-
-    .srd-btn {
-        padding: 0.75rem 2rem;
+    /* 새로 추가된 스타일 */
+    .btn-video-call {
+        background-color: #4CAF50;
+        color: white;
         border: none;
-        border-radius: 25px;
-        font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        font-weight: 600;
         text-decoration: none;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .srd-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-        );
-        transition: all 0.5s;
-    }
-
-    .srd-btn:hover::before {
-        left: 100%;
-    }
-
-    .srd-btn-primary {
-        background-color: #2c786c;
-        color: #fff;
-    }
-
-    .srd-btn-primary:hover {
-        background-color: #37a794;
-        box-shadow: 0 5px 15px rgba(44, 120, 108, 0.4);
-    }
-
-    .srd-health-info {
-        margin-top: 0.5rem;
-    }
-
-    .srd-health-item {
-        background-color: rgba(255, 255, 255, 0.6);
-        border-radius: 8px;
-        padding: 0.8rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .srd-health-item:last-child {
-        margin-bottom: 0;
-    }
-
-    .health-charts {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-    }
-
-    .health-chart-title {
-        font-size: 1.5rem;
-        color: #2c786c;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-
-    .health-chart-card {
-        background-color: #ffffff;
-        border-radius: 10px;
-        padding: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: inline-block;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
-    .health-chart-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    .btn-video-call:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     }
 
-    .health-chart-card h5 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-        color: #2c786c;
-    }
-
-    .health-chart-card h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: #333;
-    }
-
-    .health-chart-card .progress {
-        height: 10px;
-        background-color: #e0e0e0;
-        border-radius: 5px;
+    #liveMap {
+        border-radius: 15px;
         overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
     }
 
-    .health-chart-card .progress-bar {
-        height: 100%;
-        background-color: #2c786c;
-        transition: width 0.5s ease-in-out;
-    }
-
-
-    .contracts-list {
+    .worklog-list {
         background: white;
         border-radius: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 20px;
     }
 
-    .contract-item {
+    .worklog-item {
         display: flex;
         align-items: center;
-        padding: 1.5rem;
-        border-bottom: 1px solid #e9ecef;
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
         transition: all 0.3s ease;
     }
 
-    .contract-item:last-child {
+    .worklog-item:last-child {
         border-bottom: none;
     }
 
-    .contract-item:hover {
-        background-color: #f8f9fa;
+    .worklog-item:hover {
+        background-color: #f5f5f5;
     }
 
-    .contract-main {
+    .worklog-date {
         flex: 1;
-        display: grid;
-        grid-template-columns: 2fr 1fr 2fr 1fr;
-        gap: 2rem;
-        align-items: center;
-    }
-
-    .customer-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .title-name {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: #40c057;
-        margin-bottom: 0.25rem;
+        color: #333;
     }
 
-    .action-btn {
-        background-color: #40c057;
+    .worklog-action {
+        background-color: #4CAF50;
         color: white;
         border: none;
+        padding: 10px 20px;
         border-radius: 25px;
-        padding: 0.5rem 1.5rem;
-        font-weight: 500;
+        font-size: 0.9rem;
         text-decoration: none;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
     }
 
-    .action-btn:hover {
-        background-color: #2b8a3e;
+    .worklog-action:hover {
+        background-color: #45a049;
         transform: translateY(-2px);
     }
 
-    @media (max-width: 768px) {
-        .contract-main {
+    @media (max-width: 1200px) {
+        .dashboard {
             grid-template-columns: 1fr;
-            gap: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
         }
 
-        .contract-item {
-            flex-direction: column;
-            align-items: flex-start;
+        .health-charts {
+            grid-template-columns: 1fr;
         }
 
-        .action-btn {
-            margin-top: 1rem;
-            width: 100%;
-            text-align: center;
+        .profile-details {
+            grid-template-columns: 1fr;
         }
     }
 </style>
-
-<div class="srd-wrapper">
-    <div class="srd-container">
-        <div class="tabs">
-            <div class="tab active" id="tab-info">시니어 상세정보</div>
-            <div class="tab" id="tab-worklog">업무일지</div>
+<div class="container">
+    <div class="dashboard">
+        <div class="card">
+            <div class="card-header">
+                프로필 정보
+            </div>
+            <div class="card-body">
+                <div class="profile-section">
+                    <img src="/imgs/senior/${senior.seniorProfile}" alt="${senior.seniorName}" class="profile-image">
+                    <h2 class="profile-name">${senior.seniorName} 어르신</h2>
+                    <div class="profile-details">
+                        <div class="profile-item">
+                            <div class="profile-label">성별</div>
+                            <c:choose>
+                                <c:when test="${senior.seniorGender == 'M'}">남자</c:when>
+                                <c:when test="${senior.seniorGender == 'F'}">여자</c:when>
+                                <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">전화번호</div>
+                            <div class="profile-value">${senior.seniorTel}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">생년월일</div>
+                            <div class="profile-value">${senior.seniorBirth}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">주소</div>
+                            <div class="profile-value">${senior.seniorStreetAddr}, ${senior.seniorDetailAddr1}, ${senior.seniorDetailAddr2}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="tab-content active" id="content-info">
-            <div class="srd-content">
-                <div class="srd-profile">
-                    <c:choose>
-                        <c:when test="${not empty senior.seniorProfile}">
-                            <img src="/imgs/senior/${senior.seniorProfile}" class="srd-profile-image"
-                                 alt="${senior.seniorName}">
-                        </c:when>
-                        <c:otherwise>
-                            <img src="/static/images/default-profile.png" class="srd-profile-image"
-                                 alt="Default Profile">
-                        </c:otherwise>
-                    </c:choose>
+        <div class="card">
+            <div class="tabs">
+                <div class="tab active" id="tab-live">시니어 상세정보</div>
+                <div class="tab" id="tab-worklog">업무일지</div>
+            </div>
 
-                    <!-- 차트 영역 -->
+            <div class="tab-content active" id="content-info">
+                <div class="card-body">
                     <div class="health-charts">
-                        <h2 class="health-chart-title">건강 정보</h2>
                         <div class="health-chart-card">
-                            <h5>수축기 혈압</h5>
-                            <h2 id="systolicBP">--</h2>
+                            <div class="health-chart-icon">💗</div>
+                            <h3 class="health-chart-title">수축기 혈압</h3>
+                            <div class="health-chart-value" id="systolicBP">--</div>
                             <div class="progress">
                                 <div id="progress1" class="progress-bar" role="progressbar"
                                      style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
@@ -393,150 +402,80 @@
                             </div>
                         </div>
                         <div class="health-chart-card">
-                            <h5>확장기 혈압</h5>
-                            <h2 id="diastolicBP">--</h2>
+                            <div class="health-chart-icon">💓</div>
+                            <h3 class="health-chart-title">확장기 혈압</h3>
+                            <div class="health-chart-value" id="diastolicBP">--</div>
                             <div class="progress">
                                 <div id="progress2" class="progress-bar" role="progressbar"
                                      style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="health-chart-card">
-                            <h5>심박수</h5>
-                            <h2 id="heartRate">--</h2>
+                            <div class="health-chart-icon">❤️</div>
+                            <h3 class="health-chart-title">심박수</h3>
+                            <div class="health-chart-value" id="heartRate">--</div>
                             <div class="progress">
                                 <div id="progress3" class="progress-bar" role="progressbar"
                                      style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="health-chart-card">
-                            <h5>체온</h5>
-                            <h2 id="temperature">--</h2>
+                            <div class="health-chart-icon">🌡️</div>
+                            <h3 class="health-chart-title">체온</h3>
+                            <div class="health-chart-value" id="temperature">--</div>
                             <div class="progress">
                                 <div id="progress4" class="progress-bar" role="progressbar"
                                      style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="srd-info">
-                    <div class="srd-name">
-                        ${senior.seniorName}
-                        <span class="srd-gender">
-                        <c:choose>
-                            <c:when test="${senior.seniorGender == 'M'}">남성</c:when>
-                            <c:otherwise>여성</c:otherwise>
-                        </c:choose>
-                    </span>
-                    </div>
-
-                    <div class="srd-details">
-                        <div class="srd-detail-item">
-                            <span class="srd-detail-label">생년월일</span>
-                            <span class="srd-detail-value">${senior.seniorBirth}</span>
-                        </div>
-
-                        <div class="srd-detail-item">
-                            <span class="srd-detail-label">전화번호</span>
-                            <span class="srd-detail-value">${senior.seniorTel}</span>
-                        </div>
-
-                        <div class="srd-detail-item">
-                            <span class="srd-detail-label">주소</span>
-                            <span class="srd-detail-value">
-                            ${senior.seniorStreetAddr} ${senior.seniorDetailAddr2}
-                            <c:if test="${not empty senior.seniorDetailAddr1}">, ${senior.seniorDetailAddr1}</c:if>
-                            (${senior.seniorZipcode})
-                        </span>
-                        </div>
-
-                        <div class="srd-detail-item">
-                            <span class="srd-detail-label">중요 사항</span>
-                            <span class="srd-detail-value">${senior.seniorSignificant != null ? senior.seniorSignificant : '특이사항 없음'}</span>
-                        </div>
-
-                        <div class="srd-detail-item">
-                            <span class="srd-detail-label">등록일</span>
-                            <span class="srd-detail-value">${senior.seniorRdate}</span>
-                        </div>
-
-                        <div class="srd-detail-item">
-                            <span class="srd-detail-label">건강 정보</span>
-                            <div class="srd-health-info">
-                                <c:choose>
-                                    <c:when test="${not empty healthinfo}">
-                                        <c:forEach items="${healthinfo}" var="info">
-                                            <div class="srd-health-item">
-                                                <span class="srd-detail-label">질병명</span>
-                                                <span class="srd-detail-value">${info.diseaseName}</span>
-                                                <span class="srd-detail-label" style="margin-top: 0.5rem;">설명</span>
-                                                <span class="srd-detail-value">${info.diseaseDescription}</span>
-                                            </div>
-                                        </c:forEach>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="srd-detail-value">등록된 건강 정보가 없습니다.</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="liveMap" style="width:100%;height:600px;"
+                         data-sr-lat="${senior.seniorLatitude}"
+                         data-sr-lng="${senior.seniorLongitude}"></div>
                 </div>
             </div>
-
-            <div class="srd-buttons">
-                <a href="/senior/update/${senior.seniorId}" class="srd-btn srd-btn-primary">수정</a>
-            </div>
-        </div>
-        <div class="tab-content" id="content-worklog">
-            <div class="contracts-list">
-                <c:forEach var="worklog" items="${workLogs}">
-                    <div class="contract-item">
-                        <div class="contract-main">
-                            <div class="customer-info">
-                                <span class="title-name">
-                                    <fmt:parseDate value="${worklog.workLogRdate}"
-                                                   pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                                    <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${ parsedDateTime }" />
-                                </span>
+            <div class="tab-content" id="content-worklog">
+                <div class="worklog-list">
+                    <c:forEach var="worklog" items="${workLogs}">
+                        <div class="worklog-item">
+                            <div class="worklog-date">
+                                <fmt:parseDate value="${worklog.workLogRdate}"
+                                               pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both"/>
+                                <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${ parsedDateTime }"/>
                             </div>
-                            <div class="status-info">
-
-                            </div>
+                            <a href="/careworker/worklog?workLogId=${worklog.workLogId}" class="worklog-action">자세히
+                                보기</a>
                         </div>
-                        <a href="/user/worklog?workLogId=${worklog.workLogId}" class="action-btn">
-                            자세히 보기
-                        </a>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </div>
             </div>
-
         </div>
-
     </div>
 </div>
-
 <script>
     const seniorId = '${senior.seniorId}';
 
     let index = {
         init: function () {
-            // 주기적으로 데이터를 가져오고 업데이트
-            this.fetchDataAndUpdateCharts(); // 초기 호출
+            this.setupTabs();
+            this.fetchDataAndUpdateCharts();
             setInterval(this.fetchDataAndUpdateCharts, 2000);
-            $("#tab-info").click(function () {
+            this.initLiveKakaoMap();
+        },
+        setupTabs: function () {
+            $("#tab-live").click(function () {
                 $(".tab").removeClass("active");
                 $(this).addClass("active");
                 $(".tab-content").removeClass("active");
                 $("#content-info").addClass("active");
             });
+
             $("#tab-worklog").click(function () {
                 $(".tab").removeClass("active");
                 $(this).addClass("active");
                 $(".tab-content").removeClass("active");
                 $("#content-worklog").addClass("active");
             });
-
         },
         fetchDataAndUpdateCharts: function () {
             const url = '/iot/health/data/' + seniorId;
@@ -551,10 +490,8 @@
                         return;
                     }
 
-                    // 최신 로그 데이터를 기반으로 업데이트
                     const latestData = response[response.length - 1];
                     if (latestData) {
-                        // 텍스트 직접 업데이트 (직접 ID로 접근)
                         let p1 = latestData.systolicBP;
                         let p2 = latestData.diastolicBP;
                         let p3 = latestData.heartRate;
@@ -579,23 +516,61 @@
                 }
             });
         },
-        updateCard: function (elementId, value, progressBarId, min, max) {
-            const element = document.getElementById(elementId);
-            const progressBar = document.getElementById(progressBarId);
+        initLiveKakaoMap: function () {
+            const lat = parseFloat($("#liveMap").data("sr-lat"));
+            const lng = parseFloat($("#liveMap").data("sr-lng"));
 
-            // 텍스트 업데이트
-            if (element) {
-                element.innerText = value;
+            console.log("Initial Position:", lat, lng);
+
+            var mapContainer = document.getElementById('liveMap');
+            var mapOption = {
+                center: new kakao.maps.LatLng(lat, lng),
+                level: 2
+            };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            var seniorMovingMarker = null;
+            const MIN_STEP_SIZE = 1.5;
+            const MAX_STEP_SIZE = 5;
+
+            setInterval(updateSeniorMovingMarker, 1000);
+
+            function getWalkingPosition(currentLat, currentLng) {
+                const randomStepSize = Math.random() * (MAX_STEP_SIZE - MIN_STEP_SIZE) + MIN_STEP_SIZE;
+                const randomAngle = Math.random() * Math.PI * 2;
+                const deltaLat = randomStepSize * Math.cos(randomAngle) / 111000;
+                const deltaLng = randomStepSize * Math.sin(randomAngle) / (111000 * Math.cos(currentLat * Math.PI / 180));
+                return {
+                    lat: currentLat + deltaLat,
+                    lng: currentLng + deltaLng
+                };
             }
 
-            // Progress Bar 업데이트
-            if (progressBar) {
-                const percentage = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
-                progressBar.style.width = `${percentage}%`; // Progress Bar 너비 조정
-                progressBar.setAttribute("aria-valuenow", percentage); // 접근성 속성 업데이트
+            function updateSeniorMovingMarker() {
+                const randomPosition = getWalkingPosition(lat, lng);
+                console.log("New Position:", randomPosition);
+                if (!seniorMovingMarker) {
+                    var content = `
+                <div class="custom-overlay">
+                    <img src="../../images/move.png" style="width:30px; height:30px;" />
+                </div>
+            `;
+
+                    seniorMovingMarker = new kakao.maps.CustomOverlay({
+                        position: new kakao.maps.LatLng(randomPosition.lat, randomPosition.lng),
+                        content: content,
+                        map: map
+                    });
+                } else {
+                    const newLatLng = new kakao.maps.LatLng(randomPosition.lat, randomPosition.lng);
+                    seniorMovingMarker.setPosition(newLatLng);
+                }
+
+                this.lat = randomPosition.lat;
+                this.lng = randomPosition.lng;
             }
-        }
+        },
     }
     index.init();
 </script>
-
