@@ -41,3 +41,5 @@ app:
   key:
     algo: PBEWithMD5AndDES
     skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780
+    papago-id: r98l5crifd
+    papago-secret: 1KbPoYsig2QZJHedMlr4nMpEiMOBoXEiSDFpaO8L

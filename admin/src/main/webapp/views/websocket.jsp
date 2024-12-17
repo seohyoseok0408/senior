@@ -316,7 +316,8 @@
                 var msg = JSON.stringify({
                     'sendid': this.id,
                     'receiveid': $('#target').val(),
-                    'content1': messageContent
+                    'content1': messageContent,
+                    'role': "ADMIN"
                 });
                 this.stompClient.send('/receiveto', {}, msg);
                 $('#totext').val('');
