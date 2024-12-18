@@ -32,6 +32,7 @@ let chatbtn = {
         document.body.appendChild(chatModal);
         scrollBtn2.addEventListener("click", function () {
             chatModal.style.display = "block";
+            chatbotModal.style.display = "none";
             console.log("WebSocket 초기화 시작");
             if (!websocket.stompClient || !websocket.stompClient.connected) {
                 websocket.init();
@@ -74,6 +75,7 @@ let chatbtn = {
 
         chatbotBtn.addEventListener("click", function () {
             chatbotModal.style.display = "block";
+            chatModal.style.display = "none";
             console.log("Chatbot WebSocket 초기화 시작");
             if (!chatbotWebSocket.stompClient || !chatbotWebSocket.stompClient.connected) {
                 chatbotWebSocket.init();

@@ -2274,8 +2274,8 @@ body {
 
 #chat-modal {
     position: fixed;
-    bottom: 90px;
-    right: 20px;
+    bottom: 30px;
+    right: 100px;
     width: 300px;
     background-color: #fff;
     border-radius: 10px;
@@ -2426,14 +2426,13 @@ body {
 
 #chatbot-modal {
     position: fixed;
-    bottom: 160px; /* WebSocket 모달 위 */
-    right: 20px;
+    bottom: 30px;
+    right: 100px;
     width: 300px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
     overflow: hidden;
-    display: none;
 }
 
 #chatbot-modal-header {
