@@ -181,9 +181,8 @@ let chatbotWebSocket = {
     id: "",
     stompClient: null,
     init: function () {
-        // Chatbot 모달에서 사용하는 ID
         this.id = document.getElementById("login_id").innerText.trim();
-        console.log("WebSocket 구독 ID:", this.id); // 구독 ID 값 확인
+        console.log("WebSocket 구독 ID:", this.id);
         this.connect();
 
         document.getElementById("chatbot-send").addEventListener("click", () => {
@@ -191,12 +190,17 @@ let chatbotWebSocket = {
             if (messageContent) {
                 const msg = JSON.stringify({
                     sendid: this.id,
-                    receiveid: "bot", // 수신자를 'bot'으로 설정
+                    receiveid: "bot",
                     content1: messageContent,
                 });
 
+                // 메시지 전송
                 this.stompClient.send("/app/sendchatbot", {}, msg);
-                document.getElementById("chatbot-text").value = ""; // 입력 필드 초기화
+
+                // 화면에 "고객님"으로 메시지 추가
+                this.addMessageToChatBox("고객님", messageContent);
+
+                document.getElementById("chatbot-text").value = "";
             }
         });
 
@@ -206,10 +210,11 @@ let chatbotWebSocket = {
             }
         });
     },
+
     connect: function () {
         if (this.isConnected) {
             console.log("이미 연결되어 있습니다.");
-            return;  // 중복 연결 방지
+            return;
         }
 
         let sid = this.id;
@@ -221,23 +226,36 @@ let chatbotWebSocket = {
             this.setConnected(true);
             console.log('Connected: ' + frame);
 
-            this.stompClient.subscribe('/sendto/' + sid, (msg) => {
-                console.log("구독한 경로:", '/sendto/' + sid);
+            // 사용자 개인 메시지 구독
+            this.stompClient.subscribe(`/sendto/${sid}`, (msg) => {
                 const message = JSON.parse(msg.body);
-                console.log("수신 메시지:", message); // 수신된 메시지 로그 출력
+                console.log("수신된 사용자 메시지:", message);
 
-                // 수정: addMessageToChatBox 호출로 변경
-                this.addMessageToChatBox(message.sendid, message.content1);
+                // 화면에 "고객님" 메시지 추가
+                this.addMessageToChatBox("챗봇", message.content1);
+            });
+
+            // Chatbot 메시지 구독
+            this.stompClient.subscribe("/sendto/bot", (msg) => {
+                const message = JSON.parse(msg.body);
+                console.log("수신된 Chatbot 메시지:", message);
+
+                // 화면에 "Chatbot" 메시지 추가
+                this.addMessageToChatBox("Chatbot", message.content1);
             });
         });
     },
+
     addMessageToChatBox: function (sender, message) {
-        const chatBox = document.getElementById("chatbot-box"); // Chatbot 메시지 박스
+        const chatBox = document.getElementById("chatbot-box");
         const newMessage = document.createElement("div");
-        newMessage.innerHTML = `<strong>${sender === "bot" ? "Chatbot" : "CHATlog.info(\"Original Text: {}\", originalText);BOT"}:</strong> ${message}`;
+
+        // 메시지 표시: "고객님" 또는 "Chatbot"
+        newMessage.innerHTML = `<strong>${sender}:</strong> ${message}`;
         chatBox.appendChild(newMessage);
         chatBox.scrollTop = chatBox.scrollHeight; // 스크롤 맨 아래로 이동
     },
+
     setConnected: function (connected) {
         const statusElement = document.getElementById("chatbot-status");
         if (statusElement) {
