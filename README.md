@@ -3,3 +3,6 @@
 **헬스케어 시스템 (WebSocket, AI Chatbot, WebRTC)**
 
 https://www.notion.so/SW-4-12a3aa17a00680ae8b39c5832ff89557
+
+
+https://youtu.be/bZwnYCVVCLo?si=vbXQbxcm0fOp-uRw
