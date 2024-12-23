@@ -5,4 +5,5 @@
 https://www.notion.so/SW-4-12a3aa17a00680ae8b39c5832ff89557
 
 
+[![Video Label](http://img.youtube.com/vi/bZwnYCVVCLo?si=vbXQbxcm0fOp-uRw/0.jpg)](https://youtu.be/bZwnYCVVCLo?si=vbXQbxcm0fOp-uRw)
 https://youtu.be/bZwnYCVVCLo?si=vbXQbxcm0fOp-uRw
