@@ -21,34 +21,34 @@ DEV(Back end) : 이동우, 진완규
 
 프로젝트 계획도
 
-https://github.com/user-attachments/assets/8ea66a24-f7b3-42a3-9d3b-b0639231b268
+![image](https://github.com/user-attachments/assets/d8a71246-5e68-4efc-9786-fa21b4214cbc)
 
 업무 흐름도
 
-https://github.com/user-attachments/assets/1295425f-c310-4130-80f4-18947636c36e
+![image](https://github.com/user-attachments/assets/0fd11947-3ee2-41c5-b9e5-55c991374fa3)
 
 요구사항 분석
 
 Service
 
-https://github.com/user-attachments/assets/c9d286de-8593-4083-af65-fae3f4b0520d
+![image](https://github.com/user-attachments/assets/ee4bee08-3c4a-4d57-9841-674c1e162b69)
 
 Admin
 
-https://github.com/user-attachments/assets/454acad1-4cec-46f2-b3cc-b897fe928cd2
+![image](https://github.com/user-attachments/assets/87155630-6e6e-41f7-9cf3-5af11bb03a7a)
 
-DB 설계
+DB 설계(사진 저장 해 놓은 거 있으면 교체 해 주세요
 
-https://github.com/user-attachments/assets/e2bafb25-f950-4de4-bd6f-72ba2be7b79d
+![image](https://github.com/user-attachments/assets/d93257a5-425c-4bc5-be03-65d86623ffa7)
 
 WBS
 
-https://github.com/user-attachments/assets/71f87040-e0af-42d0-8e73-04f501d78265
+![image](https://github.com/user-attachments/assets/ef2e2157-9311-4720-b00e-a47b727974ee)
 
 
 시스템 아키텍쳐
 
-https://github.com/user-attachments/assets/ef4c8a53-0dfd-49ac-80b7-d4a466ec0054
+![image](https://github.com/user-attachments/assets/b765f24d-c312-44ec-a14c-85bd16903b7e)
 
 # 3. 프로젝트 역할분담
 
@@ -64,7 +64,7 @@ https://github.com/user-attachments/assets/ef4c8a53-0dfd-49ac-80b7-d4a466ec0054
 
 ---
 
-고객 페이지
+## 고객 페이지
 
 ---
 
@@ -73,7 +73,7 @@ https://github.com/user-attachments/assets/ef4c8a53-0dfd-49ac-80b7-d4a466ec0054
 ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3814dddd-5616-4f68-8a4e-e3ff03ea02cb/a4a1c2a1-3ca2-45d2-a3b7-92a2911c5b44/image.png)
 
 
-메인 페이지
+## 메인 페이지
 
 
 ![image](https://github.com/user-attachments/assets/9fe0c319-f73f-4132-8e4a-d096e58c7b50)
@@ -121,9 +121,9 @@ https://github.com/user-attachments/assets/ef4c8a53-0dfd-49ac-80b7-d4a466ec0054
 ![image](https://github.com/user-attachments/assets/1b974872-044a-4ad5-9ed0-9cd78467f394)
 
 - 계약이 체결된 고객과 보호사의 화상통화 화면입니다
-- 
+  
 - 계약 정보의 PK를 자동으로 회의룸의 방번호로 설정하여 1대1 화상통화를 보장합니다
-- 
+  
 - 보호사가 시니어 집에 가정방문 했을 때 고객과 화상통화를 하거나, 고객과 보호사 간 상담 용도로 활용합니다
 
 ## 보호사 업무일지 화면
@@ -150,8 +150,12 @@ https://github.com/user-attachments/assets/ef4c8a53-0dfd-49ac-80b7-d4a466ec0054
 
 - 보호사는 계약 내역을 전체, 대기중, 매칭완료 탭으로 분류하여 조회합니다
 
+
+---
+
 ## 관리자 화면
 
+---
 ![image](https://github.com/user-attachments/assets/941de868-5f75-47c8-be46-c02ddd304322)
 
 ![image](https://github.com/user-attachments/assets/d47293f3-423c-4ce6-bfb4-1199fb6c116f)
