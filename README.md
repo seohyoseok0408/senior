@@ -2,9 +2,18 @@
 
 **Spring Boot 기반 시니어 실시간 건강 모니터링 시스템헬스케어 시스템 (WebSocket, AI Chatbot, WebRTC)**
 
+**NOTION 주소**
+
 [https://www.notion.so/SW-4-12a3aa17a00680ae8b39c5832ff89557](https://www.notion.so/SW-4-12a3aa17a00680ae8b39c5832ff89557?pvs=21)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bZwnYCVVCLo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+**유튜브 주소**
+
+[![See Near - Senior Health Monitoring System](http://img.youtube.com/vi/bZwnYCVVCLo/0.jpg)](https://youtu.be/bZwnYCVVCLo)
+
+
+**👨🏻‍👩🏻‍👦🏻‍👦🏻MEMBER**
 
 PL (Project Leader) : 서효석
 
@@ -18,7 +27,26 @@ DEV(Back end) : 이동우, 진완규
 
 # 1. 프로젝트 주제 및 기획의도
 
+
 주제: 시니어의 건강 데이터 수집, 건강 정보 제공, 위험 상황 시 신속한 대응 지원
+
+
+기획의도 
+
+- 시니어들이 독립적인 생활을 유지하면서도 안전하게 지낼 수 있도록 지원
+- 
+- 보호자와 요양 보호사 간의 실시간 소통 및 관리 필요성 증대
+
+차별화
+
+- 웨어러블 기기를 도입해 실시간으로 건강 상태를 모니터링하고, 이를 기반으로 예방적 조치를 가능하게 함
+  
+- 상태 변화 발생 시 신속한 알림 및 대응 체계를 구축
+  
+- API 연동을 통해 위치 정보 및 건강 데이터를 수집함으로써 시니어들의 안전성과 삶의 질을 향상
+  
+- 업무 일지 작성 및 WebRTC 기술을 활용해 보호자와 요양 보호사 간 소통을 강화
+  
 
 # 2. 프로젝트 개요
 
@@ -27,9 +55,19 @@ DEV(Back end) : 이동우, 진완규
 
 ![image](https://github.com/user-attachments/assets/d8a71246-5e68-4efc-9786-fa21b4214cbc)
 
+***
+
+**✨시나리오**
+
+![image](https://github.com/user-attachments/assets/b7ecbac5-a54b-4980-8543-b8e7479ac162)
+
+***
+
 **✨업무 흐름도**
 
 ![image](https://github.com/user-attachments/assets/0fd11947-3ee2-41c5-b9e5-55c991374fa3)
+
+***
 
 **✨요구사항 분석**
 
@@ -41,25 +79,36 @@ DEV(Back end) : 이동우, 진완규
 
 ![image](https://github.com/user-attachments/assets/87155630-6e6e-41f7-9cf3-5af11bb03a7a)
 
+***
+
 **✨DB 설계(사진 저장 해 놓은 거 있으면 교체 해 주세요**
 
 ![image](https://github.com/user-attachments/assets/d93257a5-425c-4bc5-be03-65d86623ffa7)
+
+***
 
 **✨WBS**
 
 ![image](https://github.com/user-attachments/assets/ef2e2157-9311-4720-b00e-a47b727974ee)
 
+***
 
 **✨시스템 아키텍쳐**
 
 ![image](https://github.com/user-attachments/assets/b765f24d-c312-44ec-a14c-85bd16903b7e)
+
+***
+
+**✨개발 환경 및 수행 도구**
+![image](https://github.com/user-attachments/assets/42fc9e38-2a19-438c-a48d-f61f7ff57ce2)
+
 
 # 3. 프로젝트 역할분담
 
 | 이름 | 역할 |
 | --- | --- |
 | 서효석 |  |
-| 이동우 |  |
+| 이동우 | 잠자기  |
 | 이태빈 |  |
 | 조현열 |  |
 | 진완규 | 밥 먹기 |
@@ -162,6 +211,16 @@ DEV(Back end) : 이동우, 진완규
 ![image](https://github.com/user-attachments/assets/d47293f3-423c-4ce6-bfb4-1199fb6c116f)
 
 **- 전체 고객 수, 채팅 활성도, 시니어 수, 보호사 수, 서버 사용량 추이 등의 통계적인 데이터를 확인할 수 있는 페이지입니다.**
+
+# 트러블 슈팅
+
+| **Name**   | **Issues**                                                                 | **Problem Solving**                                                                                 |
+|------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| **서호석** | - Spring Boot 기본 설정으로 인해 파일 크기 제어가 안 되는 문제 발생 및 파일 저장 경로 지정 문제<br>- JSP 페이지에서 JavaScript와 연동 시 Ajax 통신 중 오류 발생 | - `application.yml`에서 파일 업로드 크기를 조정하고 파일 저장 경로를 설정<br>- JavaScript 코드 디버깅을 통해 통신 방식 수정 |
+| **조현열** | - Jackson DataType 모듈이 LocalDateTime을 제대로 처리하지 못함<br>- API 호출 시 `CORS` 문제 발생 및 Spring Security 설정 충돌 | - Jackson Datatype JSR310 추가 및 `JavaTimeModule` 설정<br>- JSON 형식 결과값 Spring 설정 수정으로 문제 해결 |
+| **이태빈** | - `keyframes slideUp` 애니메이션 작업 중 속도가 매끄럽지 않음<br>- `onmouseover` 이벤트가 중복 실행되는 문제                     | - CSS의 `transition` 사용으로 속도 개선<br>- 이벤트 처리 로직에서 `setTimeout`으로 딜레이를 추가해 중복 처리 문제 해결 |
+| **이동우** | - 브라우저에서 전송 시 `body: JSON.stringify()`와 헤더에서 `content-type: application/json` 미설정으로 발생한 DB 에러<br>- DateTime 변환 시 UTC 시간이 저장되어 로컬 시간과 불일치 | - `fetch` 헤더에 `content-type: application/json` 추가하여 문제 해결<br>- 새로운 `DateFormatter` 설정으로 UTC 문제를 해결 |
+| **진완규** | - WebSocket 설정 중 스프링 기본 설정에서 채팅 구독 문제가 발생<br>- `configureMessageBroker()` 호출 후 메시지 브로커 활성화가 안 됨 | - 새로 만든 스프링 구독 경로를 인덱스에서 별도로 처리<br>- `enableSimpleBroker()`로 메시지 브로커 활성화 |
 
 
 
