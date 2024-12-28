@@ -23,15 +23,15 @@ DEV(Back end) : 이동우, 진완규
 # 2. 프로젝트 개요
 
 
-**프로젝트 계획도**
+**✨프로젝트 계획도**
 
 ![image](https://github.com/user-attachments/assets/d8a71246-5e68-4efc-9786-fa21b4214cbc)
 
-**업무 흐름도**
+**✨업무 흐름도**
 
 ![image](https://github.com/user-attachments/assets/0fd11947-3ee2-41c5-b9e5-55c991374fa3)
 
-**요구사항 분석**
+**✨요구사항 분석**
 
 **Service**
 
@@ -41,16 +41,16 @@ DEV(Back end) : 이동우, 진완규
 
 ![image](https://github.com/user-attachments/assets/87155630-6e6e-41f7-9cf3-5af11bb03a7a)
 
-**DB 설계(사진 저장 해 놓은 거 있으면 교체 해 주세요**
+**✨DB 설계(사진 저장 해 놓은 거 있으면 교체 해 주세요**
 
 ![image](https://github.com/user-attachments/assets/d93257a5-425c-4bc5-be03-65d86623ffa7)
 
-**WBS**
+**✨WBS**
 
 ![image](https://github.com/user-attachments/assets/ef2e2157-9311-4720-b00e-a47b727974ee)
 
 
-**시스템 아키텍쳐**
+**✨시스템 아키텍쳐**
 
 ![image](https://github.com/user-attachments/assets/b765f24d-c312-44ec-a14c-85bd16903b7e)
 
@@ -66,21 +66,18 @@ DEV(Back end) : 이동우, 진완규
 
 # 4. 프로젝트 핵심 기능
 
----
-
-## 고객 페이지
-
----
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3814dddd-5616-4f68-8a4e-e3ff03ea02cb/5198a758-47be-4c6c-8b7a-eaacb1b95a16/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/3814dddd-5616-4f68-8a4e-e3ff03ea02cb/a4a1c2a1-3ca2-45d2-a3b7-92a2911c5b44/image.png)
-
 
 ## 메인 페이지
 
 
 ![image](https://github.com/user-attachments/assets/9fe0c319-f73f-4132-8e4a-d096e58c7b50)
+
+
+
+## 고객 페이지
+
+![image](https://github.com/user-attachments/assets/9adf6434-9b50-4989-8958-43a908f55fbd)
+
 
 
 **- 로그인 완료 후 메인페이지의 모습입니다. 일정관리와 내 정보 외의 헤더 클릭 시, 시니어를 등록하는 페이지로 강제 리다이렉트 됩니다. 오른쪽 밑 말풍선 버튼을 클릭하면 관리자와 1대1 채팅 팝업이 나타납니다.**
