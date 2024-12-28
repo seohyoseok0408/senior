@@ -216,7 +216,7 @@ DEV(Back end) : 이동우, 진완규
 
 | **Name**   | **Issues**                                                                 | **Problem Solving**                                                                                 |
 |------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| **서호석** | - Spring Boot 기본 설정으로 인해 파일 크기 제어가 안 되는 문제 발생 및 파일 저장 경로 지정 문제<br>- JSP 페이지에서 JavaScript와 연동 시 Ajax 통신 중 오류 발생 | - `application.yml`에서 파일 업로드 크기를 조정하고 파일 저장 경로를 설정<br>- JavaScript 코드 디버깅을 통해 통신 방식 수정 |
+| **서효석** | - Spring Boot 기본 설정으로 인해 파일 크기 제어가 안 되는 문제 발생 및 파일 저장 경로 지정 문제<br>- JSP 페이지에서 JavaScript와 연동 시 Ajax 통신 중 오류 발생 | - `application.yml`에서 파일 업로드 크기를 조정하고 파일 저장 경로를 설정<br>- JavaScript 코드 디버깅을 통해 통신 방식 수정 |
 | **조현열** | - Jackson DataType 모듈이 LocalDateTime을 제대로 처리하지 못함<br>- API 호출 시 `CORS` 문제 발생 및 Spring Security 설정 충돌 | - Jackson Datatype JSR310 추가 및 `JavaTimeModule` 설정<br>- JSON 형식 결과값 Spring 설정 수정으로 문제 해결 |
 | **이태빈** | - `keyframes slideUp` 애니메이션 작업 중 속도가 매끄럽지 않음<br>- `onmouseover` 이벤트가 중복 실행되는 문제                     | - CSS의 `transition` 사용으로 속도 개선<br>- 이벤트 처리 로직에서 `setTimeout`으로 딜레이를 추가해 중복 처리 문제 해결 |
 | **이동우** | - 브라우저에서 전송 시 `body: JSON.stringify()`와 헤더에서 `content-type: application/json` 미설정으로 발생한 DB 에러<br>- DateTime 변환 시 UTC 시간이 저장되어 로컬 시간과 불일치 | - `fetch` 헤더에 `content-type: application/json` 추가하여 문제 해결<br>- 새로운 `DateFormatter` 설정으로 UTC 문제를 해결 |
